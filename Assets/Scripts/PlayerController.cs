@@ -1,0 +1,252 @@
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+public class PlayerController : MonoBehaviour
+{
+    public enum PlayerState
+    {
+        Default,
+        Gun,
+        Melee
+    }
+
+    public PlayerState currentState = PlayerState.Default;
+
+    [Header("Movement")]
+    public float moveSpeed = 4f;
+    public float jumpForce = 8f;
+
+    [Header("Ground Check")]
+    public Transform groundCheck;
+    public float groundCheckRadius = 0.2f;
+    public LayerMask groundLayer;
+
+    private Rigidbody2D rb;
+    [SerializeField] Animator defaultAnimator;
+    [SerializeField] Animator gunAnimator;
+    private Animator currentAnimator
+    {
+        get
+        {
+            return currentState == PlayerState.Default
+                ? defaultAnimator
+                : gunAnimator;
+        }
+    }
+
+    private float moveInput;
+    private bool isGrounded;
+
+    [Header("Sprite Renderers")]
+    [SerializeField] SpriteRenderer defaultRenderer;
+    [SerializeField] SpriteRenderer gunBodyRenderer;
+    [SerializeField] private SpriteRenderer armRenderer;
+    [SerializeField] private SpriteRenderer gunRenderer;
+
+    [Header("Arm Pivoting")]
+    [SerializeField] Transform armPivot;
+    [SerializeField] Transform gunPivot;
+
+    [SerializeField] private Vector2 posRight;
+    [SerializeField] private Vector2 posUpRight;
+    [SerializeField] private Vector2 posUp;
+    [SerializeField] private Vector2 posDownRight;
+    [SerializeField] private Vector2 posDown;
+
+    [SerializeField] private Vector2 gunOffsetRight;
+    [SerializeField] private Vector2 gunOffsetUpRight;
+    [SerializeField] private Vector2 gunOffsetUp;
+    [SerializeField] private Vector2 gunOffsetDownRight;
+    [SerializeField] private Vector2 gunOffsetDown;
+
+    [Header("Sprites")]
+    [SerializeField] private Sprite armRight;
+    [SerializeField] private Sprite armUpRight;
+    [SerializeField] private Sprite armDownRight;
+    [SerializeField] private Sprite armUp;
+    [SerializeField] private Sprite armDown;
+
+    [SerializeField] private Sprite gunBase;
+    [SerializeField] private Sprite gunDiagonal;
+
+    [Header("Shooting")]
+    [SerializeField] GameObject bulletPrefab;
+    [SerializeField] Transform firePoint;
+    [SerializeField] float fireRate = 0.2f;
+    Vector2 currentAimDirection;
+    float currentSnappedAngle;
+    float nextFireTime = 0f;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    void Update()
+    {
+        // Get horizontal input
+        moveInput = Input.GetAxisRaw("Horizontal");
+
+        // Flip sprite
+        if (currentState == PlayerState.Default)
+        {
+            if (moveInput > 0)
+                transform.localScale = new Vector3(1, 1, 1);
+            else if (moveInput < 0)
+                transform.localScale = new Vector3(-1, 1, 1);
+        }
+
+        // Jump
+        if (Input.GetButtonDown("Jump") && isGrounded)
+        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+        }
+
+        // Toggle gun state
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            ToggleGunState();
+        }
+
+        // Animator
+        currentAnimator.SetFloat("Speed", Mathf.Abs(moveInput));
+        currentAnimator.SetBool("IsJumping", !isGrounded);
+
+        if (currentState == PlayerState.Gun)
+        {
+            AimTowardMouse();
+        }
+
+        if (currentState == PlayerState.Gun && (Input.GetMouseButton(0) && Time.time >= nextFireTime))
+        {
+            Shoot();
+            nextFireTime = Time.time + fireRate;
+        }
+    }
+
+    void ToggleGunState()
+    {
+        if (currentState == PlayerState.Default)
+        {
+            currentState = PlayerState.Gun;
+            EnterGunMode();
+        }
+        else
+        {
+            currentState = PlayerState.Default;
+            EnterDefaultMode();
+        }
+    }
+
+    void EnterGunMode()
+    {
+        defaultRenderer.gameObject.SetActive(false);
+        gunBodyRenderer.gameObject.SetActive(true);
+        armPivot.gameObject.SetActive(true);
+    }
+    void EnterDefaultMode()
+    {
+        defaultRenderer.gameObject.SetActive(true);
+        gunBodyRenderer.gameObject.SetActive(false);
+        armPivot.gameObject.SetActive(false);
+    }
+    
+    // Aim Rotation
+    void AimTowardMouse()
+    {
+        Vector3 mouseWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorld.z = 0f;
+
+        Vector2 direction = (mouseWorld - transform.position).normalized;
+
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        currentSnappedAngle = Mathf.Round(angle / 45f) * 45f;
+
+        currentAimDirection = GetSnappedDirection(direction);
+
+        if (direction.x > 0)
+            transform.localScale = new Vector3(1, 1, 1);
+        else if (direction.x < 0)
+            transform.localScale = new Vector3(-1, 1, 1);
+
+        UpdateArmSprite(currentSnappedAngle);
+    }
+
+    void Shoot()
+    {
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        bullet.GetComponent<Bullet>().Initialize(currentAimDirection);
+    }
+
+    Vector2 GetSnappedDirection(Vector2 rawDirection)
+    {
+        float angle = Mathf.Atan2(rawDirection.y, rawDirection.x) * Mathf.Rad2Deg;
+
+        // Snap to nearest 45 degrees
+        float snappedAngle = Mathf.Round(angle / 45f) * 45f;
+
+        float rad = snappedAngle * Mathf.Deg2Rad;
+
+        return new Vector2(Mathf.Cos(rad), Mathf.Sin(rad));
+    }
+
+    void UpdateArmSprite(float snappedAngle)
+    {
+        if (snappedAngle == 0 || snappedAngle == 180)
+        {
+            armRenderer.sprite = armRight;
+            gunRenderer.sprite = gunBase;
+            armPivot.localPosition = posRight;
+            gunPivot.localPosition = gunOffsetRight;
+            gunPivot.localRotation = Quaternion.identity;
+        }
+        else if (snappedAngle == 45 || snappedAngle == 135)
+        {
+            armRenderer.sprite = armUpRight;
+            gunRenderer.sprite = gunDiagonal;
+            armPivot.localPosition = posUpRight;
+            gunPivot.localPosition = gunOffsetUpRight;
+            gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
+        }
+        else if (snappedAngle == 90)
+        {
+            armRenderer.sprite = armUp;
+            gunRenderer.sprite = gunBase;
+            armPivot.localPosition = posUp;
+            gunPivot.localPosition = gunOffsetUp;
+            gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
+        }
+        else if (snappedAngle == -45 || snappedAngle == -135)
+        {
+            armRenderer.sprite = armDownRight;
+            gunRenderer.sprite = gunDiagonal;
+            armPivot.localPosition = posDownRight;
+            gunPivot.localPosition = gunOffsetDownRight;
+            gunPivot.localRotation = Quaternion.identity;
+        }
+        else if (snappedAngle == -90)
+        {
+            armRenderer.sprite = armDown;
+            gunRenderer.sprite = gunBase;
+            armPivot.localPosition = posDown;
+            gunPivot.localPosition = gunOffsetDown;
+            gunPivot.localRotation = Quaternion.Euler(0, 0, -90);
+        }
+    }
+
+    void FixedUpdate()
+    {
+        // Movement
+        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+    }
+
+    void LateUpdate()
+    {
+        // Ground check
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            groundCheckRadius,
+            groundLayer
+        );
+    }
+}
