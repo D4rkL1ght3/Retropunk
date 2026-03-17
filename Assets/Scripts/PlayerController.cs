@@ -15,6 +15,15 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 4f;
     public float jumpForce = 8f;
+    private bool doubleJumpUsed = false;
+
+    public float climbSpeed = 3f;
+    private int ladderCount = 0;
+    private bool isOnLadder => ladderCount > 0;
+    private float ladderX;
+    private bool isClimbing;
+    private float verticalInput;
+    private float defaultGravity;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -80,6 +89,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        defaultGravity = rb.gravityScale;
     }
 
     void Update()
@@ -97,10 +107,33 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && isGrounded)
+        if (Input.GetButtonDown("Jump") && !doubleJumpUsed)
         {
+            if (!isGrounded && !isClimbing)
+            {
+                // Double Jump
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); // reset Y velocity
+                defaultAnimator.SetTrigger("DoubleJump");
+                doubleJumpUsed = true;
+            }
+
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
         }
+
+        // Climbing
+        verticalInput = Input.GetAxisRaw("Vertical");
+
+        if (isOnLadder && Mathf.Abs(verticalInput) > 0f && currentState == PlayerState.Default)
+            StartClimbing();
+
+        if (currentState == PlayerState.Gun && isClimbing)
+            StopClimbing();
+
+        if (isOnLadder && isGrounded && verticalInput < 0f)
+            StopClimbing();
+
+        if (isClimbing && (Mathf.Abs(moveInput) > 0 || Input.GetButtonDown("Jump")))
+            StopClimbing();
 
         // Toggle gun state
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -110,7 +143,9 @@ public class PlayerController : MonoBehaviour
 
         // Animator
         currentAnimator.SetFloat("Speed", Mathf.Abs(moveInput));
-        currentAnimator.SetBool("IsJumping", !isGrounded);
+        defaultAnimator.SetFloat("ClimbSpeed", verticalInput);
+        currentAnimator.SetBool("IsJumping", !isGrounded && !isClimbing);
+        defaultAnimator.SetBool("IsClimbing", isClimbing);
 
         if (currentState == PlayerState.Gun)
         {
@@ -234,10 +269,65 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void StartClimbing()
+    {
+        isClimbing = true;
+        rb.gravityScale = 0f;
+    }
+
+    void StopClimbing()
+    {
+        isClimbing = false;
+        rb.gravityScale = defaultGravity;
+    }
+
+    void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            ladderCount++;
+
+            // Snap target X to ladder center
+            ladderX = collision.bounds.center.x;
+        }
+    }
+
+    void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Ladder"))
+        {
+            ladderCount--;
+            if (ladderCount <= 0)
+            {
+                ladderCount = 0;
+                StopClimbing();
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         // Movement
-        rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        if (isClimbing)
+        {
+            rb.linearVelocity = new Vector2(0f, verticalInput * climbSpeed);
+
+            // Snap X position to ladder center
+            transform.position = new Vector3(
+                ladderX,
+                transform.position.y,
+                transform.position.z
+            );
+        }
+        else
+        {
+            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+        }
+
+        if (isGrounded && doubleJumpUsed)
+        {
+            doubleJumpUsed = false;
+        }
     }
 
     void LateUpdate()

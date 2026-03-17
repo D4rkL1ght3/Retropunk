@@ -3,7 +3,8 @@ using UnityEngine;
 public class InfiniteParallax : MonoBehaviour
 {
     public Transform cameraTransform;
-    public float parallaxMultiplier;
+    public float parallaxMultiplierX;
+    public float parallaxMultiplierY;
 
     private float spriteWidth;
     private Vector3 lastCameraPosition;
@@ -17,7 +18,7 @@ public class InfiniteParallax : MonoBehaviour
     void Update()
     {
         Vector3 deltaMovement = cameraTransform.position - lastCameraPosition;
-        transform.position += new Vector3(deltaMovement.x * parallaxMultiplier, 0f, 0f);
+        transform.position += new Vector3(deltaMovement.x * parallaxMultiplierX, deltaMovement.y * parallaxMultiplierY, 0f);
 
         lastCameraPosition = cameraTransform.position;
 
