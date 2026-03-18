@@ -295,7 +295,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 222, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &18554438
 MonoBehaviour:
@@ -400,7 +400,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -100}
-  m_SizeDelta: {x: 160, y: 30}
+  m_SizeDelta: {x: 222, y: 72}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &79731687
 MonoBehaviour:
@@ -1468,7 +1468,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteParallax
   cameraTransform: {fileID: 1448922641}
-  parallaxMultiplier: 0.1
+  parallaxMultiplierX: 0.1
+  parallaxMultiplierY: 0
 --- !u!1 &992387251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1517,7 +1518,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteParallax
   cameraTransform: {fileID: 1448922641}
-  parallaxMultiplier: 0.05
+  parallaxMultiplierX: 0.05
+  parallaxMultiplierY: 0
 --- !u!1 &1025233348
 GameObject:
   m_ObjectHideFlags: 0
@@ -2770,7 +2772,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteParallax
   cameraTransform: {fileID: 1448922641}
-  parallaxMultiplier: 0.2
+  parallaxMultiplierX: 0.2
+  parallaxMultiplierY: 0
 --- !u!1 &1923831114
 GameObject:
   m_ObjectHideFlags: 0
@@ -2910,7 +2913,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InfiniteParallax
   cameraTransform: {fileID: 1448922641}
-  parallaxMultiplier: 0.4
+  parallaxMultiplierX: 0.4
+  parallaxMultiplierY: 0
 --- !u!1 &2064026994
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,7 +13,10 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
     public float moveSpeed = 3f;
     public float detectionRange = 6f;
     public float attackRange = 1.5f;
+    public LayerMask Player;
+    public LayerMask Ground;
 
+    private bool aggroed = false;
     private Transform currentTarget;
     private Rigidbody2D rb;
 
@@ -69,12 +72,33 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
 
         distance = Vector2.Distance(transform.position, player.position);
 
-        if (distance < detectionRange)
+        Vector2 direction = (player.position - transform.position).normalized;
+
+        // Raycast toward player
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction,
+            detectionRange,
+            Ground | Player
+        );
+
+        bool canSeePlayer = false;
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                canSeePlayer = true;
+            }
+        }
+        
+        if ((distance < detectionRange && canSeePlayer) || aggroed)
         {
             currentState = EnemyState.Chase;
         }
         else
         {
+            aggroed = false;
             currentState = EnemyState.Patrol;
         }
 
@@ -215,6 +239,11 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
         }
     }
 
+    public void OnDamaged()
+    {
+        aggroed = true;
+        currentState = EnemyState.Chase;
+    }
     public void Disable()
     {
         enabled = false;

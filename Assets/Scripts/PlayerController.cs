@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     public Transform groundCheck;
-    public float groundCheckRadius = 0.2f;
+    public float groundCheckRadius = 0.1f;
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
@@ -112,7 +112,7 @@ public class PlayerController : MonoBehaviour
             if (!isGrounded && !isClimbing)
             {
                 // Double Jump
-                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f); // reset Y velocity
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
                 defaultAnimator.SetTrigger("DoubleJump");
                 doubleJumpUsed = true;
             }
@@ -324,19 +324,16 @@ public class PlayerController : MonoBehaviour
             rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
         }
 
-        if (isGrounded && doubleJumpUsed)
-        {
-            doubleJumpUsed = false;
-        }
-    }
-
-    void LateUpdate()
-    {
-        // Ground check
+        // Ground Check
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
             groundLayer
         );
+
+        if (doubleJumpUsed && isGrounded && Mathf.Abs(rb.linearVelocity.y) < 0.1f)
+        {
+            doubleJumpUsed = false;
+        }
     }
 }

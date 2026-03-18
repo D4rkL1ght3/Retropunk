@@ -9,6 +9,7 @@ public class Health : MonoBehaviour
     private Animator[] animators;
     private SpriteRenderer[] spriteRenderers;
     private Rigidbody2D rb;
+    private IEntity controller;
 
     bool isDead = false;
 
@@ -18,6 +19,7 @@ public class Health : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animators = GetComponentsInChildren<Animator>(true);
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        controller = GetComponent<IEntity>();
     }
 
     public void TakeDamage(int damage)
@@ -25,6 +27,8 @@ public class Health : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+        if (controller != null)
+            controller.OnDamaged();
 
         StopAllCoroutines();
         StartCoroutine(DamageFlash());
@@ -36,6 +40,7 @@ public class Health : MonoBehaviour
             Die();
         }
     }
+
     IEnumerator DamageFlash()
     {
         foreach (SpriteRenderer sr in spriteRenderers)
@@ -55,6 +60,8 @@ public class Health : MonoBehaviour
     {
         isDead = true;
         rb.linearVelocity = Vector2.zero;
+        if (controller != null)
+            controller.Disable();
 
         if (CompareTag("Player"))
         {
@@ -64,17 +71,18 @@ public class Health : MonoBehaviour
             {
                 armPivot.SetActive(false);
             }
+
+            PlayerDeath playerDeath = GetComponent<PlayerDeath>();
+
+            if (playerDeath != null)
+            {
+                playerDeath.Disable();
+            }
         }
 
         foreach (Animator anim in animators)
         {
             anim.SetTrigger("Death");
-        }
-
-        IEntity controller = GetComponent<IEntity>();
-        if (controller != null)
-        {
-            controller.Disable();
         }
     }
 }

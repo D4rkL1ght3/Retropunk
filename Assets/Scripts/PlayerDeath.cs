@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PlayerDeath : MonoBehaviour, IEntity
+public class PlayerDeath : MonoBehaviour
 {
     public void Disable()
     {
