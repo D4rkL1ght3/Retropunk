@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
@@ -79,17 +80,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite gunDiagonal;
 
     [Header("Shooting")]
-    [SerializeField] GameObject bulletPrefab;
+    public Gun currentGun;
+    private bool isReloading = false;
     [SerializeField] Transform firePoint;
-    [SerializeField] float fireRate = 0.2f;
     Vector2 currentAimDirection;
     float currentSnappedAngle;
-    float nextFireTime = 0f;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         defaultGravity = rb.gravityScale;
+
+        if (currentGun != null)
+            currentGun.Initialize();
     }
 
     void Update()
@@ -152,10 +155,25 @@ public class PlayerController : MonoBehaviour
             AimTowardMouse();
         }
 
-        if (currentState == PlayerState.Gun && (Input.GetMouseButton(0) && Time.time >= nextFireTime))
+        if (currentState == PlayerState.Gun && currentGun != null && !isReloading)
         {
-            Shoot();
-            nextFireTime = Time.time + fireRate;
+            if (Input.GetMouseButton(0))
+            {
+                if (currentGun.CanShoot())
+                {
+                    currentGun.Shoot(firePoint, currentAimDirection);
+                }
+                else if (currentGun.NeedsReload())
+                {
+                    StartCoroutine(Reload());
+                }
+            }
+
+            // Manual reload
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(Reload());
+            }
         }
     }
 
@@ -207,10 +225,25 @@ public class PlayerController : MonoBehaviour
         UpdateArmSprite(currentSnappedAngle);
     }
 
-    void Shoot()
+    IEnumerator Reload()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
-        bullet.GetComponent<Bullet>().Initialize(currentAimDirection);
+        if (isReloading || currentGun == null)
+            yield break;
+
+        if (currentGun.currentAmmo == currentGun.maxAmmo)
+            yield break;
+
+        isReloading = true;
+
+        Debug.Log("Reloading...");
+
+        yield return new WaitForSeconds(currentGun.reloadTime);
+
+        currentGun.Reload();
+
+        Debug.Log("Reloaded!");
+
+        isReloading = false;
     }
 
     Vector2 GetSnappedDirection(Vector2 rawDirection)
@@ -230,7 +263,7 @@ public class PlayerController : MonoBehaviour
         if (snappedAngle == 0 || snappedAngle == 180)
         {
             armRenderer.sprite = armRight;
-            gunRenderer.sprite = gunBase;
+            gunRenderer.sprite = currentGun.gunBaseSprite;
             armPivot.localPosition = posRight;
             gunPivot.localPosition = gunOffsetRight;
             gunPivot.localRotation = Quaternion.identity;
@@ -238,7 +271,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == 45 || snappedAngle == 135)
         {
             armRenderer.sprite = armUpRight;
-            gunRenderer.sprite = gunDiagonal;
+            gunRenderer.sprite = currentGun.gunDiagonalSprite;
             armPivot.localPosition = posUpRight;
             gunPivot.localPosition = gunOffsetUpRight;
             gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
@@ -246,7 +279,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == 90)
         {
             armRenderer.sprite = armUp;
-            gunRenderer.sprite = gunBase;
+            gunRenderer.sprite = currentGun.gunBaseSprite;
             armPivot.localPosition = posUp;
             gunPivot.localPosition = gunOffsetUp;
             gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
@@ -254,7 +287,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == -45 || snappedAngle == -135)
         {
             armRenderer.sprite = armDownRight;
-            gunRenderer.sprite = gunDiagonal;
+            gunRenderer.sprite = currentGun.gunDiagonalSprite;
             armPivot.localPosition = posDownRight;
             gunPivot.localPosition = gunOffsetDownRight;
             gunPivot.localRotation = Quaternion.identity;
@@ -262,7 +295,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == -90)
         {
             armRenderer.sprite = armDown;
-            gunRenderer.sprite = gunBase;
+            gunRenderer.sprite = currentGun.gunBaseSprite;
             armPivot.localPosition = posDown;
             gunPivot.localPosition = gunOffsetDown;
             gunPivot.localRotation = Quaternion.Euler(0, 0, -90);

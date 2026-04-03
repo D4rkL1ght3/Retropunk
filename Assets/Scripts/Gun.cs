@@ -1,0 +1,69 @@
+using UnityEngine;
+
+[System.Serializable]
+public class Gun
+{
+    [Header("Basic Info")]
+    public string gunName;
+
+    [Header("Shooting")]
+    public float fireRate = 0.2f;
+    public int damage = 5;
+
+    [Header("Projectile")]
+    public float bulletSpeed = 20f;
+    public float bulletLifetime = 1f;
+
+    [Header("Ammo")]
+    public int maxAmmo = 10;
+    public int currentAmmo;
+    public float reloadTime = 1.5f;
+
+    [Header("Visuals")]
+    public Sprite gunBaseSprite;
+    public Sprite gunDiagonalSprite;
+
+    [Header("Bullet")]
+    public GameObject bulletPrefab;
+
+    private float nextFireTime = 0f;
+
+    public void Initialize()
+    {
+        currentAmmo = maxAmmo;
+    }
+
+    public bool CanShoot()
+    {
+        return Time.time >= nextFireTime && currentAmmo > 0;
+    }
+
+    public void Shoot(Transform firePoint, Vector2 direction)
+    {
+        if (!CanShoot()) return;
+
+        GameObject bullet = GameObject.Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+
+        Bullet b = bullet.GetComponent<Bullet>();
+        if (b != null)
+        {
+            b.Initialize(direction);
+            b.damage = damage;
+            b.speed = bulletSpeed;        
+            b.lifetime = bulletLifetime;  
+        }
+
+        currentAmmo--;
+        nextFireTime = Time.time + fireRate;
+    }
+
+    public bool NeedsReload()
+    {
+        return currentAmmo <= 0;
+    }
+
+    public void Reload()
+    {
+        currentAmmo = maxAmmo;
+    }
+}
