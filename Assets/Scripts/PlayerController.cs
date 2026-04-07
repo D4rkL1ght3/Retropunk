@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
@@ -81,10 +81,15 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shooting")]
     public Gun currentGun;
-    private bool isReloading = false;
     [SerializeField] Transform firePoint;
     Vector2 currentAimDirection;
     float currentSnappedAngle;
+
+    [Header("Reloading")]
+    private bool isReloading = false;
+    public TextMeshProUGUI ammoText;
+    public AudioSource audioSource;
+    public AudioClip reloadSound;
 
     void Start()
     {
@@ -93,6 +98,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentGun != null)
             currentGun.Initialize();
+
+        UpdateAmmoUI();
     }
 
     void Update()
@@ -162,6 +169,7 @@ public class PlayerController : MonoBehaviour
                 if (currentGun.CanShoot())
                 {
                     currentGun.Shoot(firePoint, currentAimDirection);
+                    UpdateAmmoUI();
                 }
                 else if (currentGun.NeedsReload())
                 {
@@ -237,9 +245,13 @@ public class PlayerController : MonoBehaviour
 
         Debug.Log("Reloading...");
 
+        if (reloadSound != null)
+            audioSource.PlayOneShot(reloadSound);
+
         yield return new WaitForSeconds(currentGun.reloadTime);
 
         currentGun.Reload();
+        UpdateAmmoUI();
 
         Debug.Log("Reloaded!");
 
@@ -312,6 +324,18 @@ public class PlayerController : MonoBehaviour
     {
         isClimbing = false;
         rb.gravityScale = defaultGravity;
+    }
+
+    void UpdateAmmoUI()
+    {
+        if (currentGun == null || ammoText == null) return;
+
+        ammoText.text = currentGun.currentAmmo + " / " + currentGun.maxAmmo;
+        
+        if (currentGun.currentAmmo == 0)
+            ammoText.color = Color.red;
+        else
+            ammoText.color = Color.white;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
