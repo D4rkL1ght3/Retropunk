@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class PlayerHealth : MonoBehaviour
@@ -37,6 +38,13 @@ public class PlayerHealth : MonoBehaviour
         {
             Die();
         }
+    }
+
+    public void Heal(int heal)
+    {
+        currentHealth += heal;
+        Debug.Log(gameObject.name + " healed for " + heal);
+        Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     IEnumerator DamageFlash()
