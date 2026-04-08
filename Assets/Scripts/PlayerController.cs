@@ -91,6 +91,17 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip reloadSound;
 
+    [Header("Melee")]
+    [SerializeField] private int punchDamage = 10;
+    [SerializeField] private float punchRange = 1.2f;
+    [SerializeField] private Transform punchPoint;
+    [SerializeField] private LayerMask enemyLayer;
+
+    [SerializeField] private float punchCooldown = 0.5f;
+    private float nextPunchTime = 0f;
+
+    private bool isPunching = false;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -157,6 +168,15 @@ public class PlayerController : MonoBehaviour
         currentAnimator.SetBool("IsJumping", !isGrounded && !isClimbing);
         defaultAnimator.SetBool("IsClimbing", isClimbing);
 
+        if (currentState == PlayerState.Default)
+        {
+            if (Input.GetMouseButtonDown(0) && Time.time >= nextPunchTime && !isPunching)
+            {
+                Punch();
+                nextPunchTime = Time.time + punchCooldown;
+            }
+        }
+
         if (currentState == PlayerState.Gun)
         {
             AimTowardMouse();
@@ -211,7 +231,38 @@ public class PlayerController : MonoBehaviour
         gunBodyRenderer.gameObject.SetActive(false);
         armPivot.gameObject.SetActive(false);
     }
-    
+
+    // Melee Attack
+    void Punch()
+    {
+        isPunching = true;
+
+        defaultAnimator.SetTrigger("Punch");
+    }
+    public void EndPunch()
+    {
+        isPunching = false;
+    }
+
+    public void DealPunchDamage()
+    {
+        Collider2D[] hits = Physics2D.OverlapCircleAll(
+            punchPoint.position,
+            punchRange,
+            enemyLayer
+        );
+
+        foreach (Collider2D hit in hits)
+        {
+            Health health = hit.GetComponent<Health>();
+
+            if (health != null)
+            {
+                health.TakeDamage(punchDamage);
+            }
+        }
+    }
+
     // Aim Rotation
     void AimTowardMouse()
     {
