@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
     [Header("Melee")]
     [SerializeField] private int punchDamage = 10;
     [SerializeField] private float punchRange = 1.2f;
-    [SerializeField] private Transform punchPoint;
+    [SerializeField] private Transform meleePoint;
     [SerializeField] private LayerMask enemyLayer;
 
     [SerializeField] private float punchCooldown = 0.5f;
@@ -172,7 +172,8 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetMouseButtonDown(0) && Time.time >= nextPunchTime && !isPunching)
             {
-                Punch();
+                defaultAnimator.SetTrigger("Punch");
+                defaultAnimator.SetBool("IsAttacking", true);
                 nextPunchTime = Time.time + punchCooldown;
             }
         }
@@ -239,15 +240,11 @@ public class PlayerController : MonoBehaviour
 
         defaultAnimator.SetTrigger("Punch");
     }
-    public void EndPunch()
-    {
-        isPunching = false;
-    }
 
     public void DealPunchDamage()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(
-            punchPoint.position,
+            meleePoint.position,
             punchRange,
             enemyLayer
         );
@@ -261,6 +258,9 @@ public class PlayerController : MonoBehaviour
                 health.TakeDamage(punchDamage);
             }
         }
+
+        isPunching = false;
+        defaultAnimator.SetBool("IsAttacking", false);
     }
 
     // Aim Rotation
@@ -443,5 +443,13 @@ public class PlayerController : MonoBehaviour
         {
             doubleJumpUsed = false;
         }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (meleePoint == null) return;
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(meleePoint.position, punchRange);
     }
 }
