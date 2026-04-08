@@ -507,9 +507,9 @@ GameObject:
   - component: {fileID: 131630271}
   - component: {fileID: 131630276}
   - component: {fileID: 131630277}
-  - component: {fileID: 131630278}
   - component: {fileID: 131630279}
   - component: {fileID: 131630280}
+  - component: {fileID: 131630281}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -662,19 +662,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.015560627}
   m_Size: {x: 0.65625, y: 1.0626287}
   m_Direction: 0
---- !u!114 &131630278
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131630270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 40
 --- !u!114 &131630279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -784,6 +771,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &131630281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 131630270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c1e0deb7ca25a3459739ac4e4d6c4e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  maxHealth: 40
 --- !u!1 &141887539
 GameObject:
   m_ObjectHideFlags: 0
@@ -1117,6 +1117,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: patrolDistance
       value: 0.1
@@ -5995,6 +6011,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: damagedColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: patrolDistance
       value: 0.2

@@ -230,7 +230,7 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
 
         if (distance <= attackRange)
         {
-            Health playerHealth = player.GetComponent<Health>();
+            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
             if (playerHealth != null)
             {

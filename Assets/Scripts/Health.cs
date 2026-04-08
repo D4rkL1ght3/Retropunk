@@ -6,19 +6,20 @@ public class Health : MonoBehaviour
     public int maxHealth = 40;
     private int currentHealth;
 
-    private Animator[] animators;
-    private SpriteRenderer[] spriteRenderers;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
     private Rigidbody2D rb;
     private IEntity controller;
 
     bool isDead = false;
+    public Color damagedColor = Color.red;
 
     void Awake()
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
-        animators = GetComponentsInChildren<Animator>(true);
-        spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
+        animator = GetComponentInChildren<Animator>(true);
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(true);
         controller = GetComponent<IEntity>();
     }
 
@@ -43,46 +44,21 @@ public class Health : MonoBehaviour
 
     IEnumerator DamageFlash()
     {
-        foreach (SpriteRenderer sr in spriteRenderers)
-        {
-            sr.color = Color.red;
-        }
+        spriteRenderer.color = damagedColor;
 
         yield return new WaitForSeconds(0.2f);
 
-        foreach (SpriteRenderer sr in spriteRenderers)
-        {
-            sr.color = Color.white;
-        }
+        spriteRenderer.color = Color.white;
     }
 
     void Die()
     {
         isDead = true;
         rb.linearVelocity = Vector2.zero;
+
         if (controller != null)
             controller.Disable();
 
-        if (CompareTag("Player"))
-        {
-            GameObject armPivot = transform.Find("ArmPivot").gameObject;
-
-            if (armPivot != null)
-            {
-                armPivot.SetActive(false);
-            }
-
-            PlayerDeath playerDeath = GetComponent<PlayerDeath>();
-
-            if (playerDeath != null)
-            {
-                playerDeath.Disable();
-            }
-        }
-
-        foreach (Animator anim in animators)
-        {
-            anim.SetTrigger("Death");
-        }
+        animator.SetTrigger("Death");
     }
 }
