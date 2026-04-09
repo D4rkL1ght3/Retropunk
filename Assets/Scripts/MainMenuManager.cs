@@ -21,11 +21,6 @@ public class MainMenuManager : MonoBehaviour
         }
     }
 
-    public void PlayGame()
-    {
-        SceneManager.LoadScene("SampleScene");
-    }
-
     public void OpenLevelSelect()
     {
         titleScreen.SetActive(false);
