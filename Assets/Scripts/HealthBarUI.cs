@@ -54,7 +54,7 @@ public class HealthBarUI : MonoBehaviour
     {
         foreach (var img in segments)
         {
-            img.color = Color.yellow;
+            img.color = Color.red;
         }
 
         yield return new WaitForSeconds(flashDuration);
