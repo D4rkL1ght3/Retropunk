@@ -127,7 +127,17 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
     void FixedUpdate()
     {
         if (isAttacking)
+        {
+            rb.linearVelocity = Vector2.zero;
+
+            // Keep facing player while attacking
+            if (player != null)
+            {
+                Flip(player.position.x - transform.position.x);
+            }
+
             return;
+        }
 
         switch (currentState)
         {

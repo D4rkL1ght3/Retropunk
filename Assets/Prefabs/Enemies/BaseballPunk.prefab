@@ -173,6 +173,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 20
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &7964569871282857250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,7 +190,7 @@ MonoBehaviour:
   patrolDistance: 3
   moveSpeed: 2.5
   detectionRange: 6
-  attackRange: 0.7
+  attackRange: 0.8
   Player:
     serializedVersion: 2
     m_Bits: 64
