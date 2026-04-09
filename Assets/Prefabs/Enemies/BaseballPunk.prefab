@@ -199,7 +199,7 @@ MonoBehaviour:
     m_Bits: 8
   patrolWaitTime: 1.5
   damage: 4
-  attackCooldown: 1.2
+  attackCooldown: 1
 --- !u!95 &314943251692427835
 Animator:
   serializedVersion: 7

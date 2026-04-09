@@ -6,6 +6,10 @@ public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 40;
     private int currentHealth;
+    public int CurrentHealth => currentHealth;
+
+    public System.Action OnDamaged;
+    public System.Action OnHealed;
 
     private Animator[] animators;
     private SpriteRenderer[] spriteRenderers;
@@ -31,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
 
         StopAllCoroutines();
         StartCoroutine(DamageFlash());
+        OnDamaged?.Invoke();
 
         Debug.Log(gameObject.name + " took damage! HP: " + currentHealth);
 
@@ -43,6 +48,11 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int heal)
     {
         currentHealth += heal;
+
+        StopAllCoroutines();
+        StartCoroutine(HealFlash());
+        OnHealed?.Invoke();
+
         Debug.Log(gameObject.name + " healed for " + heal);
         Mathf.Clamp(currentHealth, 0, maxHealth);
     }
@@ -56,6 +66,19 @@ public class PlayerHealth : MonoBehaviour
 
         yield return new WaitForSeconds(0.2f);
 
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = Color.white;
+        }
+    }
+
+    IEnumerator HealFlash()
+    {
+        foreach (SpriteRenderer sr in spriteRenderers)
+        {
+            sr.color = Color.green;
+        }
+        yield return new WaitForSeconds(0.2f);
         foreach (SpriteRenderer sr in spriteRenderers)
         {
             sr.color = Color.white;
