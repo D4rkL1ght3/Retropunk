@@ -92,12 +92,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite gunDiagonal;
 
     [Header("Shooting")]
-    public Gun currentGun;
+    private Gun currentGun;
     [SerializeField] Gun primaryWeapon;
     [SerializeField] Gun secondaryWeapon;
-
     [SerializeField] private Transform firePoint;
-    [SerializeField] AudioClip shootSound;
 
     Vector2 currentAimDirection;
     float currentSnappedAngle;
@@ -253,9 +251,6 @@ public class PlayerController : MonoBehaviour
                 if (currentGun.CanShoot())
                 {
                     currentGun.Shoot(firePoint, currentAimDirection);
-
-                    if (shootSound != null)
-                        audioSource.PlayOneShot(shootSound);
 
                     UpdateAmmoUI();
                 }
