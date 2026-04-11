@@ -436,6 +436,8 @@ public class PlayerController : MonoBehaviour
 
     void UpdateArmSprite(float snappedAngle)
     {
+        if (currentGun == null) return;
+
         if (snappedAngle == 0 || snappedAngle == 180)
         {
             armRenderer.sprite = armRight;
