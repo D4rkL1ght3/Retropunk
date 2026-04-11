@@ -249,6 +249,7 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine(reloadCoroutine);
                 reloadCoroutine = null;
                 isReloading = false;
+                Debug.Log("Reload cancelled.");
             }
         }
         else
