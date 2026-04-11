@@ -28,6 +28,14 @@ public class Gun
 
     private float nextFireTime = 0f;
 
+    [Header("Gun Type")]
+    public GunType gunType;
+    public enum GunType
+    {
+        OneHanded,
+        TwoHanded
+    }
+
     public void Initialize()
     {
         currentAmmo = maxAmmo;

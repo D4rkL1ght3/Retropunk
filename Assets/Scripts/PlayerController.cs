@@ -1,13 +1,15 @@
-using UnityEngine;
 using System.Collections;
 using TMPro;
+using UnityEngine;
+using static Gun;
 
 public class PlayerController : MonoBehaviour
 {
     public enum PlayerState
     {
         Default,
-        Gun,
+        GunOneHanded,
+        GunTwoHanded,
         Melee
     }
 
@@ -38,20 +40,30 @@ public class PlayerController : MonoBehaviour
     {
         get
         {
-            return currentState == PlayerState.Default
-                ? defaultAnimator
-                : gunAnimator;
+            return GetActiveModel().GetComponent<Animator>();
         }
+    }
+
+    GameObject GetActiveModel()
+    {
+        if (defaultModel.activeSelf) return defaultModel;
+        if (oneHandedModel.activeSelf) return oneHandedModel;
+        if (twoHandedModel.activeSelf) return twoHandedModel;
+
+        return defaultModel;
     }
 
     private float moveInput;
     private bool isGrounded;
 
-    [Header("Sprite Renderers")]
-    [SerializeField] SpriteRenderer defaultRenderer;
-    [SerializeField] SpriteRenderer gunBodyRenderer;
-    [SerializeField] private SpriteRenderer armRenderer;
-    [SerializeField] private SpriteRenderer gunRenderer;
+    [Header("Player States")]
+    [SerializeField] private GameObject defaultModel;
+    [SerializeField] private GameObject oneHandedModel;
+    [SerializeField] private GameObject twoHandedModel;
+
+    [Header("Arm & Gun Renderers")]
+    [SerializeField] SpriteRenderer armRenderer;
+    [SerializeField] SpriteRenderer gunRenderer;
 
     [Header("Arm Pivoting")]
     [SerializeField] Transform armPivot;
@@ -81,6 +93,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shooting")]
     public Gun currentGun;
+    [SerializeField] Gun primaryWeapon;
+    [SerializeField] Gun secondaryWeapon;
+
     [SerializeField] private Transform firePoint;
     [SerializeField] AudioClip shootSound;
 
@@ -123,8 +138,11 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         defaultGravity = rb.gravityScale;
 
-        if (currentGun != null)
-            currentGun.Initialize();
+        if (primaryWeapon != null)
+            primaryWeapon.Initialize();
+
+        if (secondaryWeapon != null)
+            secondaryWeapon.Initialize();
 
         currentStamina = maxStamina;
         UpdateAmmoUI();
@@ -180,7 +198,7 @@ public class PlayerController : MonoBehaviour
         if (isOnLadder && Mathf.Abs(verticalInput) > 0f && currentState == PlayerState.Default)
             StartClimbing();
 
-        if (currentState == PlayerState.Gun && isClimbing)
+        if ((currentState == PlayerState.GunOneHanded || currentState == PlayerState.GunTwoHanded) && isClimbing)
             StopClimbing();
 
         if (isOnLadder && isGrounded && verticalInput < 0f)
@@ -192,7 +210,18 @@ public class PlayerController : MonoBehaviour
         // Toggle gun state
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ToggleGunState();
+            EquipGun(primaryWeapon);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            EquipGun(secondaryWeapon);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            EnterDefaultMode();
+            currentGun = null;
         }
 
         // Animator
@@ -211,12 +240,13 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (currentState == PlayerState.Gun)
+        if (currentState == PlayerState.GunOneHanded || currentState == PlayerState.GunTwoHanded)
         {
             AimTowardMouse();
         }
 
-        if (currentState == PlayerState.Gun && currentGun != null && !isReloading)
+        if ((currentState == PlayerState.GunOneHanded || currentState == PlayerState.GunTwoHanded)
+            && currentGun != null && !isReloading)
         {
             if (Input.GetMouseButton(0))
             {
@@ -245,7 +275,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (currentState != PlayerState.Gun)
+        if (currentState == PlayerState.Default)
         {
             ammoText.gameObject.SetActive(false);
 
@@ -266,30 +296,57 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void ToggleGunState()
+    void SetModel(GameObject activeModel)
     {
-        if (currentState == PlayerState.Default)
-        {
-            currentState = PlayerState.Gun;
-            EnterGunMode();
-        }
-        else
-        {
-            currentState = PlayerState.Default;
-            EnterDefaultMode();
-        }
+        defaultModel.SetActive(false);
+        oneHandedModel.SetActive(false);
+        twoHandedModel.SetActive(false);
+
+        activeModel.SetActive(true);
     }
 
-    void EnterGunMode()
+    void EquipGun(Gun gun)
     {
-        defaultRenderer.gameObject.SetActive(false);
-        gunBodyRenderer.gameObject.SetActive(true);
+        if (gun == null) return;
+
+        currentGun = gun;
+
+        // Decide state based on weapon type
+        switch (gun.gunType)
+        {
+            case GunType.OneHanded:
+                currentState = PlayerState.GunOneHanded;
+                SetModel(oneHandedModel);
+                break;
+
+            case GunType.TwoHanded:
+                currentState = PlayerState.GunTwoHanded;
+                SetModel(twoHandedModel);
+                break;
+        }
+
+        armPivot.gameObject.SetActive(true);
+
+        UpdateAmmoUI();
+    }
+
+    void EquipOneHandedGun()
+    {
+        currentState = PlayerState.GunOneHanded;
+        SetModel(oneHandedModel);
         armPivot.gameObject.SetActive(true);
     }
+
+    void EquipTwoHandedGun()
+    {
+        currentState = PlayerState.GunTwoHanded;
+        SetModel(twoHandedModel);
+        armPivot.gameObject.SetActive(true);
+    }
+
     void EnterDefaultMode()
     {
-        defaultRenderer.gameObject.SetActive(true);
-        gunBodyRenderer.gameObject.SetActive(false);
+        SetModel(defaultModel);
         armPivot.gameObject.SetActive(false);
     }
 
