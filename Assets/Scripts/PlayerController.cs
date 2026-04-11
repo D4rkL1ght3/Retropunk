@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour
     private float moveInput;
     private bool isGrounded;
 
-    [Header("Player States")]
+    [Header("Player Models")]
     [SerializeField] private GameObject defaultModel;
     [SerializeField] private GameObject oneHandedModel;
     [SerializeField] private GameObject twoHandedModel;
@@ -81,15 +81,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Vector2 gunOffsetDownRight;
     [SerializeField] private Vector2 gunOffsetDown;
 
-    [Header("Sprites")]
+    [Header("Arm Sprites")]
     [SerializeField] private Sprite armRight;
     [SerializeField] private Sprite armUpRight;
     [SerializeField] private Sprite armDownRight;
     [SerializeField] private Sprite armUp;
     [SerializeField] private Sprite armDown;
-
-    [SerializeField] private Sprite gunBase;
-    [SerializeField] private Sprite gunDiagonal;
 
     [Header("Shooting")]
     private Gun currentGun;
@@ -325,20 +322,6 @@ public class PlayerController : MonoBehaviour
         UpdateAmmoUI();
     }
 
-    void EquipOneHandedGun()
-    {
-        currentState = PlayerState.GunOneHanded;
-        SetModel(oneHandedModel);
-        armPivot.gameObject.SetActive(true);
-    }
-
-    void EquipTwoHandedGun()
-    {
-        currentState = PlayerState.GunTwoHanded;
-        SetModel(twoHandedModel);
-        armPivot.gameObject.SetActive(true);
-    }
-
     void EnterDefaultMode()
     {
         SetModel(defaultModel);
@@ -456,7 +439,7 @@ public class PlayerController : MonoBehaviour
         if (snappedAngle == 0 || snappedAngle == 180)
         {
             armRenderer.sprite = armRight;
-            gunRenderer.sprite = currentGun.gunBaseSprite;
+            gunRenderer.sprite = currentGun.baseSprite;
             armPivot.localPosition = posRight;
             gunPivot.localPosition = gunOffsetRight;
             gunPivot.localRotation = Quaternion.identity;
@@ -464,7 +447,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == 45 || snappedAngle == 135)
         {
             armRenderer.sprite = armUpRight;
-            gunRenderer.sprite = currentGun.gunDiagonalSprite;
+            gunRenderer.sprite = currentGun.diagonalSprite;
             armPivot.localPosition = posUpRight;
             gunPivot.localPosition = gunOffsetUpRight;
             gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
@@ -472,7 +455,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == 90)
         {
             armRenderer.sprite = armUp;
-            gunRenderer.sprite = currentGun.gunBaseSprite;
+            gunRenderer.sprite = currentGun.baseSprite;
             armPivot.localPosition = posUp;
             gunPivot.localPosition = gunOffsetUp;
             gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
@@ -480,7 +463,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == -45 || snappedAngle == -135)
         {
             armRenderer.sprite = armDownRight;
-            gunRenderer.sprite = currentGun.gunDiagonalSprite;
+            gunRenderer.sprite = currentGun.diagonalSprite;
             armPivot.localPosition = posDownRight;
             gunPivot.localPosition = gunOffsetDownRight;
             gunPivot.localRotation = Quaternion.identity;
@@ -488,7 +471,7 @@ public class PlayerController : MonoBehaviour
         else if (snappedAngle == -90)
         {
             armRenderer.sprite = armDown;
-            gunRenderer.sprite = currentGun.gunBaseSprite;
+            gunRenderer.sprite = currentGun.baseSprite;
             armPivot.localPosition = posDown;
             gunPivot.localPosition = gunOffsetDown;
             gunPivot.localRotation = Quaternion.Euler(0, 0, -90);

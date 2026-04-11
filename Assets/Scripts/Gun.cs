@@ -20,8 +20,8 @@ public class Gun
     public float reloadTime = 1.5f;
 
     [Header("Visuals")]
-    public Sprite gunBaseSprite;
-    public Sprite gunDiagonalSprite;
+    public Sprite baseSprite;
+    public Sprite diagonalSprite;
 
     [Header("Bullet")]
     public GameObject bulletPrefab;
