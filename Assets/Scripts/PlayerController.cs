@@ -88,7 +88,9 @@ public class PlayerController : MonoBehaviour
     float currentSnappedAngle;
 
     [Header("Reloading")]
-    private bool isReloading = false;
+    private Coroutine reloadCoroutine;
+    private bool isReloading;
+
     [SerializeField] TextMeshProUGUI ammoText;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip reloadSound;
@@ -224,7 +226,10 @@ public class PlayerController : MonoBehaviour
                 }
                 else if (currentGun.NeedsReload())
                 {
-                    StartCoroutine(Reload());
+                    if (!isReloading)
+                    {
+                        reloadCoroutine = StartCoroutine(Reload());
+                    }
                 }
             }
 
@@ -238,7 +243,13 @@ public class PlayerController : MonoBehaviour
         if (currentState != PlayerState.Gun)
         {
             ammoText.gameObject.SetActive(false);
-            StopCoroutine(Reload()); // Stop reloading outside of gun mode
+
+            if (isReloading && reloadCoroutine != null)
+            {
+                StopCoroutine(reloadCoroutine);
+                reloadCoroutine = null;
+                isReloading = false;
+            }
         }
         else
         {
@@ -345,14 +356,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator Reload()
     {
-        if (isReloading || currentGun == null)
+        if (currentGun == null)
             yield break;
 
         if (currentGun.currentAmmo == currentGun.maxAmmo)
             yield break;
 
         isReloading = true;
-
         Debug.Log("Reloading...");
 
         if (reloadSound != null)
@@ -363,9 +373,9 @@ public class PlayerController : MonoBehaviour
         currentGun.Reload();
         UpdateAmmoUI();
 
-        Debug.Log("Reloaded!");
-
         isReloading = false;
+        reloadCoroutine = null;
+        Debug.Log("Reloaded!");
     }
 
     Vector2 GetSnappedDirection(Vector2 rawDirection)
