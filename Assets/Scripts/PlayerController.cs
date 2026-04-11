@@ -234,6 +234,16 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(Reload());
             }
         }
+
+        if (currentState != PlayerState.Gun)
+        {
+            ammoText.gameObject.SetActive(false);
+            StopCoroutine(Reload()); // Stop reloading outside of gun mode
+        }
+        else
+        {
+            ammoText.gameObject.SetActive(true);
+        }
     }
 
     void ToggleGunState()
