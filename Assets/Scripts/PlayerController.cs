@@ -102,6 +102,19 @@ public class PlayerController : MonoBehaviour
 
     private bool isPunching = false;
 
+    [Header("Stamina")]
+    public float maxStamina = 5f;
+    private float currentStamina;
+    public float CurrentStamina => currentStamina;
+
+    public float staminaDrainRate = 1f;
+    public float staminaRegenRate = 0.8f;
+
+    private bool isRunning;
+
+    private float staminaCooldownTimer;
+    public float staminaCooldown = 1.5f;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -110,6 +123,7 @@ public class PlayerController : MonoBehaviour
         if (currentGun != null)
             currentGun.Initialize();
 
+        currentStamina = maxStamina;
         UpdateAmmoUI();
     }
 
@@ -117,6 +131,17 @@ public class PlayerController : MonoBehaviour
     {
         // Get horizontal input
         moveInput = Input.GetAxisRaw("Horizontal");
+
+        // Running
+        bool runInput = Input.GetKey(KeyCode.LeftShift);
+
+        if (runInput && currentStamina > 0 && moveInput != 0 && isGrounded)
+            isRunning = true;
+        else
+            isRunning = false;
+
+        currentAnimator.SetBool("IsRunning", isRunning);
+        HandleStamina();
 
         // Flip sprite
         if (currentState == PlayerState.Default)
@@ -231,6 +256,25 @@ public class PlayerController : MonoBehaviour
         defaultRenderer.gameObject.SetActive(true);
         gunBodyRenderer.gameObject.SetActive(false);
         armPivot.gameObject.SetActive(false);
+    }
+
+    // Stamina
+    void HandleStamina()
+    {
+        if (isRunning)
+        {
+            currentStamina -= staminaDrainRate * Time.deltaTime;
+            staminaCooldownTimer = staminaCooldown;
+        }
+        else
+        {
+            if (staminaCooldownTimer > 0)
+                staminaCooldownTimer -= Time.deltaTime;
+            else
+                currentStamina += staminaRegenRate * Time.deltaTime;
+        }
+
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
     }
 
     // Melee Attack
@@ -429,7 +473,8 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            rb.linearVelocity = new Vector2(moveInput * moveSpeed, rb.linearVelocity.y);
+            float speed = isRunning ? moveSpeed : moveSpeed * 0.5f;
+            rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
         }
 
         // Ground Check
