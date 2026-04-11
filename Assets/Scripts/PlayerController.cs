@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Ground Check")]
     public Transform groundCheck;
-    public float groundCheckRadius = 0.1f;
+    public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
 
     private Rigidbody2D rb;
@@ -96,8 +96,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip reloadSound;
 
     [Header("Melee")]
-    public int punchDamage = 10;
-    public float punchRange = 1.2f;
+    public int punchDamage = 4;
+    public float punchRange = 0.4f;
     [SerializeField] private Transform meleePoint;
     [SerializeField] private LayerMask enemyLayer;
 
@@ -116,7 +116,7 @@ public class PlayerController : MonoBehaviour
     private bool isRunning;
 
     private float staminaCooldownTimer;
-    public float staminaCooldown = 1.5f;
+    public float staminaCooldown = 0.6f;
 
     void Start()
     {
@@ -140,7 +140,7 @@ public class PlayerController : MonoBehaviour
         // Running
         bool runInput = Input.GetKey(KeyCode.LeftShift);
 
-        if (runInput && currentStamina > 0 && moveInput != 0 && isGrounded)
+        if (runInput && currentStamina > 0 && moveInput != 0)
             isRunning = true;
         else
             isRunning = false;
@@ -158,7 +158,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && !doubleJumpUsed)
+        if (Input.GetButtonDown("Jump") && !doubleJumpUsed && currentStamina >= 0.25f)
         {
             if (!isGrounded && !isClimbing)
             {
@@ -169,6 +169,9 @@ public class PlayerController : MonoBehaviour
             }
 
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            currentStamina -= 0.25f; // Small stamina cost for jumping
+            staminaCooldownTimer = staminaCooldown;
+            currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
 
         // Climbing
