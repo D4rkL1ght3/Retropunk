@@ -250,6 +250,9 @@ public class PlayerController : MonoBehaviour
                 reloadCoroutine = null;
                 isReloading = false;
                 Debug.Log("Reload cancelled.");
+
+                if (reloadSound != null)
+                    audioSource.Stop();
             }
         }
         else
