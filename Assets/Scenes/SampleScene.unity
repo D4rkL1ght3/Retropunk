@@ -773,6 +773,7 @@ MonoBehaviour:
     gunDiagonalSprite: {fileID: 21300000, guid: 34610e8e5c08de94ab006b3de756fd7b, type: 3}
     bulletPrefab: {fileID: 1477378336292868779, guid: e56e9b639a4eee84093c688af3c9b6e1, type: 3}
   firePoint: {fileID: 2096287947}
+  shootSound: {fileID: 8300000, guid: 583a4d847262e0b41a02ba666594d558, type: 3}
   ammoText: {fileID: 1743465456}
   audioSource: {fileID: 131630280}
   reloadSound: {fileID: 8300000, guid: 8d623c77b152446428442948c8fc35f7, type: 3}
@@ -849,7 +850,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -81,25 +81,26 @@ public class PlayerController : MonoBehaviour
 
     [Header("Shooting")]
     public Gun currentGun;
-    [SerializeField] Transform firePoint;
+    [SerializeField] private Transform firePoint;
+    [SerializeField] AudioClip shootSound;
+
     Vector2 currentAimDirection;
     float currentSnappedAngle;
 
     [Header("Reloading")]
     private bool isReloading = false;
-    public TextMeshProUGUI ammoText;
-    public AudioSource audioSource;
-    public AudioClip reloadSound;
+    [SerializeField] TextMeshProUGUI ammoText;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip reloadSound;
 
     [Header("Melee")]
-    [SerializeField] private int punchDamage = 10;
-    [SerializeField] private float punchRange = 1.2f;
+    public int punchDamage = 10;
+    public float punchRange = 1.2f;
     [SerializeField] private Transform meleePoint;
     [SerializeField] private LayerMask enemyLayer;
 
-    [SerializeField] private float punchCooldown = 0.5f;
+    public float punchCooldown = 0.5f;
     private float nextPunchTime = 0f;
-
     private bool isPunching = false;
 
     [Header("Stamina")]
@@ -215,6 +216,10 @@ public class PlayerController : MonoBehaviour
                 if (currentGun.CanShoot())
                 {
                     currentGun.Shoot(firePoint, currentAimDirection);
+
+                    if (shootSound != null)
+                        audioSource.PlayOneShot(shootSound);
+
                     UpdateAmmoUI();
                 }
                 else if (currentGun.NeedsReload())
