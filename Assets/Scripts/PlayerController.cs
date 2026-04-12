@@ -89,12 +89,18 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite armUp;
     [SerializeField] private Sprite armDown;
 
-    [Header("Two Handed Arm Positions")]
+    [Header("Two Arm Pivoting")]
     [SerializeField] private Vector2 posRightTwo;
     [SerializeField] private Vector2 posUpRightTwo;
     [SerializeField] private Vector2 posUpTwo;
     [SerializeField] private Vector2 posDownRightTwo;
     [SerializeField] private Vector2 posDownTwo;
+
+    [SerializeField] private Vector2 gunOffsetRightTwo;
+    [SerializeField] private Vector2 gunOffsetUpRightTwo;
+    [SerializeField] private Vector2 gunOffsetUpTwo;
+    [SerializeField] private Vector2 gunOffsetDownRightTwo;
+    [SerializeField] private Vector2 gunOffsetDownTwo;
 
     [Header("Two Handed Sprites")]
     [SerializeField] private Sprite twoArmRight;
@@ -456,14 +462,15 @@ public class PlayerController : MonoBehaviour
 
         if (currentState == PlayerState.GunTwoHanded)
         {
-            armRenderer.sortingOrder = 5; // Ensure arms are in front of the gun
+            armRenderer.sortingOrder = 6; // Ensure arms are in front of the gun
+            gunRenderer.sortingOrder = 5; // Ensure gun is behind the arms
 
             if (snappedAngle == 0 || snappedAngle == 180)
             {
                 armRenderer.sprite = twoArmRight;
                 gunRenderer.sprite = currentGun.baseSprite;
                 armPivot.localPosition = posRightTwo;
-                gunPivot.localPosition = gunOffsetRight;
+                gunPivot.localPosition = gunOffsetRightTwo;
                 gunPivot.localRotation = Quaternion.identity;
             }
             else if (snappedAngle == 45 || snappedAngle == 135)
@@ -471,7 +478,7 @@ public class PlayerController : MonoBehaviour
                 armRenderer.sprite = twoArmUpRight;
                 gunRenderer.sprite = currentGun.diagonalSprite;
                 armPivot.localPosition = posUpRightTwo;
-                gunPivot.localPosition = gunOffsetUpRight;
+                gunPivot.localPosition = gunOffsetUpRightTwo;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
             }
             else if (snappedAngle == 90)
@@ -479,7 +486,7 @@ public class PlayerController : MonoBehaviour
                 armRenderer.sprite = twoArmUp;
                 gunRenderer.sprite = currentGun.baseSprite;
                 armPivot.localPosition = posUpTwo;
-                gunPivot.localPosition = gunOffsetUp;
+                gunPivot.localPosition = gunOffsetUpTwo;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
             }
             else if (snappedAngle == -45 || snappedAngle == -135)
@@ -487,7 +494,7 @@ public class PlayerController : MonoBehaviour
                 armRenderer.sprite = twoArmDownRight;
                 gunRenderer.sprite = currentGun.diagonalSprite;
                 armPivot.localPosition = posDownRightTwo;
-                gunPivot.localPosition = gunOffsetDownRight;
+                gunPivot.localPosition = gunOffsetDownRightTwo;
                 gunPivot.localRotation = Quaternion.identity;
             }
             else if (snappedAngle == -90)
@@ -495,13 +502,14 @@ public class PlayerController : MonoBehaviour
                 armRenderer.sprite = twoArmDown;
                 gunRenderer.sprite = currentGun.baseSprite;
                 armPivot.localPosition = posDownTwo;
-                gunPivot.localPosition = gunOffsetDown;
+                gunPivot.localPosition = gunOffsetDownTwo;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, -90);
             }
             return; // Skip one-handed logic
         }
 
-        armRenderer.sortingOrder = 3; // Ensure arm is behind the gun
+        armRenderer.sortingOrder = 3;
+        gunRenderer.sortingOrder = 2;
 
         if (snappedAngle == 0 || snappedAngle == 180)
         {

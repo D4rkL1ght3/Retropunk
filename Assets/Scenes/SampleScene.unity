@@ -765,6 +765,11 @@ MonoBehaviour:
   posUpTwo: {x: -0.16, y: 0}
   posDownRightTwo: {x: -0.16, y: 0}
   posDownTwo: {x: -0.16, y: 0}
+  gunOffsetRightTwo: {x: -0.15, y: -0.08}
+  gunOffsetUpRightTwo: {x: 0.6, y: -0.1}
+  gunOffsetUpTwo: {x: 0.45, y: 0.05}
+  gunOffsetDownRightTwo: {x: -0.25, y: -0.3}
+  gunOffsetDownTwo: {x: -0.15, y: 0.25}
   twoArmRight: {fileID: 21300000, guid: 01629a65d60ab414cacfdcee44367366, type: 3}
   twoArmUpRight: {fileID: 21300000, guid: c92f0fb4c6d68c04182f9e9851f0f8e6, type: 3}
   twoArmDownRight: {fileID: 21300000, guid: ff5ea2b05981ba741ab4b369119340c9, type: 3}
@@ -792,8 +797,8 @@ MonoBehaviour:
     maxAmmo: 30
     currentAmmo: 0
     reloadTime: 3
-    baseSprite: {fileID: -4464237010107836687, guid: 258bd01b070178c488fcb322f57afdd5, type: 3}
-    diagonalSprite: {fileID: -3170110953543520844, guid: aadba96e67a43b049ad71d68464e0bcf, type: 3}
+    baseSprite: {fileID: 5155163167032735316, guid: 1bbca9395468255419b5dcb385bd4397, type: 3}
+    diagonalSprite: {fileID: 8420994399391746316, guid: 19e2bdd10d9ff0044a2f51cb69af4d98, type: 3}
     bulletPrefab: {fileID: 7199598470211620651, guid: 9be67991dd1bf1242a6ebeb9194d4a4f, type: 3}
     gunType: 1
   firePoint: {fileID: 2096287947}
@@ -4529,7 +4534,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -4983,7 +4988,6 @@ GameObject:
   - component: {fileID: 695336632}
   - component: {fileID: 695336631}
   - component: {fileID: 695336630}
-  - component: {fileID: 695336633}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -5080,18 +5084,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &695336633
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 695336629}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
 --- !u!1 &736320851
 GameObject:
   m_ObjectHideFlags: 0
@@ -7232,11 +7224,11 @@ Transform:
   m_GameObject: {fileID: 1301490869}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 21.5, y: 3.5, z: 2}
+  m_LocalPosition: {x: 21.5, y: 5, z: 2}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1975680675}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &1301490871
 SpriteRenderer:
@@ -10138,7 +10130,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 44177779}
-  - {fileID: 1301490870}
   - {fileID: 1544743457}
   m_Father: {fileID: 1033781875}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -12644,3 +12635,4 @@ SceneRoots:
   - {fileID: 319894113}
   - {fileID: 1167793904}
   - {fileID: 363655676}
+  - {fileID: 1301490870}
