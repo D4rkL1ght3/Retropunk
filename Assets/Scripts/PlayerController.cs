@@ -89,6 +89,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite armUp;
     [SerializeField] private Sprite armDown;
 
+    [Header("Two Handed Arm Positions")]
+    [SerializeField] private Vector2 posRightTwo;
+    [SerializeField] private Vector2 posUpRightTwo;
+    [SerializeField] private Vector2 posUpTwo;
+    [SerializeField] private Vector2 posDownRightTwo;
+    [SerializeField] private Vector2 posDownTwo;
+
     [Header("Two Handed Sprites")]
     [SerializeField] private Sprite twoArmRight;
     [SerializeField] private Sprite twoArmUpRight;
@@ -449,11 +456,13 @@ public class PlayerController : MonoBehaviour
 
         if (currentState == PlayerState.GunTwoHanded)
         {
+            armRenderer.sortingOrder = 5; // Ensure arms are in front of the gun
+
             if (snappedAngle == 0 || snappedAngle == 180)
             {
                 armRenderer.sprite = twoArmRight;
                 gunRenderer.sprite = currentGun.baseSprite;
-                armPivot.localPosition = posRight;
+                armPivot.localPosition = posRightTwo;
                 gunPivot.localPosition = gunOffsetRight;
                 gunPivot.localRotation = Quaternion.identity;
             }
@@ -461,7 +470,7 @@ public class PlayerController : MonoBehaviour
             {
                 armRenderer.sprite = twoArmUpRight;
                 gunRenderer.sprite = currentGun.diagonalSprite;
-                armPivot.localPosition = posUpRight;
+                armPivot.localPosition = posUpRightTwo;
                 gunPivot.localPosition = gunOffsetUpRight;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
             }
@@ -469,7 +478,7 @@ public class PlayerController : MonoBehaviour
             {
                 armRenderer.sprite = twoArmUp;
                 gunRenderer.sprite = currentGun.baseSprite;
-                armPivot.localPosition = posUp;
+                armPivot.localPosition = posUpTwo;
                 gunPivot.localPosition = gunOffsetUp;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, 90);
             }
@@ -477,7 +486,7 @@ public class PlayerController : MonoBehaviour
             {
                 armRenderer.sprite = twoArmDownRight;
                 gunRenderer.sprite = currentGun.diagonalSprite;
-                armPivot.localPosition = posDownRight;
+                armPivot.localPosition = posDownRightTwo;
                 gunPivot.localPosition = gunOffsetDownRight;
                 gunPivot.localRotation = Quaternion.identity;
             }
@@ -485,12 +494,14 @@ public class PlayerController : MonoBehaviour
             {
                 armRenderer.sprite = twoArmDown;
                 gunRenderer.sprite = currentGun.baseSprite;
-                armPivot.localPosition = posDown;
+                armPivot.localPosition = posDownTwo;
                 gunPivot.localPosition = gunOffsetDown;
                 gunPivot.localRotation = Quaternion.Euler(0, 0, -90);
             }
             return; // Skip one-handed logic
         }
+
+        armRenderer.sortingOrder = 3; // Ensure arm is behind the gun
 
         if (snappedAngle == 0 || snappedAngle == 180)
         {

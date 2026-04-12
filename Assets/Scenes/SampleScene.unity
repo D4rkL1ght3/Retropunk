@@ -760,11 +760,16 @@ MonoBehaviour:
   armDownRight: {fileID: 6937817954938267909, guid: 8c2995b8209a6bd4f83d75cba523d747, type: 3}
   armUp: {fileID: 4130640169021434097, guid: a39eb3c4864d22f4a9912c8cca6afae5, type: 3}
   armDown: {fileID: -855298285791758126, guid: 06ff5c470b4ca5244acb78854b330ebc, type: 3}
-  twoArmRight: {fileID: 8288426215254106694, guid: 01629a65d60ab414cacfdcee44367366, type: 3}
-  twoArmUpRight: {fileID: 4113829005332862926, guid: c92f0fb4c6d68c04182f9e9851f0f8e6, type: 3}
-  twoArmDownRight: {fileID: 7028616704906629411, guid: ff5ea2b05981ba741ab4b369119340c9, type: 3}
-  twoArmUp: {fileID: -5099292496197868168, guid: 9cd53baeed3174f4aad4b62608fd3711, type: 3}
-  twoArmDown: {fileID: 3465286685962602723, guid: b502186c88ddaa346befcd26ca5947be, type: 3}
+  posRightTwo: {x: -0.16, y: 0}
+  posUpRightTwo: {x: -0.16, y: 0}
+  posUpTwo: {x: -0.16, y: 0}
+  posDownRightTwo: {x: -0.16, y: 0}
+  posDownTwo: {x: -0.16, y: 0}
+  twoArmRight: {fileID: 21300000, guid: 01629a65d60ab414cacfdcee44367366, type: 3}
+  twoArmUpRight: {fileID: 21300000, guid: c92f0fb4c6d68c04182f9e9851f0f8e6, type: 3}
+  twoArmDownRight: {fileID: 21300000, guid: ff5ea2b05981ba741ab4b369119340c9, type: 3}
+  twoArmUp: {fileID: 21300000, guid: 9cd53baeed3174f4aad4b62608fd3711, type: 3}
+  twoArmDown: {fileID: 21300000, guid: b502186c88ddaa346befcd26ca5947be, type: 3}
   primaryWeapon:
     gunName: Pistol
     fireRate: 0.5
@@ -787,9 +792,9 @@ MonoBehaviour:
     maxAmmo: 30
     currentAmmo: 0
     reloadTime: 3
-    baseSprite: {fileID: 0}
-    diagonalSprite: {fileID: 0}
-    bulletPrefab: {fileID: 1477378336292868779, guid: e56e9b639a4eee84093c688af3c9b6e1, type: 3}
+    baseSprite: {fileID: -4464237010107836687, guid: 258bd01b070178c488fcb322f57afdd5, type: 3}
+    diagonalSprite: {fileID: -3170110953543520844, guid: aadba96e67a43b049ad71d68464e0bcf, type: 3}
+    bulletPrefab: {fileID: 7199598470211620651, guid: 9be67991dd1bf1242a6ebeb9194d4a4f, type: 3}
     gunType: 1
   firePoint: {fileID: 2096287947}
   ammoText: {fileID: 1743465456}
@@ -4414,7 +4419,7 @@ SpriteRenderer:
   m_Size: {x: 0.5, y: 0.28125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &519420028
 GameObject:
@@ -4978,6 +4983,7 @@ GameObject:
   - component: {fileID: 695336632}
   - component: {fileID: 695336631}
   - component: {fileID: 695336630}
+  - component: {fileID: 695336633}
   m_Layer: 0
   m_Name: CinemachineCamera
   m_TagString: Untagged
@@ -5074,6 +5080,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &695336633
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 695336629}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a8a05de0ac134f4f9d01bef6b9da077, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachinePixelPerfect
 --- !u!1 &736320851
 GameObject:
   m_ObjectHideFlags: 0
