@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     [SerializeField] Animator defaultAnimator;
     [SerializeField] Animator gunAnimator;
+    [SerializeField] Animator twoHandedAnimator;
     private Animator currentAnimator
     {
         get
@@ -331,6 +332,7 @@ public class PlayerController : MonoBehaviour
 
     void EnterDefaultMode()
     {
+        currentState = PlayerState.Default;
         SetModel(defaultModel);
         armPivot.gameObject.SetActive(false);
     }

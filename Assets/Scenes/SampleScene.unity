@@ -737,6 +737,7 @@ MonoBehaviour:
     m_Bits: 8
   defaultAnimator: {fileID: 884761051}
   gunAnimator: {fileID: 1038753068}
+  twoHandedAnimator: {fileID: 1358801273}
   defaultModel: {fileID: 884761049}
   oneHandedModel: {fileID: 1038753066}
   twoHandedModel: {fileID: 1358801270}
@@ -788,7 +789,7 @@ MonoBehaviour:
     reloadTime: 3
     baseSprite: {fileID: 0}
     diagonalSprite: {fileID: 0}
-    bulletPrefab: {fileID: 0}
+    bulletPrefab: {fileID: 1477378336292868779, guid: e56e9b639a4eee84093c688af3c9b6e1, type: 3}
     gunType: 1
   firePoint: {fileID: 2096287947}
   ammoText: {fileID: 1743465456}
@@ -4413,7 +4414,7 @@ SpriteRenderer:
   m_Size: {x: 0.5, y: 0.28125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &519420028
 GameObject:
