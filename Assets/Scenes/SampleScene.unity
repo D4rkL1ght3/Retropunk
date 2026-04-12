@@ -657,7 +657,6 @@ GameObject:
   - component: {fileID: 131630271}
   - component: {fileID: 131630276}
   - component: {fileID: 131630277}
-  - component: {fileID: 131630279}
   - component: {fileID: 131630280}
   - component: {fileID: 131630281}
   m_Layer: 6
@@ -760,6 +759,11 @@ MonoBehaviour:
   armDownRight: {fileID: 6937817954938267909, guid: 8c2995b8209a6bd4f83d75cba523d747, type: 3}
   armUp: {fileID: 4130640169021434097, guid: a39eb3c4864d22f4a9912c8cca6afae5, type: 3}
   armDown: {fileID: -855298285791758126, guid: 06ff5c470b4ca5244acb78854b330ebc, type: 3}
+  twoArmRight: {fileID: 8288426215254106694, guid: 01629a65d60ab414cacfdcee44367366, type: 3}
+  twoArmUpRight: {fileID: 4113829005332862926, guid: c92f0fb4c6d68c04182f9e9851f0f8e6, type: 3}
+  twoArmDownRight: {fileID: 7028616704906629411, guid: ff5ea2b05981ba741ab4b369119340c9, type: 3}
+  twoArmUp: {fileID: -5099292496197868168, guid: 9cd53baeed3174f4aad4b62608fd3711, type: 3}
+  twoArmDown: {fileID: 3465286685962602723, guid: b502186c88ddaa346befcd26ca5947be, type: 3}
   primaryWeapon:
     gunName: Pistol
     fireRate: 0.5
@@ -774,18 +778,18 @@ MonoBehaviour:
     bulletPrefab: {fileID: 1477378336292868779, guid: e56e9b639a4eee84093c688af3c9b6e1, type: 3}
     gunType: 0
   secondaryWeapon:
-    gunName: 
+    gunName: Assault Rifle
     fireRate: 0.2
-    damage: 5
-    bulletSpeed: 20
+    damage: 4
+    bulletSpeed: 25
     bulletLifetime: 1
-    maxAmmo: 10
+    maxAmmo: 30
     currentAmmo: 0
-    reloadTime: 1.5
+    reloadTime: 3
     baseSprite: {fileID: 0}
     diagonalSprite: {fileID: 0}
     bulletPrefab: {fileID: 0}
-    gunType: 0
+    gunType: 1
   firePoint: {fileID: 2096287947}
   ammoText: {fileID: 1743465456}
   audioSource: {fileID: 131630280}
@@ -838,18 +842,6 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0.015560627}
   m_Size: {x: 0.65625, y: 1.0626287}
   m_Direction: 0
---- !u!114 &131630279
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 131630270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 903e2971b2b2b0143abefe6687b1c0c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDeath
 --- !u!82 &131630280
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7525,7 +7517,7 @@ Animator:
   m_GameObject: {fileID: 1358801270}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c2b15515dd68a5544abdfe675e40164a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -7586,15 +7578,15 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -8157529274441160004, guid: e2a21fc888824164695621508b63fef4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.65625, y: 1.09375}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
 --- !u!1 &1371309848
 GameObject:
