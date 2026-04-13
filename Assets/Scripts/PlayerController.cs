@@ -331,9 +331,10 @@ public class PlayerController : MonoBehaviour
             ammoText.gameObject.SetActive(true);
         }
 
-        if (!audioSource.isPlaying)
+        if (!isReloading && audioSource.loop == true)
         {
-            audioSource.pitch = 1f; // Reset audio pitch to normal
+            audioSource.loop = false;
+            audioSource.Stop();
         }
     }
 
@@ -494,8 +495,9 @@ public class PlayerController : MonoBehaviour
 
         if (reloadSound != null)
         {
-            audioSource.PlayOneShot(reloadSound);
-            audioSource.pitch = 1f / (currentGun.reloadTime); // Adjust pitch based on reload time
+            audioSource.clip = reloadSound;
+            audioSource.Play();
+            audioSource.loop = true;
         }
 
         yield return new WaitForSeconds(currentGun.reloadTime);
