@@ -127,14 +127,16 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioClip reloadSound;
 
     [Header("Melee")]
-    public int punchDamage = 4;
-    public float punchRange = 0.4f;
+    [SerializeField] MeleeWeapon meleeWeapon;
     [SerializeField] private Transform meleePoint;
     [SerializeField] private LayerMask enemyLayer;
 
+    public int punchDamage = 4;
+    public float punchRange = 0.4f;
     public float punchCooldown = 0.5f;
-    private float nextPunchTime = 0f;
-    private bool isPunching = false;
+
+    private float nextAttackTime = 0f;
+    private bool isAttacking = false;
 
     [Header("Stamina")]
     public float maxStamina = 5f;
@@ -183,7 +185,7 @@ public class PlayerController : MonoBehaviour
         HandleStamina();
 
         // Flip sprite
-        if (currentState == PlayerState.Default)
+        if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
         {
             if (moveInput > 0)
                 transform.localScale = new Vector3(1, 1, 1);
@@ -229,10 +231,8 @@ public class PlayerController : MonoBehaviour
             if (currentGun == primaryWeapon)
             {
                 EnterDefaultMode();
-                currentGun = null;
                 return;
             }
-
             EquipGun(primaryWeapon);
         }
 
@@ -241,40 +241,49 @@ public class PlayerController : MonoBehaviour
             if (currentGun == secondaryWeapon)
             {
                 EnterDefaultMode();
-                currentGun = null;
                 return;
             }
-
             EquipGun(secondaryWeapon);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            if (currentState == PlayerState.Melee)
+            {
+                EnterDefaultMode();
+                return;
+            }
+            EnterMeleeMode();
         }
 
         if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             EnterDefaultMode();
-            currentGun = null;
         }
 
-        // Animator
+        // Animations
         currentAnimator.SetFloat("Speed", Mathf.Abs(moveInput));
         defaultAnimator.SetFloat("ClimbSpeed", verticalInput);
         currentAnimator.SetBool("IsJumping", !isGrounded && !isClimbing);
         defaultAnimator.SetBool("IsClimbing", isClimbing);
 
-        if (currentState == PlayerState.Default)
+        if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
         {
-            if (Input.GetMouseButtonDown(0) && Time.time >= nextPunchTime && !isPunching)
+            if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttacking)
             {
                 defaultAnimator.SetTrigger("Punch");
                 defaultAnimator.SetBool("IsAttacking", true);
-                nextPunchTime = Time.time + punchCooldown;
+                nextAttackTime = Time.time + GetMeleeCooldown();
             }
         }
 
+        // Aiming
         if (currentState == PlayerState.GunOneHanded || currentState == PlayerState.GunTwoHanded)
         {
             AimTowardMouse();
         }
 
+        // Shooting
         if ((currentState == PlayerState.GunOneHanded || currentState == PlayerState.GunTwoHanded)
             && currentGun != null && !isReloading)
         {
@@ -302,7 +311,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (currentState == PlayerState.Default)
+        if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
         {
             ammoText.gameObject.SetActive(false);
 
@@ -320,6 +329,11 @@ public class PlayerController : MonoBehaviour
         else
         {
             ammoText.gameObject.SetActive(true);
+        }
+
+        if (!audioSource.isPlaying)
+        {
+            audioSource.pitch = 1f; // Reset audio pitch to normal
         }
     }
 
@@ -362,6 +376,15 @@ public class PlayerController : MonoBehaviour
         currentState = PlayerState.Default;
         SetModel(defaultModel);
         armPivot.gameObject.SetActive(false);
+        currentGun = null;
+    }
+
+    void EnterMeleeMode()
+    {
+        currentState = PlayerState.Melee;
+        SetModel(defaultModel); // or future melee model
+        armPivot.gameObject.SetActive(false);
+        currentGun = null;
     }
 
     // Stamina
@@ -384,18 +407,18 @@ public class PlayerController : MonoBehaviour
     }
 
     // Melee Attack
-    void Punch()
+    void Attack()
     {
-        isPunching = true;
+        isAttacking = true;
 
         defaultAnimator.SetTrigger("Punch");
     }
 
-    public void DealPunchDamage()
+    public void DealMeleeDamage()
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(
             meleePoint.position,
-            punchRange,
+            GetMeleeRange(),
             enemyLayer
         );
 
@@ -405,12 +428,36 @@ public class PlayerController : MonoBehaviour
 
             if (health != null)
             {
-                health.TakeDamage(punchDamage);
+                health.TakeDamage(GetMeleeDamage());
             }
         }
 
-        isPunching = false;
+        isAttacking = false;
         defaultAnimator.SetBool("IsAttacking", false);
+    }
+
+    int GetMeleeDamage()
+    {
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+            return meleeWeapon.damage;
+
+        return punchDamage;
+    }
+
+    float GetMeleeRange()
+    {
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+            return meleeWeapon.range;
+
+        return punchRange;
+    }
+
+    float GetMeleeCooldown()
+    {
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+            return meleeWeapon.cooldown;
+
+        return punchCooldown;
     }
 
     // Aim Rotation
@@ -446,7 +493,10 @@ public class PlayerController : MonoBehaviour
         Debug.Log("Reloading...");
 
         if (reloadSound != null)
+        {
             audioSource.PlayOneShot(reloadSound);
+            audioSource.pitch = 1f / (currentGun.reloadTime); // Adjust pitch based on reload time
+        }
 
         yield return new WaitForSeconds(currentGun.reloadTime);
 

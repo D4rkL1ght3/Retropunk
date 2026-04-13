@@ -805,12 +805,17 @@ MonoBehaviour:
   ammoText: {fileID: 1743465456}
   audioSource: {fileID: 131630280}
   reloadSound: {fileID: 8300000, guid: 8d623c77b152446428442948c8fc35f7, type: 3}
-  punchDamage: 4
-  punchRange: 0.4
+  meleeWeapon:
+    weaponName: Knife
+    damage: 10
+    range: 0.5
+    cooldown: 0.6
   meleePoint: {fileID: 1572003021}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 128
+  punchDamage: 4
+  punchRange: 0.4
   punchCooldown: 0.5
   maxStamina: 5
   staminaDrainRate: 1
