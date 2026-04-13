@@ -37,6 +37,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator defaultAnimator;
     [SerializeField] Animator gunAnimator;
     [SerializeField] Animator twoHandedAnimator;
+    [SerializeField] Animator meleeAnimator;
+
     private Animator currentAnimator
     {
         get
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviour
         if (defaultModel.activeSelf) return defaultModel;
         if (oneHandedModel.activeSelf) return oneHandedModel;
         if (twoHandedModel.activeSelf) return twoHandedModel;
+        if (meleeModel.activeSelf) return meleeModel;
 
         return defaultModel;
     }
@@ -61,8 +64,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private GameObject defaultModel;
     [SerializeField] private GameObject oneHandedModel;
     [SerializeField] private GameObject twoHandedModel;
+    [SerializeField] private GameObject meleeModel;
 
-    [Header("Arm & Gun Renderers")]
+    [Header("Sprite Renderers")]
     [SerializeField] SpriteRenderer armRenderer;
     [SerializeField] SpriteRenderer gunRenderer;
 
@@ -126,18 +130,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip reloadSound;
 
-    [Header("Melee")]
-    [SerializeField] MeleeWeapon meleeWeapon;
-    [SerializeField] private Transform meleePoint;
-    [SerializeField] private LayerMask enemyLayer;
-
-    public int punchDamage = 4;
-    public float punchRange = 0.4f;
-    public float punchCooldown = 0.5f;
-
-    private float nextAttackTime = 0f;
-    private bool isAttacking = false;
-
     [Header("Stamina")]
     public float maxStamina = 5f;
     private float currentStamina;
@@ -150,6 +142,18 @@ public class PlayerController : MonoBehaviour
 
     private float staminaCooldownTimer;
     public float staminaCooldown = 0.6f;
+
+    [Header("Melee")]
+    [SerializeField] MeleeWeapon meleeWeapon;
+    [SerializeField] private Transform meleePoint;
+    [SerializeField] private LayerMask enemyLayer;
+
+    public int punchDamage = 4;
+    public float punchRange = 0.4f;
+    public float punchCooldown = 0.5f;
+
+    private float nextAttackTime = 0f;
+    private bool isAttacking = false;
 
     void Start()
     {
@@ -196,6 +200,9 @@ public class PlayerController : MonoBehaviour
         // Jump
         if (Input.GetButtonDown("Jump") && !doubleJumpUsed && currentStamina >= 0.25f)
         {
+            if (currentState != PlayerState.Default)
+                doubleJumpUsed = true; // Disable double jump
+
             if (!isGrounded && !isClimbing)
             {
                 // Double Jump
