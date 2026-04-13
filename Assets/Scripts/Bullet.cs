@@ -29,12 +29,11 @@ public class Bullet : MonoBehaviour
 
         Health health = collision.GetComponent<Health>();
 
-        if (health != null)
+        if (health != null && health.enabled == true)
         {
             health.TakeDamage(damage);
+            Destroy(gameObject);
         }
-
-        Destroy(gameObject);
     }
 
     void Update()

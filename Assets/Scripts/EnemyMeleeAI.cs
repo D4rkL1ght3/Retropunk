@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class EnemyMeleeAI : MonoBehaviour, IEntity
@@ -19,6 +20,7 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
     private bool aggroed = false;
     private Transform currentTarget;
     private Rigidbody2D rb;
+    private Health health;
 
     enum EnemyState
     {
@@ -47,6 +49,7 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
+        health = GetComponent<Health>();
 
         if (player == null)
         {
@@ -257,6 +260,7 @@ public class EnemyMeleeAI : MonoBehaviour, IEntity
     public void Disable()
     {
         enabled = false;
+        health.enabled = false;
     }
     public void OnDeath()
     {

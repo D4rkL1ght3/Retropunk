@@ -223,18 +223,32 @@ public class PlayerController : MonoBehaviour
         if (isClimbing && (Mathf.Abs(moveInput) > 0 || Input.GetButtonDown("Jump")))
             StopClimbing();
 
-        // Toggle gun state
+        // Toggle states
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
+            if (currentGun == primaryWeapon)
+            {
+                EnterDefaultMode();
+                currentGun = null;
+                return;
+            }
+
             EquipGun(primaryWeapon);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
+            if (currentGun == secondaryWeapon)
+            {
+                EnterDefaultMode();
+                currentGun = null;
+                return;
+            }
+
             EquipGun(secondaryWeapon);
         }
 
-        if (Input.GetKeyDown(KeyCode.Alpha3))
+        if (Input.GetKeyDown(KeyCode.BackQuote))
         {
             EnterDefaultMode();
             currentGun = null;
