@@ -753,7 +753,7 @@ MonoBehaviour:
   posUp: {x: -0.2, y: 0.15}
   posDownRight: {x: -0.2, y: 0}
   posDown: {x: -0.2, y: 0}
-  gunOffsetRight: {x: 0.75, y: 0.2}
+  gunOffsetRight: {x: 0.7, y: 0.2}
   gunOffsetUpRight: {x: 0.55, y: 0.42}
   gunOffsetUp: {x: 0.32, y: 0.45}
   gunOffsetDownRight: {x: 0.65, y: -0.1}
@@ -769,7 +769,7 @@ MonoBehaviour:
   posDownRightTwo: {x: -0.16, y: 0}
   posDownTwo: {x: -0.16, y: 0}
   gunOffsetRightTwo: {x: 0.4, y: 0.1}
-  gunOffsetUpRightTwo: {x: 0.4, y: 0.5}
+  gunOffsetUpRightTwo: {x: 0.4, y: 0.45}
   gunOffsetUpTwo: {x: 0.25, y: 0.6}
   gunOffsetDownRightTwo: {x: 0.35, y: -0.1}
   gunOffsetDownTwo: {x: 0.05, y: -0.2}
