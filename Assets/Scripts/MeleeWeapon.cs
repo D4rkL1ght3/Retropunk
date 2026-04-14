@@ -11,5 +11,5 @@ public class MeleeWeapon
     public float cooldown = 0.6f;
 
     [Header("Animations")]
-    public Animator animator;
+    public RuntimeAnimatorController animator;
 }

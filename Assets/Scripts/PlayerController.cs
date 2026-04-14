@@ -130,6 +130,19 @@ public class PlayerController : MonoBehaviour
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip reloadSound;
 
+    [Header("Melee")]
+    [SerializeField] MeleeWeapon meleeWeapon;
+    [SerializeField] private Animator weaponAnimator;
+    [SerializeField] private Transform meleePoint;
+    [SerializeField] private LayerMask enemyLayer;
+
+    public int punchDamage = 4;
+    public float punchRange = 0.4f;
+    public float punchCooldown = 0.5f;
+
+    private float nextAttackTime = 0f;
+    private bool isAttacking = false;
+
     [Header("Stamina")]
     public float maxStamina = 5f;
     private float currentStamina;
@@ -142,18 +155,6 @@ public class PlayerController : MonoBehaviour
 
     private float staminaCooldownTimer;
     public float staminaCooldown = 0.6f;
-
-    [Header("Melee")]
-    [SerializeField] MeleeWeapon meleeWeapon;
-    [SerializeField] private Transform meleePoint;
-    [SerializeField] private LayerMask enemyLayer;
-
-    public int punchDamage = 4;
-    public float punchRange = 0.4f;
-    public float punchCooldown = 0.5f;
-
-    private float nextAttackTime = 0f;
-    private bool isAttacking = false;
 
     void Start()
     {
@@ -185,7 +186,6 @@ public class PlayerController : MonoBehaviour
         else
             isRunning = false;
 
-        currentAnimator.SetBool("IsRunning", isRunning);
         HandleStamina();
 
         // Flip sprite
@@ -198,7 +198,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && !doubleJumpUsed && currentStamina >= 0.25f)
+        if (Input.GetButtonDown("Jump") && !doubleJumpUsed && currentStamina >= 0.25f && currentState != PlayerState.Melee)
         {
             if (currentState != PlayerState.Default)
                 doubleJumpUsed = true; // Disable double jump
@@ -272,16 +272,27 @@ public class PlayerController : MonoBehaviour
         currentAnimator.SetFloat("Speed", Mathf.Abs(moveInput));
         defaultAnimator.SetFloat("ClimbSpeed", verticalInput);
         currentAnimator.SetBool("IsJumping", !isGrounded && !isClimbing);
+        currentAnimator.SetBool("IsRunning", isRunning);
         defaultAnimator.SetBool("IsClimbing", isClimbing);
+
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+        {
+            weaponAnimator.SetFloat("Speed", Mathf.Abs(moveInput));
+            weaponAnimator.SetBool("IsRunning", isRunning);
+        }
 
         if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
         {
             if (Input.GetMouseButtonDown(0) && Time.time >= nextAttackTime && !isAttacking)
             {
-                defaultAnimator.SetTrigger("Punch");
-                defaultAnimator.SetBool("IsAttacking", true);
+                Attack();
                 nextAttackTime = Time.time + GetMeleeCooldown();
             }
+        }
+        else
+        {
+            if (isAttacking)
+                isAttacking = false;
         }
 
         // Aiming
@@ -350,6 +361,7 @@ public class PlayerController : MonoBehaviour
         defaultModel.SetActive(false);
         oneHandedModel.SetActive(false);
         twoHandedModel.SetActive(false);
+        meleeModel.SetActive(false);
 
         activeModel.SetActive(true);
     }
@@ -390,9 +402,15 @@ public class PlayerController : MonoBehaviour
     void EnterMeleeMode()
     {
         currentState = PlayerState.Melee;
-        SetModel(defaultModel); // or future melee model
+        SetModel(meleeModel);
         armPivot.gameObject.SetActive(false);
         currentGun = null;
+
+        if (meleeWeapon != null)
+        {
+            weaponAnimator.runtimeAnimatorController = meleeWeapon.animator;
+            weaponAnimator.gameObject.SetActive(true);
+        }
     }
 
     // Stamina
@@ -418,8 +436,14 @@ public class PlayerController : MonoBehaviour
     void Attack()
     {
         isAttacking = true;
+        currentAnimator.SetTrigger("Attack");
+        currentAnimator.SetBool("IsAttacking", true);
 
-        defaultAnimator.SetTrigger("Punch");
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+        {
+            weaponAnimator.SetTrigger("Attack");
+            weaponAnimator.SetBool("IsAttacking", true);
+        }
     }
 
     public void DealMeleeDamage()
@@ -441,7 +465,12 @@ public class PlayerController : MonoBehaviour
         }
 
         isAttacking = false;
-        defaultAnimator.SetBool("IsAttacking", false);
+        currentAnimator.SetBool("IsAttacking", false);
+
+        if (currentState == PlayerState.Melee && meleeWeapon != null)
+        {
+            weaponAnimator.SetBool("IsAttacking", false);
+        }
     }
 
     int GetMeleeDamage()
@@ -690,7 +719,15 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
-            float speed = isRunning ? moveSpeed : moveSpeed * 0.5f;
+            float speed;
+            if (currentState == PlayerState.Melee)
+            {
+                speed = isRunning ? moveSpeed * 1.2f : moveSpeed;
+            }
+            else
+            {
+                speed = isRunning ? moveSpeed : moveSpeed * 0.5f;
+            }
             rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
         }
 

@@ -9,7 +9,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Punch
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   - m_ConditionMode: 4
     m_ConditionEvent: Speed
@@ -237,7 +237,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Punch
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: IsRunning
@@ -681,7 +681,7 @@ AnimatorController:
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: Punch
+  - m_Name: Attack
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -882,9 +882,9 @@ AnimatorStateMachine:
   - {fileID: 3268334485198109552}
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: -5757483787421704721}
-    second: []
   - first: {fileID: 3951643049856617435}
+    second: []
+  - first: {fileID: -5757483787421704721}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 50, y: 170, z: 0}
@@ -1004,7 +1004,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: Punch
+    m_ConditionEvent: Attack
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: IsRunning

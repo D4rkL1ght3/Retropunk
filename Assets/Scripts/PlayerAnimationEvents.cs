@@ -5,7 +5,7 @@ public class PlayerAnimationEvents : MonoBehaviour
 {
     public void Attack()
     {
-        transform.root.SendMessage("DealPunchDamage", SendMessageOptions.DontRequireReceiver);
+        transform.root.SendMessage("DealMeleeDamage", SendMessageOptions.DontRequireReceiver);
     }
 
     public void OnDeath()
