@@ -186,6 +186,11 @@ public class PlayerController : MonoBehaviour
         else
             isRunning = false;
 
+        if (currentState == PlayerState.Melee && moveInput != 0)
+        {
+            staminaCooldownTimer = staminaCooldown;
+        }
+
         HandleStamina();
 
         // Flip sprite
@@ -722,7 +727,7 @@ public class PlayerController : MonoBehaviour
             float speed;
             if (currentState == PlayerState.Melee)
             {
-                speed = isRunning ? moveSpeed * 1.2f : moveSpeed;
+                speed = isRunning ? moveSpeed * 1.2f : moveSpeed * 1f;
             }
             else
             {
