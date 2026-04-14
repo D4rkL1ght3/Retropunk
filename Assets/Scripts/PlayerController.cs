@@ -754,6 +754,6 @@ public class PlayerController : MonoBehaviour
         if (meleePoint == null) return;
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(meleePoint.position, punchRange);
+        Gizmos.DrawWireSphere(meleePoint.position, GetMeleeRange());
     }
 }

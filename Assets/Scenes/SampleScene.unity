@@ -748,31 +748,31 @@ MonoBehaviour:
   gunRenderer: {fileID: 8657415509520739244}
   armPivot: {fileID: 1339774296}
   gunPivot: {fileID: 1282304212}
-  posRight: {x: 0, y: 0.03}
-  posUpRight: {x: -0.05, y: 0.12}
-  posUp: {x: -0.15, y: 0.18}
-  posDownRight: {x: -0.05, y: -0.1}
-  posDown: {x: -0.15, y: -0.12}
-  gunOffsetRight: {x: 0, y: 0}
-  gunOffsetUpRight: {x: 0.7, y: -0.25}
-  gunOffsetUp: {x: 0.5, y: -0.2}
-  gunOffsetDownRight: {x: -0.05, y: -0.2}
-  gunOffsetDown: {x: 0.25, y: 0.5}
-  armRight: {fileID: -6470460504253458178, guid: 77b3bf63cfb52364b815adcc306e34b1, type: 3}
-  armUpRight: {fileID: -4178046375966092550, guid: e8ca9d26cfda6fd41aa607fbe6892b85, type: 3}
-  armDownRight: {fileID: 6937817954938267909, guid: 8c2995b8209a6bd4f83d75cba523d747, type: 3}
-  armUp: {fileID: 4130640169021434097, guid: a39eb3c4864d22f4a9912c8cca6afae5, type: 3}
-  armDown: {fileID: -855298285791758126, guid: 06ff5c470b4ca5244acb78854b330ebc, type: 3}
+  posRight: {x: -0.2, y: 0.05}
+  posUpRight: {x: -0.2, y: 0.08}
+  posUp: {x: -0.2, y: 0.15}
+  posDownRight: {x: -0.2, y: 0}
+  posDown: {x: -0.2, y: 0}
+  gunOffsetRight: {x: 0.75, y: 0.2}
+  gunOffsetUpRight: {x: 0.55, y: 0.42}
+  gunOffsetUp: {x: 0.32, y: 0.45}
+  gunOffsetDownRight: {x: 0.65, y: -0.1}
+  gunOffsetDown: {x: 0.45, y: -0.25}
+  armRight: {fileID: 21300000, guid: 77b3bf63cfb52364b815adcc306e34b1, type: 3}
+  armUpRight: {fileID: 21300000, guid: e8ca9d26cfda6fd41aa607fbe6892b85, type: 3}
+  armDownRight: {fileID: 21300000, guid: 8c2995b8209a6bd4f83d75cba523d747, type: 3}
+  armUp: {fileID: 21300000, guid: a39eb3c4864d22f4a9912c8cca6afae5, type: 3}
+  armDown: {fileID: 21300000, guid: 06ff5c470b4ca5244acb78854b330ebc, type: 3}
   posRightTwo: {x: -0.16, y: 0}
   posUpRightTwo: {x: -0.16, y: 0}
   posUpTwo: {x: -0.16, y: 0}
   posDownRightTwo: {x: -0.16, y: 0}
   posDownTwo: {x: -0.16, y: 0}
-  gunOffsetRightTwo: {x: -0.15, y: -0.08}
-  gunOffsetUpRightTwo: {x: 0.6, y: -0.1}
-  gunOffsetUpTwo: {x: 0.45, y: 0.05}
-  gunOffsetDownRightTwo: {x: -0.25, y: -0.3}
-  gunOffsetDownTwo: {x: -0.15, y: 0.25}
+  gunOffsetRightTwo: {x: 0.4, y: 0.1}
+  gunOffsetUpRightTwo: {x: 0.4, y: 0.5}
+  gunOffsetUpTwo: {x: 0.25, y: 0.6}
+  gunOffsetDownRightTwo: {x: 0.35, y: -0.1}
+  gunOffsetDownTwo: {x: 0.05, y: -0.2}
   twoArmRight: {fileID: 21300000, guid: 01629a65d60ab414cacfdcee44367366, type: 3}
   twoArmUpRight: {fileID: 21300000, guid: c92f0fb4c6d68c04182f9e9851f0f8e6, type: 3}
   twoArmDownRight: {fileID: 21300000, guid: ff5ea2b05981ba741ab4b369119340c9, type: 3}
@@ -800,8 +800,8 @@ MonoBehaviour:
     maxAmmo: 30
     currentAmmo: 0
     reloadTime: 2
-    baseSprite: {fileID: 5155163167032735316, guid: 1bbca9395468255419b5dcb385bd4397, type: 3}
-    diagonalSprite: {fileID: 8420994399391746316, guid: 19e2bdd10d9ff0044a2f51cb69af4d98, type: 3}
+    baseSprite: {fileID: 21300000, guid: 1bbca9395468255419b5dcb385bd4397, type: 3}
+    diagonalSprite: {fileID: 21300000, guid: 19e2bdd10d9ff0044a2f51cb69af4d98, type: 3}
     bulletPrefab: {fileID: 7199598470211620651, guid: 9be67991dd1bf1242a6ebeb9194d4a4f, type: 3}
     gunType: 1
   firePoint: {fileID: 2096287947}
@@ -4434,7 +4434,7 @@ SpriteRenderer:
   m_Size: {x: 0.5, y: 0.28125}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_SpriteSortPoint: 0
 --- !u!1 &519420028
 GameObject:
@@ -6021,7 +6021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &884761050
 SpriteRenderer:
   serializedVersion: 2
@@ -6112,7 +6112,7 @@ Transform:
   m_GameObject: {fileID: 884761049}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6148,7 +6148,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &894480443
 Transform:
   m_ObjectHideFlags: 0
@@ -6158,7 +6158,7 @@ Transform:
   m_GameObject: {fileID: 894480442}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.3, y: 0.23, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -6489,7 +6489,7 @@ Transform:
   m_GameObject: {fileID: 1038753066}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7638,7 +7638,7 @@ Transform:
   m_GameObject: {fileID: 1358801270}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.3, y: 0.22, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10973,7 +10973,7 @@ Transform:
   m_GameObject: {fileID: 2096287946}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.75, y: 0.25, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -12453,7 +12453,7 @@ Transform:
   m_GameObject: {fileID: 3189157137089105747}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.5741768, y: 0.21646357, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -54,7 +54,7 @@ public class PlayerHealth : MonoBehaviour
         OnHealed?.Invoke();
 
         Debug.Log(gameObject.name + " healed for " + heal);
-        Mathf.Clamp(currentHealth, 0, maxHealth);
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     IEnumerator DamageFlash()
