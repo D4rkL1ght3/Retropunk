@@ -11,7 +11,7 @@ public class PlayerHealth : MonoBehaviour
     public System.Action OnDamaged;
     public System.Action OnHealed;
 
-    private Animator[] animators;
+    private Animator animator;
     private SpriteRenderer[] spriteRenderers;
     private Rigidbody2D rb;
     private PlayerController playerController;
@@ -22,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
-        animators = GetComponentsInChildren<Animator>(true);
+        animator = transform.Find("DefaultModel").GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         playerController = GetComponent<PlayerController>();
     }
@@ -90,17 +90,11 @@ public class PlayerHealth : MonoBehaviour
         isDead = true;
         rb.linearVelocity = Vector2.zero;
 
-        GameObject armPivot = transform.Find("ArmPivot").gameObject;
-
-        if (armPivot != null)
-            armPivot.SetActive(false);
+        playerController.EnterDefaultMode();
 
         if (playerController != null)
             playerController.enabled = false;
 
-        foreach (Animator anim in animators)
-        {
-            anim.SetTrigger("Death");
-        }
+        animator.SetTrigger("Death");
     }
 }

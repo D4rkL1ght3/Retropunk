@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player") || collision.CompareTag("Ladder"))
+        if (collision.CompareTag("Player"))
             return;
 
         if (((1 << collision.gameObject.layer) & groundLayer) != 0)

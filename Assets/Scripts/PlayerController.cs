@@ -386,7 +386,7 @@ public class PlayerController : MonoBehaviour
         UpdateAmmoUI();
     }
 
-    void EnterDefaultMode()
+    public void EnterDefaultMode()
     {
         currentState = PlayerState.Default;
         SetModel(defaultModel);
