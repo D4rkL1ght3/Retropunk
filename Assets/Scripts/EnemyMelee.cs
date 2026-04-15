@@ -24,8 +24,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     private float lastAttackTime;
     private bool isAttacking = false;
-    private float distance;
-    private bool aggroed = false;
 
     [Header("Raycast")]
     public LayerMask Player;
@@ -34,6 +32,12 @@ public class EnemyMelee : MonoBehaviour, IEntity
     private Rigidbody2D rb;
     private Animator animator;
     private Health health;
+
+    [Header("Aggro")]
+    public float aggroTime = 3f;
+    private bool aggroed = false;
+    private float aggroTimer;
+    private float distance;
 
     enum EnemyState
     {
@@ -67,7 +71,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
 
         distance = Vector2.Distance(transform.position, player.position);
-
         Vector2 direction = (player.position - transform.position).normalized;
 
         // Raycast toward player
@@ -88,14 +91,16 @@ public class EnemyMelee : MonoBehaviour, IEntity
             }
         }
         
-        if ((distance < detectionRange && canSeePlayer) || aggroed)
+        if ((distance <= detectionRange && canSeePlayer) || aggroed)
         {
+            aggroTimer = aggroTime; // Reset aggro timer
             currentState = EnemyState.Chase;
         }
         else
         {
-            aggroed = false;
-            currentState = EnemyState.Patrol;
+            aggroTimer -= Time.deltaTime;
+            if (aggroTimer <= 0)
+                currentState = EnemyState.Patrol;
         }
 
         if (currentState == EnemyState.Chase)

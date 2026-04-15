@@ -39,7 +39,10 @@ public class EnemyRanged : MonoBehaviour, IEntity
     private Animator animator;
     private Health health;
 
+    [Header("Aggro")]
+    public float aggroTime = 3f;
     private bool aggroed = false;
+    private float aggroTimer;
     private float distance;
 
     enum EnemyState
@@ -67,16 +70,37 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         distance = Vector2.Distance(transform.position, player.position);
 
-        bool canSeePlayer = HasClearShot();
+        distance = Vector2.Distance(transform.position, player.position);
+        Vector2 direction = (player.position - transform.position).normalized;
 
-        if ((distance < detectionRange && canSeePlayer) || aggroed)
+        // Raycast toward player
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction,
+            detectionRange,
+            Ground | Player
+        );
+
+        bool canSeePlayer = false;
+
+        if (hit.collider != null)
         {
-            aggroed = true;
+            if (hit.collider.CompareTag("Player"))
+            {
+                canSeePlayer = true;
+            }
+        }
+
+        if ((distance <= detectionRange && canSeePlayer) || aggroed)
+        {
+            aggroTimer = aggroTime; // Reset aggro timer
             currentState = EnemyState.Chase;
         }
         else
         {
-            currentState = EnemyState.Patrol;
+            aggroTimer -= Time.deltaTime;
+            if (aggroTimer <= 0)
+                currentState = EnemyState.Patrol;
         }
 
         switch (currentState)
@@ -91,6 +115,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
                 break;
         }
 
+        animator.SetBool("isMoving", moveDirection != 0f);
         if (currentState == EnemyState.Chase)
         {
             Flip(player.position.x - transform.position.x);
@@ -155,21 +180,23 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
 
         float dir = Mathf.Sign(player.position.x - transform.position.x);
+        bool canShoot = CanShootPlayer();
 
-        if (distance > optimalRange)
+        if (distance <= detectionRange && distance > optimalRange)
         {
             moveDirection = dir;
-            animator.SetBool("isMoving", true);
         }
         else if (distance < retreatRange)
         {
             moveDirection = -dir;
-            animator.SetBool("isMoving", true);
+        }
+        else if (distance <= optimalRange && !canShoot)
+        {
+            moveDirection = dir;
         }
         else
         {
             moveDirection = 0f;
-            animator.SetBool("isMoving", false);
         }
     }
 
@@ -177,20 +204,22 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            if (HasClearShot())
+            Vector2 rawDir = (player.position - firePoint.position);
+            Vector2 snappedDir = GetSnappedDirection(rawDir);
+
+            if (snappedDir != Vector2.zero && HasClearShot(snappedDir))
             {
-                Shoot();
+                Shoot(snappedDir);
                 isShooting = true;
                 lastAttackTime = Time.time;
             }
         }
     }
 
-    void Shoot()
+    void Shoot(Vector2 direction)
     {
-        animator.SetTrigger("Shoot");
-
-        Vector2 direction = (player.position - firePoint.position).normalized;
+        Flip(direction.x);
+        PlayShootAnimation(direction);
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
@@ -201,6 +230,22 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
     }
 
+    void PlayShootAnimation(Vector2 dir)
+    {
+        if (dir.y > 0.5f)
+        {
+            animator.SetTrigger("ShootUp");
+        }
+        else if (dir.y < -0.5f)
+        {
+            animator.SetTrigger("ShootDown");
+        }
+        else
+        {
+            animator.SetTrigger("Shoot");
+        }
+    }
+
     public void EndAttack()
     {
         isShooting = false;
@@ -208,9 +253,42 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     // ================= HELPERS =================
 
-    bool HasClearShot()
+    Vector2 GetSnappedDirection(Vector2 rawDir)
     {
-        Vector2 direction = (player.position - firePoint.position).normalized;
+        float angle = Mathf.Atan2(rawDir.y, rawDir.x) * Mathf.Rad2Deg;
+
+        // Snap to nearest 45 degrees
+        float snappedAngle = Mathf.Round(angle / 45f) * 45f;
+
+        // FORWARD
+        if (snappedAngle == 0 || snappedAngle == 180)
+            return new Vector2(Mathf.Sign(rawDir.x), 0);
+
+        // UP DIAGONAL
+        if (snappedAngle == 45 || snappedAngle == 135)
+            return new Vector2(Mathf.Sign(rawDir.x), 1).normalized;
+
+        // DOWN DIAGONAL
+        if (snappedAngle == -45 || snappedAngle == -135)
+            return new Vector2(Mathf.Sign(rawDir.x), -1).normalized;
+
+        return Vector2.zero;
+    }
+
+    Vector2 GetCurrentSnappedDirection()
+    {
+        Vector2 rawDir = player.position - firePoint.position;
+        return GetSnappedDirection(rawDir);
+    }
+
+    bool CanShootPlayer()
+    {
+        Vector2 snappedDir = GetCurrentSnappedDirection();
+        return snappedDir != Vector2.zero && HasClearShot(snappedDir);
+    }
+
+    bool HasClearShot(Vector2 direction)
+    {
         float dist = Vector2.Distance(firePoint.position, player.position);
 
         RaycastHit2D hit = Physics2D.Raycast(
@@ -222,6 +300,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
         return hit.collider != null && hit.collider.CompareTag("Player");
     }
+
     void Flip(float directionX)
     {
         Vector3 scale = transform.localScale;

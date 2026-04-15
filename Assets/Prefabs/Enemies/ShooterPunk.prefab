@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 15
+  maxHealth: 24
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &6076701654666950552
 MonoBehaviour:
@@ -222,9 +222,9 @@ MonoBehaviour:
   moveSpeed: 2.5
   patrolDistance: 0.1
   patrolWaitTime: 1.5
-  detectionRange: 8
-  optimalRange: 5
-  retreatRange: 3
+  detectionRange: 10
+  optimalRange: 8
+  retreatRange: 4
   attackCooldown: 1.5
   bulletPrefab: {fileID: 2747704218444851675, guid: 7ed9310d082e3cd45ad236f1317f5cd4, type: 3}
   firePoint: {fileID: 2025044432932106805}
