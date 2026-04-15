@@ -802,7 +802,7 @@ MonoBehaviour:
     reloadTime: 2
     baseSprite: {fileID: 21300000, guid: 1bbca9395468255419b5dcb385bd4397, type: 3}
     diagonalSprite: {fileID: 21300000, guid: 19e2bdd10d9ff0044a2f51cb69af4d98, type: 3}
-    bulletPrefab: {fileID: 7199598470211620651, guid: 9be67991dd1bf1242a6ebeb9194d4a4f, type: 3}
+    bulletPrefab: {fileID: 6454494011821787917, guid: c26fc7d40d929244baad2680b457edce, type: 3}
     gunType: 1
   firePoint: {fileID: 2096287947}
   ammoText: {fileID: 1743465456}
@@ -4544,7 +4544,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7732,7 +7732,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.65625, y: 1.09375}
+  m_Size: {x: 1.5, y: 1.5}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1

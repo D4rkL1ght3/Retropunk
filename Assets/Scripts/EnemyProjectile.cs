@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class EnemyProjectile : MonoBehaviour
 {
     public float speed = 20f;
     public float lifetime = 1f;
-    public int damage = 5;
+    public int damage = 4;
 
     public LayerMask groundLayer;
     Vector2 moveDirection;
@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Enemy"))
             return;
 
         if (((1 << collision.gameObject.layer) & groundLayer) != 0)
@@ -27,7 +27,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
 
-        Health health = collision.GetComponent<Health>();
+        PlayerHealth health = collision.GetComponent<PlayerHealth>();
 
         if (health != null && health.enabled == true)
         {

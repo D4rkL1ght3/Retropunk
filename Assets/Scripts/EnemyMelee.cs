@@ -1,7 +1,7 @@
 using UnityEditor.SceneManagement;
 using UnityEngine;
 
-public class EnemyMeleeAI : MonoBehaviour, IEntity
+public class EnemyMelee : MonoBehaviour, IEntity
 {
     public Transform player;
 
