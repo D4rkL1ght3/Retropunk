@@ -144,12 +144,12 @@ TextureImporter:
       name: Biker_run_attack_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 2
         y: 0
-        width: 48
-        height: 48
+        width: 27
+        height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -166,12 +166,12 @@ TextureImporter:
       name: Biker_run_attack_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 55
         y: 0
-        width: 48
-        height: 48
+        width: 22
+        height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -188,12 +188,12 @@ TextureImporter:
       name: Biker_run_attack_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 98
         y: 0
-        width: 48
-        height: 48
+        width: 38
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -210,12 +210,12 @@ TextureImporter:
       name: Biker_run_attack_3
       rect:
         serializedVersion: 2
-        x: 144
+        x: 145
         y: 0
-        width: 48
-        height: 48
+        width: 37
+        height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -232,12 +232,12 @@ TextureImporter:
       name: Biker_run_attack_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 199
         y: 0
-        width: 48
-        height: 48
+        width: 25
+        height: 33
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -254,12 +254,12 @@ TextureImporter:
       name: Biker_run_attack_5
       rect:
         serializedVersion: 2
-        x: 240
+        x: 242
         y: 0
-        width: 48
-        height: 48
+        width: 26
+        height: 32
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -276,7 +276,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 44003ffd3c8f6494799af7e6d373739d
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -284,11 +284,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceOnImport
-        value: False
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":true,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
       Biker_run_attack_0: -3991288185152461678
       Biker_run_attack_1: -3017198888099546121

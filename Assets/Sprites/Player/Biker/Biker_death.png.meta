@@ -147,12 +147,12 @@ TextureImporter:
       name: Biker_death_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 3
         y: 0
-        width: 48
-        height: 48
+        width: 21
+        height: 35
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -169,12 +169,12 @@ TextureImporter:
       name: Biker_death_1
       rect:
         serializedVersion: 2
-        x: 48
+        x: 47
         y: 0
-        width: 48
-        height: 48
+        width: 27
+        height: 28
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -191,12 +191,12 @@ TextureImporter:
       name: Biker_death_2
       rect:
         serializedVersion: 2
-        x: 96
+        x: 95
         y: 0
-        width: 48
-        height: 48
+        width: 28
+        height: 21
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -213,12 +213,12 @@ TextureImporter:
       name: Biker_death_3
       rect:
         serializedVersion: 2
-        x: 144
+        x: 143
         y: 0
-        width: 48
-        height: 48
+        width: 33
+        height: 16
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -235,12 +235,12 @@ TextureImporter:
       name: Biker_death_4
       rect:
         serializedVersion: 2
-        x: 192
+        x: 191
         y: 0
-        width: 48
-        height: 48
+        width: 28
+        height: 14
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -257,20 +257,42 @@ TextureImporter:
       name: Biker_death_5
       rect:
         serializedVersion: 2
-        x: 240
-        y: 0
-        width: 48
-        height: 48
+        x: 220
+        y: 1
+        width: 7
+        height: 6
       alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
-      tessellationDetail: 0
+      tessellationDetail: -1
       bones: []
-      spriteID: e0479045c44268f478ed69886a8ec8e9
+      spriteID: c7da3000f16b2f420800000000000000
       internalID: 2662390573989866876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Biker_death_6
+      rect:
+        serializedVersion: 2
+        x: 239
+        y: 0
+        width: 38
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f769af24567093e80800000000000000
+      internalID: -8198513515154467201
       vertices: []
       indices: 
       edges: []
@@ -279,7 +301,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 475b020d9b1540147a347593f64174a0
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -287,9 +309,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries:
-      - key: SpriteEditor.SliceSettings
-        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":48.0,"y":48.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+      entries: []
     nameFileIdTable:
       Biker_death_0: 1324592268616771537
       Biker_death_1: -1033013684159133044
@@ -297,6 +317,7 @@ TextureImporter:
       Biker_death_3: 2743186813669621832
       Biker_death_4: -4060151416582447097
       Biker_death_5: 2662390573989866876
+      Biker_death_6: -8198513515154467201
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
