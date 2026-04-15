@@ -26,6 +26,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
     [Header("Shooting")]
     public float attackCooldown = 1.5f;
     private float lastAttackTime;
+    private bool isShooting = false;
 
     public GameObject bulletPrefab;
     public Transform firePoint;
@@ -147,6 +148,12 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     void HandleMovement()
     {
+        if (isShooting)
+        {
+            moveDirection = 0f;
+            return;
+        }
+
         float dir = Mathf.Sign(player.position.x - transform.position.x);
 
         if (distance > optimalRange)
@@ -173,6 +180,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
             if (HasClearShot())
             {
                 Shoot();
+                isShooting = true;
                 lastAttackTime = Time.time;
             }
         }
@@ -191,6 +199,11 @@ public class EnemyRanged : MonoBehaviour, IEntity
         {
             b.Initialize(direction);
         }
+    }
+
+    public void EndAttack()
+    {
+        isShooting = false;
     }
 
     // ================= HELPERS =================

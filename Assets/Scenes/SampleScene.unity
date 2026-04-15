@@ -4463,7 +4463,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -12982,18 +12982,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRanged
   player: {fileID: 0}
   moveSpeed: 2.5
+  patrolDistance: 0.1
+  patrolWaitTime: 1.5
   detectionRange: 8
   optimalRange: 5
   retreatRange: 3
   attackCooldown: 1.5
   bulletPrefab: {fileID: 2747704218444851675, guid: 7ed9310d082e3cd45ad236f1317f5cd4, type: 3}
   firePoint: {fileID: 711224271}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 8
-  playerLayer:
+  Player:
     serializedVersion: 2
     m_Bits: 64
+  Ground:
+    serializedVersion: 2
+    m_Bits: 8
 --- !u!1 &8873745568305329077
 GameObject:
   m_ObjectHideFlags: 0
