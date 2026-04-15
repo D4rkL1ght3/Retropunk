@@ -330,24 +330,14 @@ public class PlayerController : MonoBehaviour
             // Manual reload
             if (Input.GetKeyDown(KeyCode.R))
             {
-                StartCoroutine(Reload());
+                reloadCoroutine =  StartCoroutine(Reload());
             }
         }
 
         if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
         {
             ammoText.gameObject.SetActive(false);
-
-            if (isReloading && reloadCoroutine != null)
-            {
-                StopCoroutine(reloadCoroutine);
-                reloadCoroutine = null;
-                isReloading = false;
-                Debug.Log("Reload cancelled.");
-
-                if (reloadSound != null)
-                    audioSource.Stop();
-            }
+            CancelReload();
         }
         else
         {
@@ -375,6 +365,7 @@ public class PlayerController : MonoBehaviour
     {
         if (gun == null) return;
 
+        CancelReload(); // Cancel reload when switching guns
         currentGun = gun;
 
         // Decide state based on weapon type
@@ -392,7 +383,6 @@ public class PlayerController : MonoBehaviour
         }
 
         armPivot.gameObject.SetActive(true);
-
         UpdateAmmoUI();
     }
 
@@ -549,6 +539,20 @@ public class PlayerController : MonoBehaviour
         isReloading = false;
         reloadCoroutine = null;
         Debug.Log("Reloaded!");
+    }
+
+    void CancelReload()
+    {
+        if (isReloading && reloadCoroutine != null)
+        {
+            StopCoroutine(reloadCoroutine);
+            reloadCoroutine = null;
+            isReloading = false;
+            Debug.Log("Reload cancelled.");
+
+            if (reloadSound != null)
+                audioSource.Stop();
+        }
     }
 
     Vector2 GetSnappedDirection(Vector2 rawDirection)
