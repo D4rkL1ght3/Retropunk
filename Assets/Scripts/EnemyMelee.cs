@@ -1,9 +1,14 @@
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyMelee : MonoBehaviour, IEntity
 {
     public Transform player;
+
+    [Header("Movement")]
+    public float moveSpeed = 3f;
+    private float moveDirection;
 
     [Header("Patrol")]
     public float patrolDistance = 3f;
@@ -16,8 +21,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     private bool isWaiting = false;
     public float detectionRange = 6f;
 
-    [Header("Base Stats")]
-    public float moveSpeed = 3f;
+    [Header("Attacking")]
     public float attackRange = 1.5f;
     public int damage = 4;
     public float attackCooldown = 1.2f;
@@ -64,12 +68,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     void Update()
     {
-        if (isAttacking)
-        {
-            rb.linearVelocity = Vector2.zero;
-            return;
-        }
-
         distance = Vector2.Distance(transform.position, player.position);
         Vector2 direction = (player.position - transform.position).normalized;
 
@@ -103,60 +101,41 @@ public class EnemyMelee : MonoBehaviour, IEntity
                 currentState = EnemyState.Patrol;
         }
 
+        switch (currentState)
+        {
+            case EnemyState.Patrol:
+                Patrol();
+                break;
+
+            case EnemyState.Chase:
+                ChasePlayer();
+                TryAttack();
+                break;
+        }
+
+        animator.SetBool("isMoving", moveDirection != 0f);
         if (currentState == EnemyState.Chase)
         {
             Flip(player.position.x - transform.position.x);
         }
-        else if (currentState == EnemyState.Patrol)
+        else
         {
             Flip(patrolDirection);
-        }
-
-        if (distance >= attackRange && currentState == EnemyState.Chase)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else if (currentState == EnemyState.Chase)
-        {
-            animator.SetBool("isMoving", false);
-            TryAttack();
         }
     }
 
     void FixedUpdate()
     {
-        if (isAttacking)
-        {
-            rb.linearVelocity = Vector2.zero;
-
-            // Keep facing player while attacking
-            if (player != null)
-            {
-                Flip(player.position.x - transform.position.x);
-            }
-
-            return;
-        }
-
-        switch (currentState)
-        {
-            case EnemyState.Patrol:
-                Patrol();
-            break;
-
-            case EnemyState.Chase:
-                if (distance >= attackRange)
-                    ChasePlayer();
-            break;
-        }
+        Vector2 velocity = rb.linearVelocity;
+        velocity.x = moveDirection * moveSpeed;
+        rb.linearVelocity = velocity;
     }
 
     void Patrol()
     {
         if (isWaiting)
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
-            animator.SetBool("isMoving", false);
+            moveDirection = 0f;
 
             waitTimer -= Time.deltaTime;
 
@@ -169,8 +148,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
             return;
         }
 
-        rb.linearVelocity = new Vector2(patrolDirection * moveSpeed, rb.linearVelocity.y);
-        animator.SetBool("isMoving", true);
+        moveDirection = patrolDirection;
 
         if (patrolDirection == 1 && transform.position.x >= patrolRightX)
         {
@@ -187,11 +165,22 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     void ChasePlayer()
     {
-        Vector2 direction = player.position - transform.position;
-        direction.y = 0;
-        direction = direction.normalized;
+        if (isAttacking)
+        {
+            moveDirection = 0f;
+            return;
+        }
 
-        rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
+        float dir = Mathf.Sign(player.position.x - transform.position.x);
+
+        if (distance > attackRange)
+        {
+            moveDirection = dir;
+        }
+        else
+        {
+            moveDirection = 0f;
+        }
     }
 
     void Flip(float directionX)
@@ -203,7 +192,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     void TryAttack()
     {
-        if (Time.time >= lastAttackTime + attackCooldown)
+        if (Time.time >= lastAttackTime + attackCooldown && distance <= attackRange)
         {
             Attack();
             lastAttackTime = Time.time;
@@ -226,7 +215,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     public void DealDamage()
     {
-        float distance = Vector2.Distance(transform.position, player.position);
+        distance = Vector2.Distance(transform.position, player.position);
 
         if (distance <= attackRange)
         {

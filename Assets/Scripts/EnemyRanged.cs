@@ -140,7 +140,6 @@ public class EnemyRanged : MonoBehaviour, IEntity
         if (isWaiting)
         {
             moveDirection = 0f;
-            animator.SetBool("isMoving", false);
 
             waitTimer -= Time.deltaTime;
 
@@ -154,7 +153,6 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
 
         moveDirection = patrolDirection;
-        animator.SetBool("isMoving", true);
 
         if (patrolDirection == 1 && transform.position.x >= patrolRightX)
         {
@@ -182,11 +180,11 @@ public class EnemyRanged : MonoBehaviour, IEntity
         float dir = Mathf.Sign(player.position.x - transform.position.x);
         bool canShoot = CanShootPlayer();
 
-        if (distance <= detectionRange && distance > optimalRange)
+        if (distance > optimalRange)
         {
             moveDirection = dir;
         }
-        else if (distance < retreatRange)
+        else if (distance <= retreatRange)
         {
             moveDirection = -dir;
         }
@@ -246,7 +244,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
     }
 
-    public void EndAttack()
+    public void EndShoot()
     {
         isShooting = false;
     }

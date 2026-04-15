@@ -4463,7 +4463,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7200,6 +7200,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: damagedColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: aggroed
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}

@@ -219,7 +219,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyRanged
   player: {fileID: 0}
-  moveSpeed: 2.5
+  moveSpeed: 2
   patrolDistance: 0.1
   patrolWaitTime: 1.5
   detectionRange: 10
@@ -234,6 +234,7 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 8
+  aggroTime: 3
 --- !u!95 &4849605956573506411
 Animator:
   serializedVersion: 7
