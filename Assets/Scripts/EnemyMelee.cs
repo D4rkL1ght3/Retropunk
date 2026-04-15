@@ -5,21 +5,34 @@ public class EnemyMelee : MonoBehaviour, IEntity
 {
     public Transform player;
 
+    [Header("Patrol")]
     public float patrolDistance = 3f;
+    public float patrolWaitTime = 1.5f;
+
     private float patrolLeftX;
     private float patrolRightX;
-
     private int patrolDirection = 1;
-
-    public float moveSpeed = 3f;
+    private float waitTimer;
+    private bool isWaiting = false;
     public float detectionRange = 6f;
+
+    [Header("Base Stats")]
+    public float moveSpeed = 3f;
     public float attackRange = 1.5f;
+    public int damage = 4;
+    public float attackCooldown = 1.2f;
+
+    private float lastAttackTime;
+    private bool isAttacking = false;
+    private float distance;
+    private bool aggroed = false;
+
+    [Header("Raycast")]
     public LayerMask Player;
     public LayerMask Ground;
 
-    private bool aggroed = false;
-    private Transform currentTarget;
     private Rigidbody2D rb;
+    private Animator animator;
     private Health health;
 
     enum EnemyState
@@ -30,24 +43,9 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     EnemyState currentState = EnemyState.Patrol;
 
-    public float patrolWaitTime = 1.5f;
-    private float waitTimer = 0f;
-    private bool isWaiting = false;
-
-    public int damage = 4;
-    public float attackCooldown = 1.2f;
-
-    private float distance;
-    private float lastAttackTime;
-    bool isAttacking = false;
-
-    private Animator animator;
-    private SpriteRenderer spriteRenderer;
-
     void Start()
     {
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
         rb = GetComponent<Rigidbody2D>();
         health = GetComponent<Health>();
 
@@ -58,11 +56,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
         patrolLeftX = transform.position.x - patrolDistance;
         patrolRightX = transform.position.x + patrolDistance;
-
-        if (transform.position.x > patrolRightX)
-            patrolDirection = -1;
-        else
-            patrolDirection = 1;
     }
 
     void Update()
@@ -244,7 +237,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public void OnDamaged()
     {
         aggroed = true;
-        currentState = EnemyState.Chase;
     }
     public void Disable()
     {
