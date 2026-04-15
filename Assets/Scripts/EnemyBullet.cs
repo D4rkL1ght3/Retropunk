@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyProjectile : MonoBehaviour
+public class EnemyBullet : MonoBehaviour
 {
     public float speed = 20f;
     public float lifetime = 1f;

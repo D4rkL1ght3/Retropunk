@@ -1,19 +1,28 @@
 using UnityEngine;
 
-public class EnemyRanged : MonoBehaviour, IEntity
+public class EnemyRangedAI : MonoBehaviour, IEntity
 {
     public Transform player;
 
+    [Header("Movement")]
     public float moveSpeed = 2.5f;
+    private float moveDirection;
+
+    [Header("Ranges")]
     public float detectionRange = 8f;
-    public float shootRange = 5f;
+    public float optimalRange = 5f;
     public float retreatRange = 3f;
 
-    public float shootCooldown = 1.5f;
-    private float lastShootTime;
+    [Header("Shooting")]
+    public float attackCooldown = 1.5f;
+    private float lastAttackTime;
 
     public GameObject bulletPrefab;
     public Transform firePoint;
+
+    [Header("Raycast")]
+    public LayerMask groundLayer;
+    public LayerMask playerLayer;
 
     private Rigidbody2D rb;
     private Animator animator;
@@ -43,40 +52,52 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
         else
         {
-            rb.linearVelocity = new Vector2(0, rb.linearVelocity.y);
+            moveDirection = 0f;
             animator.SetBool("isMoving", false);
         }
 
         Flip();
     }
 
+    void FixedUpdate()
+    {
+        Vector2 velocity = rb.linearVelocity;
+
+        velocity.x = moveDirection * moveSpeed;
+
+        rb.linearVelocity = velocity;
+    }
+
     void HandleMovement()
     {
-        float direction = Mathf.Sign(player.position.x - transform.position.x);
+        float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-        if (distance > shootRange)
+        if (distance > optimalRange)
         {
-            rb.linearVelocity = new Vector2(direction * moveSpeed, rb.linearVelocity.y);
+            moveDirection = dir;
             animator.SetBool("isMoving", true);
         }
         else if (distance < retreatRange)
         {
-            rb.linearVelocity = new Vector2(-direction * moveSpeed, rb.linearVelocity.y);
+            moveDirection = -dir;
             animator.SetBool("isMoving", true);
         }
         else
         {
-            rb.linearVelocity = Vector2.zero;
+            moveDirection = 0f;
             animator.SetBool("isMoving", false);
         }
     }
 
     void TryShoot()
     {
-        if (distance <= shootRange && Time.time >= lastShootTime + shootCooldown)
+        if (Time.time >= lastAttackTime + attackCooldown)
         {
-            Shoot();
-            lastShootTime = Time.time;
+            if (HasClearShot() && IsHeightValid())
+            {
+                Shoot();
+                lastAttackTime = Time.time;
+            }
         }
     }
 
@@ -86,13 +107,39 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
         Vector2 direction = (player.position - firePoint.position).normalized;
 
-        GameObject projectile = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
-        EnemyProjectile p = projectile.GetComponent<EnemyProjectile>();
-        if (p != null)
+        EnemyBullet b = bullet.GetComponent<EnemyBullet>();
+        if (b != null)
         {
-            p.Initialize(direction);
+            b.Initialize(direction);
         }
+    }
+
+    bool HasClearShot()
+    {
+        Vector2 direction = (player.position - firePoint.position).normalized;
+        float dist = Vector2.Distance(firePoint.position, player.position);
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            firePoint.position,
+            direction,
+            dist,
+            groundLayer | playerLayer
+        );
+
+        if (hit.collider != null && hit.collider.CompareTag("Player"))
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    bool IsHeightValid()
+    {
+        float heightDiff = Mathf.Abs(player.position.y - firePoint.position.y);
+        return heightDiff < 1.5f; // tweak this if needed
     }
 
     void Flip()
