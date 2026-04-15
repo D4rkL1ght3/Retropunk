@@ -116,12 +116,10 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
         if (distance >= attackRange && currentState == EnemyState.Chase)
         {
-            MoveTowardPlayer();
             animator.SetBool("isMoving", true);
         }
         else if (currentState == EnemyState.Chase)
         {
-            rb.linearVelocity = Vector2.zero;
             animator.SetBool("isMoving", false);
             TryAttack();
         }
@@ -146,12 +144,12 @@ public class EnemyMelee : MonoBehaviour, IEntity
         {
             case EnemyState.Patrol:
                 Patrol();
-                break;
+            break;
 
             case EnemyState.Chase:
                 if (distance >= attackRange)
                     ChasePlayer();
-                break;
+            break;
         }
     }
 
@@ -190,15 +188,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
     }
 
     void ChasePlayer()
-    {
-        Vector2 direction = player.position - transform.position;
-        direction.y = 0;
-        direction = direction.normalized;
-
-        rb.linearVelocity = new Vector2(direction.x * moveSpeed, rb.linearVelocity.y);
-    }
-
-    void MoveTowardPlayer()
     {
         Vector2 direction = player.position - transform.position;
         direction.y = 0;
