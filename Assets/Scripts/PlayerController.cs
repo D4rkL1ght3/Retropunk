@@ -33,6 +33,7 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public float groundCheckRadius = 0.2f;
     public LayerMask groundLayer;
+    public LayerMask platformLayer;
 
     private Rigidbody2D rb;
     [SerializeField] Animator defaultAnimator;
@@ -745,7 +746,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
-            groundLayer
+            groundLayer | platformLayer 
         );
 
         if (doubleJumpUsed && isGrounded && Mathf.Abs(rb.linearVelocity.y) < 0.1f)
