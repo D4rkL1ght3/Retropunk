@@ -180,18 +180,22 @@ public class EnemyRanged : MonoBehaviour, IEntity
         float dir = Mathf.Sign(player.position.x - transform.position.x);
         bool canShoot = CanShootPlayer();
 
+        // Move into optimal range
         if (distance > optimalRange)
         {
             moveDirection = dir;
         }
+        // Continue moving closer if player is not within shooting range
+        else if (distance <= optimalRange && !canShoot) 
+        {
+            moveDirection = dir;
+        }
+        // Retreat if player is too close
         else if (distance <= retreatRange)
         {
             moveDirection = -dir;
         }
-        else if (distance <= optimalRange && !canShoot)
-        {
-            moveDirection = dir;
-        }
+        // Stop if within optimal range and can shoot
         else
         {
             moveDirection = 0f;
