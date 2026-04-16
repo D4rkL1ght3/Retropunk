@@ -186,7 +186,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
             moveDirection = dir;
         }
         // Continue moving closer if player is not within shooting range
-        else if (distance <= optimalRange && !canShoot) 
+        else if (distance <= optimalRange && !canShoot && distance > 1f)
         {
             moveDirection = dir;
         }

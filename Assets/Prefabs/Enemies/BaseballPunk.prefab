@@ -148,7 +148,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 2f492a32baf216e4082afed0e3b0d8f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -187,19 +187,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyMeleeAI
   player: {fileID: 0}
-  patrolDistance: 3
   moveSpeed: 2.5
+  patrolDistance: 3
+  patrolWaitTime: 1.5
   detectionRange: 6
   attackRange: 0.8
+  damage: 4
+  attackCooldown: 1
   Player:
     serializedVersion: 2
     m_Bits: 64
   Ground:
     serializedVersion: 2
     m_Bits: 8
-  patrolWaitTime: 1.5
-  damage: 4
-  attackCooldown: 1
+  aggroTime: 3
 --- !u!95 &314943251692427835
 Animator:
   serializedVersion: 7
