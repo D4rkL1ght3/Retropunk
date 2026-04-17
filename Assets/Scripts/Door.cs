@@ -4,6 +4,7 @@ public class Door : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private BoxCollider2D entryPoint;
+    public bool enterDoor;
 
     private void Start()
     {
@@ -15,7 +16,10 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            spriteRenderer.sortingOrder = 6;
+            if (enterDoor)
+                spriteRenderer.sortingOrder = 8;
+            else
+                spriteRenderer.sortingOrder = 0;
         }
     }
 
@@ -23,7 +27,10 @@ public class Door : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            spriteRenderer.sortingOrder = 0;
+            if (enterDoor)
+                spriteRenderer.sortingOrder = 0;
+            else
+                spriteRenderer.sortingOrder = 8;
         }
     }
 }

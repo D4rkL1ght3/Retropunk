@@ -218,7 +218,7 @@ public class PlayerController : MonoBehaviour
                 doubleJumpUsed = true;
             }
 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce * 1.1f);
             currentStamina -= 0.25f; // Small stamina cost for jumping
             staminaCooldownTimer = staminaCooldown;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
