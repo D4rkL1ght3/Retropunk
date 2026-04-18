@@ -34,10 +34,13 @@ public class EnemyRanged : MonoBehaviour, IEntity
     [Header("Raycast")]
     public LayerMask Player;
     public LayerMask Ground;
-    
+    public LayerMask Platform;
+
     private Rigidbody2D rb;
     private Animator animator;
     private Health health;
+
+    [SerializeField] float maxDropHeight = 2f;
 
     [Header("Aggro")]
     public float aggroTime = 3f;
@@ -70,7 +73,6 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         distance = Vector2.Distance(transform.position, player.position);
 
-        distance = Vector2.Distance(transform.position, player.position);
         Vector2 direction = (player.position - transform.position).normalized;
 
         // Raycast toward player
@@ -180,6 +182,12 @@ public class EnemyRanged : MonoBehaviour, IEntity
         float dir = Mathf.Sign(player.position.x - transform.position.x);
         bool canShoot = CanShootPlayer();
 
+        // Don't move if drop is unsafe
+        if (!IsDropSafe(dir))
+        {
+            moveDirection = 0f;
+            return;
+        }
         // Move into optimal range
         if (distance > optimalRange)
         {
@@ -301,6 +309,25 @@ public class EnemyRanged : MonoBehaviour, IEntity
         );
 
         return hit.collider != null && hit.collider.CompareTag("Player");
+    }
+
+    bool IsDropSafe(float direction)
+    {
+        Vector2 origin = (Vector2)transform.position + new Vector2(direction * 0.3f, 0);
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            origin,
+            Vector2.down,
+            Mathf.Infinity,
+            Ground | Platform
+        );
+
+        if (hit.collider == null)
+            return false; // no ground at all = definitely unsafe
+
+        float dropHeight = origin.y - hit.point.y;
+
+        return dropHeight <= maxDropHeight;
     }
 
     void Flip(float directionX)

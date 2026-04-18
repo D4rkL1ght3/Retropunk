@@ -234,6 +234,10 @@ MonoBehaviour:
   Ground:
     serializedVersion: 2
     m_Bits: 8
+  Platform:
+    serializedVersion: 2
+    m_Bits: 256
+  maxDropHeight: 1.5
   aggroTime: 3
 --- !u!95 &4849605956573506411
 Animator:

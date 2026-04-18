@@ -32,10 +32,14 @@ public class EnemyMelee : MonoBehaviour, IEntity
     [Header("Raycast")]
     public LayerMask Player;
     public LayerMask Ground;
+    public LayerMask Platform;
 
     private Rigidbody2D rb;
     private Animator animator;
     private Health health;
+
+    [SerializeField] float maxDropHeight = 2f;
+    [SerializeField] float maxReachableHeight = 1.5f;
 
     [Header("Aggro")]
     public float aggroTime = 3f;
@@ -80,6 +84,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         );
 
         bool canSeePlayer = false;
+        bool canReachPlayer = canChase();
 
         if (hit.collider != null)
         {
@@ -89,7 +94,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
             }
         }
         
-        if ((distance <= detectionRange && canSeePlayer) || aggroed)
+        if (((distance <= detectionRange && canSeePlayer) || aggroed) && canReachPlayer)
         {
             aggroTimer = aggroTime; // Reset aggro timer
             currentState = EnemyState.Chase;
@@ -98,7 +103,10 @@ public class EnemyMelee : MonoBehaviour, IEntity
         {
             aggroTimer -= Time.deltaTime;
             if (aggroTimer <= 0)
+            {
                 currentState = EnemyState.Patrol;
+                aggroed = false; // Reset aggro state when timer runs out
+            }
         }
 
         switch (currentState)
@@ -173,7 +181,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
         float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-        if (distance > attackRange)
+        if (distance > attackRange && IsDropSafe(dir))
         {
             moveDirection = dir;
         }
@@ -181,6 +189,36 @@ public class EnemyMelee : MonoBehaviour, IEntity
         {
             moveDirection = 0f;
         }
+    }
+
+    bool canChase()
+    {
+        return CanReachPlayerHeight() && IsDropSafe(Mathf.Sign(player.position.x - transform.position.x));
+    }
+
+    bool CanReachPlayerHeight()
+    {
+        float verticalDifference = player.position.y - transform.position.y;
+        return verticalDifference <= maxReachableHeight;
+    }
+
+    bool IsDropSafe(float direction)
+    {
+        Vector2 origin = (Vector2)transform.position + new Vector2(direction * 0.3f, 0);
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            origin,
+            Vector2.down,
+            Mathf.Infinity,
+            Ground | Platform
+        );
+
+        if (hit.collider == null)
+            return false; // no ground at all = definitely unsafe
+
+        float dropHeight = origin.y - hit.point.y;
+
+        return dropHeight <= maxDropHeight;
     }
 
     void Flip(float directionX)
