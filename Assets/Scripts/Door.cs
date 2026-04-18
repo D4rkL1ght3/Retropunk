@@ -14,23 +14,17 @@ public class Door : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (enterDoor)
-                spriteRenderer.sortingOrder = 8;
-            else
-                spriteRenderer.sortingOrder = 0;
-        }
+        if (enterDoor)
+            spriteRenderer.sortingOrder = 8;
+        else
+            spriteRenderer.sortingOrder = 0;
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            if (enterDoor)
-                spriteRenderer.sortingOrder = 0;
-            else
-                spriteRenderer.sortingOrder = 8;
-        }
+        if (enterDoor)
+            spriteRenderer.sortingOrder = 0;
+        else
+            spriteRenderer.sortingOrder = 8;
     }
 }
