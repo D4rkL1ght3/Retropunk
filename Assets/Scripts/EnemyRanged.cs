@@ -1,4 +1,7 @@
+using Unity.VisualScripting.Antlr3.Runtime;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class EnemyRanged : MonoBehaviour, IEntity
 {
@@ -117,7 +120,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
                 break;
         }
 
-        animator.SetBool("isMoving", moveDirection != 0f);
+        animator.SetBool("isMoving", moveDirection != 0f && IsDropSafe(moveDirection));
         if (currentState == EnemyState.Chase)
         {
             Flip(player.position.x - transform.position.x);
@@ -131,7 +134,10 @@ public class EnemyRanged : MonoBehaviour, IEntity
     void FixedUpdate()
     {
         Vector2 velocity = rb.linearVelocity;
-        velocity.x = moveDirection * moveSpeed;
+        if (IsDropSafe(moveDirection))
+            velocity.x = moveDirection * moveSpeed;
+        else
+            velocity.x = 0f;
         rb.linearVelocity = velocity;
     }
 
@@ -180,33 +186,23 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
 
         float dir = Mathf.Sign(player.position.x - transform.position.x);
-        bool canShoot = CanShootPlayer();
 
-        // Don't move if drop is unsafe
-        if (!IsDropSafe(dir))
+        bool canShoot = HasClearShot(GetCurrentSnappedDirection());
+
+        if (canShoot)
         {
-            moveDirection = 0f;
+            if (distance < retreatRange)
+                moveDirection = -dir;
+            else if (distance > optimalRange)
+                moveDirection = dir;
+            else
+                moveDirection = 0f;
+
             return;
         }
-        // Move into optimal range
-        if (distance > optimalRange)
-        {
-            moveDirection = dir;
-        }
-        // Continue moving closer if player is not within shooting range
-        else if (distance <= optimalRange && !canShoot && distance > 1f)
-        {
-            moveDirection = dir;
-        }
-        // Retreat if player is too close
-        else if (distance <= retreatRange)
-        {
-            moveDirection = -dir;
-        }
-        // Stop if within optimal range and can shoot
         else
         {
-            moveDirection = 0f;
+            moveDirection = GetRepositionDirection();
         }
     }
 
@@ -214,12 +210,11 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            Vector2 rawDir = (player.position - firePoint.position);
-            Vector2 snappedDir = GetSnappedDirection(rawDir);
+            Vector2 shootDir = GetCurrentSnappedDirection();
 
-            if (snappedDir != Vector2.zero && HasClearShot(snappedDir))
+            if (HasClearShot(shootDir))
             {
-                Shoot(snappedDir);
+                Shoot(shootDir);
                 isShooting = true;
                 lastAttackTime = Time.time;
             }
@@ -291,24 +286,61 @@ public class EnemyRanged : MonoBehaviour, IEntity
         return GetSnappedDirection(rawDir);
     }
 
-    bool CanShootPlayer()
-    {
-        Vector2 snappedDir = GetCurrentSnappedDirection();
-        return snappedDir != Vector2.zero && HasClearShot(snappedDir);
-    }
-
     bool HasClearShot(Vector2 direction)
     {
-        float dist = Vector2.Distance(firePoint.position, player.position);
-
         RaycastHit2D hit = Physics2D.Raycast(
             firePoint.position,
             direction,
-            dist,
+            detectionRange,
             Ground | Player
         );
 
         return hit.collider != null && hit.collider.CompareTag("Player");
+    }
+
+    bool TryGetShotHit(Vector2 direction, out Vector2 hitPoint)
+    {
+        float maxDistance = detectionRange;
+        Vector2 origin = firePoint.position;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            origin,
+            direction,
+            maxDistance,
+            Ground | Player
+        );
+
+        if (hit.collider != null)
+        {
+            hitPoint = hit.point;
+            return true;
+        }
+        else
+        {
+            hitPoint = origin + direction;
+            return true;
+        }
+    }
+
+    float GetRepositionDirection()
+    {
+        Vector2 dir = GetCurrentSnappedDirection();
+
+        if (TryGetShotHit(dir, out Vector2 hitPoint))
+        {
+            // If this shot already hits player, no need to move
+            if (HasClearShot(dir))
+                return 0f;
+
+            // Move to align hit point with player
+            float deltaX = player.position.x - hitPoint.x;
+            if (Mathf.Abs(deltaX) < 0.2f)
+                return 0f;
+
+            return Mathf.Sign(deltaX);
+        }
+
+        return 0f;
     }
 
     bool IsDropSafe(float direction)

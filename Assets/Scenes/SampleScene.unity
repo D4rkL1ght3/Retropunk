@@ -17559,6 +17559,10 @@ PrefabInstance:
       propertyPath: patrolDistance
       value: 0.2
       objectReference: {fileID: 0}
+    - target: {fileID: 6076701654666950552, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: Platform.m_Bits
+      value: 256
+      objectReference: {fileID: 0}
     - target: {fileID: 6446780912385580659, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
       propertyPath: m_Name
       value: ShooterPunk (1)
@@ -21441,6 +21445,10 @@ PrefabInstance:
     - target: {fileID: 6076701654666950552, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
       propertyPath: patrolDistance
       value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6076701654666950552, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: Platform.m_Bits
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 6446780912385580659, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
       propertyPath: m_Name

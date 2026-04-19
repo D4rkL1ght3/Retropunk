@@ -203,7 +203,7 @@ MonoBehaviour:
   Platform:
     serializedVersion: 2
     m_Bits: 256
-  maxDropHeight: 2
+  maxDropHeight: 3
   maxReachableHeight: 1.5
   aggroTime: 2
 --- !u!95 &314943251692427835
