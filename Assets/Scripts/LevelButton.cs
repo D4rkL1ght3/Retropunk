@@ -11,7 +11,7 @@ public class LevelButton : MonoBehaviour
 
     private void Start()
     {
-        int unlockedLevel = LevelManager.instance.GetUnlockedLevel();
+        int unlockedLevel = LevelManager.Instance.GetUnlockedLevel();
 
         if (levelNumber <= unlockedLevel)
         {

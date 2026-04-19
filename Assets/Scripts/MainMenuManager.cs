@@ -23,14 +23,21 @@ public class MainMenuManager : MonoBehaviour
 
     public void OpenLevelSelect()
     {
-        titleScreen.SetActive(false);
         levelSelect.SetActive(true);
+        titleScreen.SetActive(false);
     }
 
     public void BackToMainMenu()
     {
         levelSelect.SetActive(false);
         titleScreen.SetActive(true);
+    }
+
+    public void BackToLevelSelect()
+    {
+        SceneManager.LoadScene("MainMenu");
+        levelSelect.SetActive(true);
+        titleScreen.SetActive(false);
     }
 
     public void QuitGame()

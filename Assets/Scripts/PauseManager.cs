@@ -54,14 +54,12 @@ public class PauseManager : MonoBehaviour
     public void GoToLevelSelect()
     {
         Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
         MainMenuManager.Instance.OpenLevelSelect();
     }
 
     public void GoToMainMenu()
     {
         Time.timeScale = 1f;
-
         SceneManager.LoadScene("MainMenu");
     }
 }
