@@ -190,7 +190,7 @@ MonoBehaviour:
   moveSpeed: 2.5
   patrolDistance: 1
   patrolWaitTime: 1.5
-  detectionRange: 6
+  detectionRange: 8
   attackRange: 0.8
   damage: 4
   attackCooldown: 1
