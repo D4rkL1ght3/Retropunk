@@ -1,4 +1,4 @@
-using TMPro;
+using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +24,18 @@ public class LevelButton : MonoBehaviour
             button.interactable = false;
             lockIcon.SetActive(true);
             levelText.SetActive(false);
+        }
+    }
+
+    public void LoadLevel(string sceneName)
+    {
+        if (LevelManager.Instance != null)
+        {
+            LevelManager.Instance.LoadLevel(sceneName);
+        }
+        else
+        {
+            Debug.LogError("LevelManager instance not found!");
         }
     }
 }
