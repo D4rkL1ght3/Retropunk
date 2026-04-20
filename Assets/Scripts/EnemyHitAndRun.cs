@@ -200,7 +200,7 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
 
         rushTimer -= Time.deltaTime;
 
-        if (rushTimer <= 0)
+        if (rushTimer <= 0 || HitWall(rushDirection))
         {
             isRushing = false;
             animator.SetBool("isRushing", false);
@@ -269,6 +269,18 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
         float dropHeight = origin.y - hit.point.y;
 
         return dropHeight <= maxDropHeight;
+    }
+
+    bool HitWall(float direction)
+    {
+        Vector2 origin = (Vector2)transform.position + new Vector2(direction * 0.3f, 0);
+        RaycastHit2D hit = Physics2D.Raycast(
+            origin,
+            Vector2.right * direction,
+            0.2f,
+            Ground
+        );
+        return hit.collider != null;
     }
 
     void Flip(float directionX)
