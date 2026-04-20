@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class EnemyMelee : MonoBehaviour, IEntity
+public class EnemyHitAndRun : MonoBehaviour, IEntity
 {
     public Transform player;
 
     [Header("Movement")]
-    public float moveSpeed = 3f;
+    public float moveSpeed = 4f;
     private float moveDirection;
 
     [Header("Patrol")]
@@ -20,12 +20,16 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public float detectionRange = 8f;
 
     [Header("Attacking")]
-    public float attackRange = 1.5f;
-    public int damage = 4;
-    public float attackCooldown = 1.2f;
+    public float rushDuration = 3f;
+    public float rushRange = 3f;
+    public float attackRange = 1.2f;
+    public int damage = 8;
 
-    private float lastAttackTime;
-    private bool isAttacking = false;
+    private bool isRushing = false;
+    private float rushTimer;
+
+    private float rushDirection;
+    private bool hasHitThisRun = false;
 
     [Header("Raycast")]
     public LayerMask Player;
@@ -40,7 +44,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     [SerializeField] float maxReachableHeight = 1.5f;
 
     [Header("Aggro")]
-    public float aggroTime = 3f;
+    public float aggroTime = 5f;
     private bool aggroed = false;
     private float aggroTimer;
     private float distance;
@@ -91,7 +95,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
                 canSeePlayer = true;
             }
         }
-        
+
         if (((distance <= detectionRange && canSeePlayer) || aggroed) && canReachPlayer)
         {
             aggroTimer = aggroTime; // Reset aggro timer
@@ -114,15 +118,27 @@ public class EnemyMelee : MonoBehaviour, IEntity
                 break;
 
             case EnemyState.Chase:
-                ChasePlayer();
-                TryAttack();
+                if (isRushing)
+                {
+                    HandleRush();
+                    TryAttack();
+                }
+                else
+                {
+                    ChasePlayer();
+
+                    if (distance <= rushRange)
+                    {
+                        StartRush();
+                    }
+                }
                 break;
         }
 
         animator.SetBool("isMoving", moveDirection != 0f);
         if (currentState == EnemyState.Chase)
         {
-            Flip(player.position.x - transform.position.x);
+            Flip(rushDirection);
         }
         else
         {
@@ -169,23 +185,58 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
     }
 
+    void StartRush()
+    {
+        isRushing = true;
+        rushTimer = rushDuration;
+        hasHitThisRun = false;
+
+        rushDirection = Mathf.Sign(player.position.x - transform.position.x);
+    }
+
+    void HandleRush()
+    {
+        moveDirection = rushDirection;
+
+        rushTimer -= Time.deltaTime;
+
+        if (rushTimer <= 0)
+            isRushing = false;
+    }
+
     void ChasePlayer()
     {
-        if (isAttacking)
-        {
-            moveDirection = 0f;
-            return;
-        }
-
         float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-        if (distance > attackRange && IsDropSafe(dir))
+        if (distance > rushRange && IsDropSafe(dir))
         {
             moveDirection = dir;
         }
         else
         {
             moveDirection = 0f;
+        }
+    }
+
+    void TryAttack()
+    {
+        if (!hasHitThisRun && distance <= attackRange)
+        {
+            RushHit();
+            hasHitThisRun = true;
+        }
+    }
+
+    void RushHit()
+    {
+        if (!isRushing || hasHitThisRun) return;
+
+        animator.SetTrigger("Attack");
+
+        PlayerHealth ph = player.GetComponent<PlayerHealth>();
+        if (ph != null)
+        {
+            ph.TakeDamage(damage);
         }
     }
 
@@ -224,44 +275,6 @@ public class EnemyMelee : MonoBehaviour, IEntity
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Sign(directionX) * Mathf.Abs(scale.x);
         transform.localScale = scale;
-    }
-
-    void TryAttack()
-    {
-        if (Time.time >= lastAttackTime + attackCooldown && distance <= attackRange)
-        {
-            Attack();
-            lastAttackTime = Time.time;
-        }
-    }
-
-    void Attack()
-    {
-        isAttacking = true;
-
-        rb.linearVelocity = Vector2.zero;
-
-        animator.SetTrigger("Attack");
-    }
-
-    public void EndAttack()
-    {
-        isAttacking = false;
-    }
-
-    public void DealDamage()
-    {
-        distance = Vector2.Distance(transform.position, player.position);
-
-        if (distance <= attackRange)
-        {
-            PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
-
-            if (playerHealth != null)
-            {
-                playerHealth.TakeDamage(damage);
-            }
-        }
     }
 
     public void OnDamaged()

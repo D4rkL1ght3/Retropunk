@@ -1,7 +1,4 @@
-using Unity.VisualScripting.Antlr3.Runtime;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using static UnityEngine.UI.Image;
 
 public class EnemyRanged : MonoBehaviour, IEntity
 {
