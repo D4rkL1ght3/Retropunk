@@ -22,7 +22,7 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
     [Header("Attacking")]
     public float rushDuration = 3f;
     public float rushRange = 3f;
-    public float attackRange = 1.2f;
+    public float attackRange = 0.8f;
     public int damage = 8;
 
     private bool isRushing = false;
@@ -138,7 +138,7 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
         animator.SetBool("isMoving", moveDirection != 0f);
         if (currentState == EnemyState.Chase)
         {
-            Flip(rushDirection);
+            Flip(moveDirection);
         }
         else
         {
@@ -190,8 +190,8 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
         isRushing = true;
         rushTimer = rushDuration;
         hasHitThisRun = false;
-
         rushDirection = Mathf.Sign(player.position.x - transform.position.x);
+        animator.SetBool("isRushing", true);
     }
 
     void HandleRush()
@@ -201,7 +201,10 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
         rushTimer -= Time.deltaTime;
 
         if (rushTimer <= 0)
+        {
             isRushing = false;
+            animator.SetBool("isRushing", false);
+        }
     }
 
     void ChasePlayer()
@@ -230,8 +233,6 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
     void RushHit()
     {
         if (!isRushing || hasHitThisRun) return;
-
-        animator.SetTrigger("Attack");
 
         PlayerHealth ph = player.GetComponent<PlayerHealth>();
         if (ph != null)

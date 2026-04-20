@@ -20,7 +20,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public float detectionRange = 8f;
 
     [Header("Attacking")]
-    public float attackRange = 1.5f;
+    public float attackRange = 0.8f;
     public int damage = 4;
     public float attackCooldown = 1.2f;
 

@@ -148,7 +148,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 2f492a32baf216e4082afed0e3b0d8f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -192,7 +192,7 @@ MonoBehaviour:
   patrolWaitTime: 1.5
   detectionRange: 8
   attackRange: 0.8
-  damage: 4
+  damage: 5
   attackCooldown: 1
   Player:
     serializedVersion: 2
