@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyRanged : MonoBehaviour, IEntity
 {
@@ -30,6 +31,11 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     public GameObject bulletPrefab;
     public Transform firePoint;
+
+    [Header("Shooting Mode")]
+    public bool horizontalOnly = false;
+    public int burstCount = 3;
+    public float burstDelay = 0.5f;
 
     [Header("Raycast")]
     public LayerMask Player;
@@ -184,9 +190,18 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
         float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-        bool canShoot = HasClearShot(GetCurrentSnappedDirection());
+        bool canShoot;
 
-        if (canShoot)
+        if (!horizontalOnly)
+        {
+            canShoot = HasClearShot(GetCurrentSnappedDirection());
+        }
+        else
+        {
+            canShoot = HasClearShot(new Vector2(dir, 0));
+        }
+
+        if (canShoot || horizontalOnly)
         {
             if (distance < retreatRange)
                 moveDirection = -dir;
@@ -207,12 +222,30 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         if (Time.time >= lastAttackTime + attackCooldown)
         {
-            Vector2 shootDir = GetCurrentSnappedDirection();
+            Vector2 shootDir;
+
+            if (horizontalOnly)
+            {
+                float dirX = Mathf.Sign(player.position.x - firePoint.position.x);
+                shootDir = new Vector2(dirX, 0);
+            }
+            else
+            {
+                shootDir = GetCurrentSnappedDirection();
+            }
 
             if (HasClearShot(shootDir))
             {
-                Shoot(shootDir);
-                isShooting = true;
+                if (burstCount > 1)
+                {
+                    StartCoroutine(BurstShoot(shootDir));
+                }
+                else
+                {
+                    Shoot(shootDir);
+                    isShooting = true;
+                }
+
                 lastAttackTime = Time.time;
             }
         }
@@ -221,7 +254,15 @@ public class EnemyRanged : MonoBehaviour, IEntity
     void Shoot(Vector2 direction)
     {
         Flip(direction.x);
-        PlayShootAnimation(direction);
+
+        if (!horizontalOnly)
+        {
+            PlayShootAnimation(direction);
+        }
+        else
+        {
+            animator.SetTrigger("Shoot");
+        }
 
         GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.identity);
 
@@ -229,6 +270,20 @@ public class EnemyRanged : MonoBehaviour, IEntity
         if (b != null)
         {
             b.Initialize(direction);
+        }
+    }
+
+    IEnumerator BurstShoot(Vector2 direction)
+    {
+        for (int i = 0; i < burstCount; i++)
+        {
+            isShooting = true;
+            Shoot(direction);
+
+            if (i < burstCount - 1)
+            {
+                yield return new WaitForSeconds(burstDelay);
+            }
         }
     }
 

@@ -10646,6 +10646,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9140799918285559138, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10850,7 +10854,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -15300,7 +15304,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3249989294521448117, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: patrolDistance
@@ -16895,6 +16899,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3249989294521448117, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 3947282581210439206, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: damagedColor.a
       value: 1
@@ -17075,6 +17083,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3249989294521448117, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: patrolDistance
       value: 5
@@ -17806,7 +17818,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3249989294521448117, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: m_SortingOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7964569871282857250, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
       propertyPath: patrolDistance
@@ -19286,6 +19298,10 @@ PrefabInstance:
     - target: {fileID: 8788485686530330152, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140799918285559138, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: m_SortingOrder
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -21022,6 +21038,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9140799918285559138, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -21431,6 +21451,10 @@ PrefabInstance:
     - target: {fileID: 8788485686530330152, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9140799918285559138, guid: 0aa47bc00418ee342aa0593363b4b663, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

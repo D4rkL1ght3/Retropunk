@@ -116,7 +116,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: 719d6c39cd1ea0247b7f7024b061f047, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -238,7 +238,7 @@ MonoBehaviour:
   attackRange: 0.3
   damage: 2
   attackCooldown: 0.5
-  aggroTime: 1
+  aggroTime: 2
 --- !u!95 &4088206279390447443
 Animator:
   serializedVersion: 7

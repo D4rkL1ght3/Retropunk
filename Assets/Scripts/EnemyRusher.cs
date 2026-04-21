@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyHitAndRun : MonoBehaviour, IEntity
+public class EnemyRusher : MonoBehaviour, IEntity
 {
     public Transform player;
 

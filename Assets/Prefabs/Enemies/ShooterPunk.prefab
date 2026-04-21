@@ -130,8 +130,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.015560627}
-  m_Size: {x: 0.65625, y: 1.0626287}
+  m_Offset: {x: 0.02882567, y: 0.037603617}
+  m_Size: {x: 0.59859866, y: 1.1067147}
   m_Direction: 0
 --- !u!212 &9140799918285559138
 SpriteRenderer:
@@ -180,7 +180,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: dd58bcac361dc9941ba3662d1c32ca46, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -228,6 +228,8 @@ MonoBehaviour:
   attackCooldown: 1.5
   bulletPrefab: {fileID: 2747704218444851675, guid: 7ed9310d082e3cd45ad236f1317f5cd4, type: 3}
   firePoint: {fileID: 2025044432932106805}
+  burstCount: 1
+  burstDelay: 0
   Player:
     serializedVersion: 2
     m_Bits: 64
@@ -238,7 +240,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 256
   maxDropHeight: 1.5
-  aggroTime: 4
+  aggroTime: 3
 --- !u!95 &4849605956573506411
 Animator:
   serializedVersion: 7
