@@ -24,7 +24,7 @@ public class EnemyFlying : MonoBehaviour, IEntity
     public float detectionRange = 8f;
 
     [Header("Attack")]
-    [SerializeField] private Transform attackPoint;
+    public Transform attackPoint;
     public float attackRange = 0.3f;
     public int damage = 2;
     public float attackCooldown = 0.5f;
