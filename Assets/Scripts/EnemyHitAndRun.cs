@@ -303,4 +303,17 @@ public class EnemyHitAndRun : MonoBehaviour, IEntity
     {
         Destroy(gameObject);
     }
+
+    void OnDrawGizmosSelected()
+    {
+        // Detection range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        // Rush range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, rushRange);
+        // Attack range
+        Gizmos.color = Color.magenta;
+        Gizmos.DrawWireSphere(transform.position, attackRange);
+    }
 }

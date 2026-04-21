@@ -381,4 +381,17 @@ public class EnemyRanged : MonoBehaviour, IEntity
     {
         Destroy(gameObject);
     }
+
+    void OnDrawGizmosSelected()
+    {
+        // Detection range
+        Gizmos.color = Color.yellow;
+        Gizmos.DrawWireSphere(transform.position, detectionRange);
+        // Optimal range
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(transform.position, optimalRange);
+        // Retreat range
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, retreatRange);
+    }
 }
