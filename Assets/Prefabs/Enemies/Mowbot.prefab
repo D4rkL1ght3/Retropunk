@@ -191,7 +191,7 @@ MonoBehaviour:
   patrolWaitTime: 1.5
   detectionRange: 8
   rushDuration: 1
-  rushRange: 1
+  rushRange: 2
   attackRange: 0.5
   damage: 3
   Player:
