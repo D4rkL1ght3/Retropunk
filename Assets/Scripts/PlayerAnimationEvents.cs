@@ -10,6 +10,9 @@ public class PlayerAnimationEvents : MonoBehaviour
 
     public void OnDeath()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        if (GameOverManager.Instance != null)
+        {
+            GameOverManager.Instance.GameOver();
+        }
     }
 }

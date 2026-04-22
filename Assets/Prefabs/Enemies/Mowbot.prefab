@@ -186,12 +186,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHitAndRun
   player: {fileID: 0}
-  moveSpeed: 3.5
+  moveSpeed: 3
   patrolDistance: 3
   patrolWaitTime: 1.5
   detectionRange: 8
   rushDuration: 1
-  rushRange: 2
+  rushRange: 1.5
   attackRange: 0.5
   damage: 3
   Player:

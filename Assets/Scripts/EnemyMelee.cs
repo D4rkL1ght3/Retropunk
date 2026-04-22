@@ -120,7 +120,14 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
 
         animator.SetBool("isMoving", moveDirection != 0f);
-        Flip(moveDirection);
+        if (currentState == EnemyState.Chase)
+        {
+            Flip(player.position.x - transform.position.x);
+        }
+        else
+        {
+            Flip(patrolDirection);
+        }
     }
 
     void FixedUpdate()

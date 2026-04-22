@@ -5,7 +5,6 @@ public class Goal : MonoBehaviour
 {
     [Header("Level Info")]
     [SerializeField] int currentLevelIndex;
-    [SerializeField] string nextSceneName;
 
     [Header("UI")]
     [SerializeField] GameObject levelCompleteUI;
@@ -34,34 +33,10 @@ public class Goal : MonoBehaviour
             LevelManager.Instance.UnlockNextLevel(currentLevelIndex);
         }
 
-        // Show UI
-        if (levelCompleteUI != null)
+        // Show Level Complete UI
+        if (GameOverManager.Instance != null)
         {
-            levelCompleteUI.SetActive(true);
+            GameOverManager.Instance.LevelClear();
         }
-
-        // Pause game
-        Time.timeScale = 0f;
-    }
-
-    // ===== BUTTON FUNCTIONS =====
-
-    public void NextLevel()
-    {
-        if (!string.IsNullOrEmpty(nextSceneName))
-        {
-            LevelManager.Instance.LoadLevel(nextSceneName);
-        }
-    }
-
-    public void Retry()
-    {
-        LevelManager.Instance.ReloadLevel();
-    }
-
-    public void MainMenu()
-    {
-        Time.timeScale = 1f;
-        SceneManager.LoadScene("MainMenu");
     }
 }

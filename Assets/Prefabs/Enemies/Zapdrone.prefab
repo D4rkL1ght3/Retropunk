@@ -228,7 +228,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyFlying
   player: {fileID: 0}
-  moveSpeed: 3
+  moveSpeed: 3.5
   hoverHeight: 1
   stoppingDistance: 0.1
   patrolRadius: 2.5
