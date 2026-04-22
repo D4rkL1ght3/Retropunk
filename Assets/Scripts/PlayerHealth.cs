@@ -15,7 +15,9 @@ public class PlayerHealth : MonoBehaviour
     private SpriteRenderer[] spriteRenderers;
     private Rigidbody2D rb;
     private PlayerController playerController;
+    private AudioSource audioSource;
 
+    [SerializeField] AudioClip deathSound;
     bool isDead = false;
 
     void Awake()
@@ -25,6 +27,7 @@ public class PlayerHealth : MonoBehaviour
         animator = transform.Find("DefaultModel").GetComponent<Animator>();
         spriteRenderers = GetComponentsInChildren<SpriteRenderer>(true);
         playerController = GetComponent<PlayerController>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     public void TakeDamage(int damage)
@@ -95,6 +98,13 @@ public class PlayerHealth : MonoBehaviour
         if (playerController != null)
             playerController.enabled = false;
 
-        animator.SetTrigger("Death");
+        if (audioSource != null && deathSound != null)
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(deathSound);
+        }
+
+        if (animator != null)
+            animator.SetTrigger("Death");
     }
 }

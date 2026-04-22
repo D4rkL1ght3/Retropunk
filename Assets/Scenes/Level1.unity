@@ -1649,6 +1649,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
   maxHealth: 40
+  deathSound: {fileID: 8300000, guid: ceea78a23fd69914ea2362da38720248, type: 3}
 --- !u!1001 &133222731
 PrefabInstance:
   m_ObjectHideFlags: 0
