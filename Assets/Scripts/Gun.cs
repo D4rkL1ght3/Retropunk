@@ -46,6 +46,21 @@ public class Gun
         return Time.time >= nextFireTime && currentAmmo > 0;
     }
 
+    public Gun(GunData data)
+    {
+        gunName = data.gunName;
+        fireRate = data.fireRate;
+        damage = data.damage;
+        bulletSpeed = data.bulletSpeed;
+        bulletLifetime = data.bulletLifetime;
+        maxAmmo = data.maxAmmo;
+        reloadTime = data.reloadTime;
+        baseSprite = data.baseSprite;
+        diagonalSprite = data.diagonalSprite;
+        bulletPrefab = data.bulletPrefab;
+        gunType = data.gunType;
+    }
+
     public void Shoot(Transform firePoint, Vector2 direction)
     {
         if (!CanShoot()) return;

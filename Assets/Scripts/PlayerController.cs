@@ -115,6 +115,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite twoArmUp;
     [SerializeField] private Sprite twoArmDown;
 
+    [Header("Loadout")]
+    public Loadout loadout;
+
+    private LoadoutSlot currentSlot = LoadoutSlot.Primary;
+
     [Header("Shooting")]
     private Gun currentGun;
     [SerializeField] Gun primaryWeapon;
@@ -171,6 +176,14 @@ public class PlayerController : MonoBehaviour
 
         currentStamina = maxStamina;
         UpdateAmmoUI();
+    }
+
+    public void SetLoadout(Loadout newLoadout)
+    {
+        loadout = newLoadout;
+
+        loadout.primary?.Initialize();
+        loadout.secondary?.Initialize();
     }
 
     void Update()

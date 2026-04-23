@@ -12,4 +12,13 @@ public class MeleeWeapon
 
     [Header("Animations")]
     public RuntimeAnimatorController animator;
+
+    public MeleeWeapon(MeleeData data)
+    {
+        weaponName = data.weaponName;
+        damage = data.damage;
+        range = data.range;
+        cooldown = data.cooldown;
+        animator = data.animator;
+    }
 }
