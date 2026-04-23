@@ -115,10 +115,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite twoArmUp;
     [SerializeField] private Sprite twoArmDown;
 
-    [Header("Loadout")]
+    [Header("Loadout Data")]
     public Loadout loadout;
 
     private LoadoutSlot currentSlot = LoadoutSlot.Primary;
+
+    public Gun CurrentGun => loadout?.GetGun(currentSlot);
+    public MeleeWeapon CurrentMelee => loadout?.GetMelee();
 
     [Header("Shooting")]
     private Gun currentGun;
