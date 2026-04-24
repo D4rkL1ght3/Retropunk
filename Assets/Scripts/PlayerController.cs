@@ -548,6 +548,7 @@ public class PlayerController : MonoBehaviour
         if (isDashing) return;
         if (isClimbing) return;
         if (isHealing) return;
+        if (!isGrounded) return;
         if (currentStamina < 0.5f)
             return;
 
