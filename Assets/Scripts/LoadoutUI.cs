@@ -3,11 +3,7 @@ using UnityEngine;
 public class LoadoutUI : MonoBehaviour
 {
     private Loadout tempLoadout = new Loadout();
-
-    void Start()
-    {
-        Time.timeScale = 0f;
-    }
+    public GameObject gameUI;
 
     public void SelectPrimary(GunData data)
     {
@@ -27,9 +23,10 @@ public class LoadoutUI : MonoBehaviour
     public void Confirm()
     {
         PlayerController player = FindFirstObjectByType<PlayerController>();
-        player.SetLoadout(tempLoadout);
+        // player.SetLoadout(tempLoadout);
 
         Time.timeScale = 1f;
         gameObject.SetActive(false);
+        gameUI.SetActive(true);
     }
 }

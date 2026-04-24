@@ -40,12 +40,13 @@ public class PlayerHealth : MonoBehaviour
         StartCoroutine(DamageFlash());
         OnDamaged?.Invoke();
 
+        if (playerController != null)
+            playerController.CancelHealing();
+
         Debug.Log(gameObject.name + " took damage! HP: " + currentHealth);
 
         if (currentHealth <= 0)
-        {
             Die();
-        }
     }
 
     public void Heal(int heal)
@@ -79,9 +80,11 @@ public class PlayerHealth : MonoBehaviour
     {
         foreach (SpriteRenderer sr in spriteRenderers)
         {
-            sr.color = Color.green;
+            sr.color = Color.lightGreen;
         }
+
         yield return new WaitForSeconds(0.2f);
+
         foreach (SpriteRenderer sr in spriteRenderers)
         {
             sr.color = Color.white;

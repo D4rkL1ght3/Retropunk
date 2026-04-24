@@ -115,14 +115,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Sprite twoArmUp;
     [SerializeField] private Sprite twoArmDown;
 
-    [Header("Loadout Data")]
-    public Loadout loadout;
-
-    private LoadoutSlot currentSlot = LoadoutSlot.Primary;
-
-    public Gun CurrentGun => loadout?.GetGun(currentSlot);
-    public MeleeWeapon CurrentMelee => loadout?.GetMelee();
-
     [Header("Shooting")]
     private Gun currentGun;
     [SerializeField] Gun primaryWeapon;
@@ -166,9 +158,22 @@ public class PlayerController : MonoBehaviour
     private float staminaCooldownTimer;
     public float staminaCooldown = 0.6f;
 
+    [Header("Healing")]
+    [SerializeField] private int healAmount = 20;
+    [SerializeField] private float healDuration = 1.2f;
+
+    [SerializeField] private float healCooldown = 30f;
+    private float lastHealTime = -Mathf.Infinity;
+
+    public bool isHealing = false;
+    private Coroutine healCoroutine;
+
+    private PlayerHealth playerHealth;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<PlayerHealth>();
         defaultGravity = rb.gravityScale;
 
         if (primaryWeapon != null)
@@ -181,17 +186,11 @@ public class PlayerController : MonoBehaviour
         UpdateAmmoUI();
     }
 
-    public void SetLoadout(Loadout newLoadout)
-    {
-        loadout = newLoadout;
-
-        loadout.primary?.Initialize();
-        loadout.secondary?.Initialize();
-    }
-
     void Update()
     {
         if (Time.timeScale == 0f) return;
+
+        if (isHealing) return;
 
         // Get horizontal input
         moveInput = Input.GetAxisRaw("Horizontal");
@@ -284,6 +283,11 @@ public class PlayerController : MonoBehaviour
                 return;
             }
             EnterMeleeMode();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            TryStartHealing();
         }
 
         if (Input.GetKeyDown(KeyCode.BackQuote))
@@ -443,6 +447,75 @@ public class PlayerController : MonoBehaviour
         }
 
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+    }
+
+    // Healing
+    void TryStartHealing()
+    {
+        if (isHealing) return;
+        if (playerHealth == null) return;
+
+        // Cooldown check
+        if (Time.time < lastHealTime + healCooldown)
+        {
+            Debug.Log("Heal on cooldown!");
+            return;
+        }
+
+        // Prevent healing at full HP
+        if (playerHealth.CurrentHealth >= playerHealth.maxHealth)
+            return;
+
+        healCoroutine = StartCoroutine(HealRoutine());
+    }
+
+    IEnumerator HealRoutine()
+    {
+        isHealing = true;
+
+        // Stop actions
+        CancelReload();
+        isAttacking = false;
+
+        // Enter default state (no weapons)
+        EnterDefaultMode();
+
+        // Play animation
+        defaultAnimator.SetTrigger("UseItem");
+
+        float timer = 0f;
+
+        while (timer < healDuration)
+        {
+            timer += Time.deltaTime;
+
+            // Cancel conditions
+            if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Alpha4))
+            {
+                CancelHealing();
+                yield break;
+            }
+
+            yield return null;
+        }
+
+        // Heal success
+        playerHealth.Heal(healAmount);
+        lastHealTime = Time.time;
+
+        isHealing = false;
+        healCoroutine = null;
+    }
+
+    public void CancelHealing()
+    {
+        if (!isHealing) return;
+
+        StopCoroutine(healCoroutine);
+        healCoroutine = null;
+        isHealing = false;
+
+        Debug.Log("Healing cancelled");
     }
 
     // Melee Attack
@@ -732,6 +805,13 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (isHealing)
+        {
+            // Completely lock player
+            rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);
+            return;
+        }
+
         // Movement
         if (isClimbing)
         {

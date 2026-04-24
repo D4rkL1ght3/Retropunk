@@ -1457,9 +1457,9 @@ MonoBehaviour:
   primaryWeapon:
     gunName: Pistol
     fireRate: 0.5
-    damage: 5
+    damage: 4
     bulletSpeed: 20
-    bulletLifetime: 1
+    bulletLifetime: 0
     maxAmmo: 10
     currentAmmo: 0
     reloadTime: 1
@@ -1470,7 +1470,7 @@ MonoBehaviour:
   secondaryWeapon:
     gunName: Assault Rifle
     fireRate: 0.2
-    damage: 4
+    damage: 3
     bulletSpeed: 25
     bulletLifetime: 1
     maxAmmo: 30
@@ -1502,6 +1502,9 @@ MonoBehaviour:
   staminaDrainRate: 1
   staminaRegenRate: 0.8
   staminaCooldown: 0.6
+  healAmount: 20
+  healDuration: 0.5
+  healCooldown: 30
 --- !u!70 &131630277
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -11108,7 +11111,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -19173,6 +19176,7 @@ GameObject:
   - component: {fileID: 1478483079}
   - component: {fileID: 1478483078}
   - component: {fileID: 1478483077}
+  - component: {fileID: 1478483081}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -19266,6 +19270,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1478483081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1478483076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e11162a296a387442a25b880581883a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LoadoutUI
+  gameUI: {fileID: 1478483076}
 --- !u!1001 &1507423618
 PrefabInstance:
   m_ObjectHideFlags: 0
