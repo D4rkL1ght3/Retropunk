@@ -548,16 +548,12 @@ public class PlayerController : MonoBehaviour
         if (isDashing) return;
         if (isClimbing) return;
         if (isHealing) return;
+        if (currentStamina < 0.5f)
+            return;
 
         if (Time.time < lastDashTime + dashCooldown)
         {
             Debug.Log("Dash on cooldown!");
-            return;
-        }
-
-        if (currentStamina < 0.5f)
-        {
-            Debug.Log("Not enough stamina to dash!");
             return;
         }
 
