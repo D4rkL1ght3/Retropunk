@@ -161,11 +161,13 @@ public class PlayerController : MonoBehaviour
     [Header("Healing")]
     [SerializeField] private int healAmount = 20;
     [SerializeField] private float healDuration = 0.5f;
-
     [SerializeField] private float healCooldown = 30f;
-    private float lastHealTime = -Mathf.Infinity;
 
-    public bool isHealing = false;
+    private float healCooldownTimer = 0f;
+    public float HealCooldownTimer => healCooldownTimer;
+    public float HealCooldown => healCooldown;
+
+    private bool isHealing = false;
     private Coroutine healCoroutine;
 
     private PlayerHealth playerHealth;
@@ -209,6 +211,13 @@ public class PlayerController : MonoBehaviour
         }
 
         HandleStamina();
+
+        if (healCooldownTimer > 0f)
+        {
+            healCooldownTimer -= Time.deltaTime;
+            if (healCooldownTimer < 0f)
+                healCooldownTimer = 0f;
+        }
 
         // Flip sprite
         if (currentState == PlayerState.Default || currentState == PlayerState.Melee)
@@ -450,13 +459,13 @@ public class PlayerController : MonoBehaviour
     }
 
     // Healing
-    void TryStartHealing()
+    public void TryStartHealing()
     {
-        if (isHealing) return;
+        if (isHealing || !isGrounded) return;
         if (playerHealth == null) return;
 
         // Cooldown check
-        if (Time.time < lastHealTime + healCooldown)
+        if (healCooldownTimer > 0f)
         {
             Debug.Log("Heal on cooldown!");
             return;
@@ -481,16 +490,15 @@ public class PlayerController : MonoBehaviour
         EnterDefaultMode();
 
         // Play animation
-        defaultAnimator.SetTrigger("UseItem");
+        defaultAnimator.SetBool("UsingItem", true);
 
         float timer = 0f;
-
         while (timer < healDuration)
         {
             timer += Time.deltaTime;
 
             // Cancel conditions
-            if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Alpha4))
+            if (Input.anyKeyDown && !Input.GetKeyDown(KeyCode.Alpha4) && !isGrounded)
             {
                 CancelHealing();
                 yield break;
@@ -501,8 +509,9 @@ public class PlayerController : MonoBehaviour
 
         // Heal success
         playerHealth.Heal(healAmount);
-        lastHealTime = Time.time;
+        healCooldownTimer = healCooldown;
 
+        defaultAnimator.SetBool("UsingItem", false);
         isHealing = false;
         healCoroutine = null;
     }
@@ -514,6 +523,7 @@ public class PlayerController : MonoBehaviour
         StopCoroutine(healCoroutine);
         healCoroutine = null;
         isHealing = false;
+        defaultAnimator.SetBool("UsingItem", false);
 
         Debug.Log("Healing cancelled");
     }

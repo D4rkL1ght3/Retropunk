@@ -6,11 +6,14 @@ using UnityEngine.UI;
 public class HealthbarUI : MonoBehaviour
 {
     public PlayerHealth playerHealth;
+    public PlayerController playerController;
 
     public List<Image> segments = new List<Image>();
-
     public int healthPerSegment = 4;
     public float flashDuration = 0.2f;
+
+    public Image healCooldown;
+    public Button healButton;
 
     void Start()
     {
@@ -21,6 +24,7 @@ public class HealthbarUI : MonoBehaviour
     void Update()
     {
         UpdateHealthBar();
+        UpdateHealCooldown();
     }
 
     void UpdateHealthBar()
@@ -37,6 +41,30 @@ public class HealthbarUI : MonoBehaviour
 
             segments[i].fillAmount = fill;
         }
+    }
+
+    void UpdateHealCooldown()
+    {
+        float cooldownTime = playerController.HealCooldownTimer;
+        float cooldownDuration = playerController.HealCooldown;
+
+        float fill = cooldownTime / cooldownDuration;
+        fill = Mathf.Clamp01(fill);
+        healCooldown.fillAmount = fill;
+
+        if (cooldownTime > 0)
+        {
+            healButton.interactable = false;
+        }
+        else
+        {
+            healButton.interactable = true;
+        }
+    }
+
+    public void Heal()
+    {
+        playerController.TryStartHealing();
     }
 
     void DamageFlashSegments()
