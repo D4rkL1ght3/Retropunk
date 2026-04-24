@@ -172,6 +172,14 @@ public class PlayerController : MonoBehaviour
 
     private PlayerHealth playerHealth;
 
+    [Header("Dash")]
+    [SerializeField] private float dashForce = 12f;
+    [SerializeField] private float dashDuration = 0.2f;
+    [SerializeField] private float dashCooldown = 1f;
+
+    private bool isDashing = false;
+    private float lastDashTime = -Mathf.Infinity;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -192,7 +200,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale == 0f) return;
 
-        if (isHealing) return;
+        if (isDashing) return;
 
         // Get horizontal input
         moveInput = Input.GetAxisRaw("Horizontal");
@@ -262,6 +270,12 @@ public class PlayerController : MonoBehaviour
 
         if (isClimbing && (Mathf.Abs(moveInput) > 0 || Input.GetButtonDown("Jump")))
             StopClimbing();
+
+        // Dashing
+        if (Input.GetKeyDown(KeyCode.LeftControl) && currentState == PlayerState.Default)
+        {
+            TryDash();
+        }
 
         // Toggle states
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -461,7 +475,7 @@ public class PlayerController : MonoBehaviour
     // Healing
     public void TryStartHealing()
     {
-        if (isHealing || !isGrounded) return;
+        if (isHealing || !isGrounded || isDashing) return;
         if (playerHealth == null) return;
 
         // Cooldown check
@@ -526,6 +540,62 @@ public class PlayerController : MonoBehaviour
         defaultAnimator.SetBool("UsingItem", false);
 
         Debug.Log("Healing cancelled");
+    }
+
+    // Dashing
+    void TryDash()
+    {
+        if (isDashing) return;
+        if (isClimbing) return;
+        if (isHealing) return;
+
+        if (Time.time < lastDashTime + dashCooldown)
+        {
+            Debug.Log("Dash on cooldown!");
+            return;
+        }
+
+        if (currentStamina < 0.5f)
+        {
+            Debug.Log("Not enough stamina to dash!");
+            return;
+        }
+
+        StartCoroutine(DashRoutine());
+        currentStamina -= 0.5f;
+        staminaCooldownTimer = staminaCooldown;
+        currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
+    }
+
+    IEnumerator DashRoutine()
+    {
+        isDashing = true;
+
+        // Stop actions
+        CancelReload();
+        isAttacking = false;
+
+        // Stop current movement
+        rb.linearVelocity = Vector2.zero;
+
+        // Determine dash direction (based on facing)
+        float direction = transform.localScale.x;
+
+        // Play animation
+        currentAnimator.SetTrigger("Dash");
+
+        float timer = 0f;
+
+        while (timer < dashDuration)
+        {
+            timer += Time.deltaTime;
+
+            rb.linearVelocity = new Vector2(direction * dashForce, 0f);
+
+            yield return null;
+        }
+
+        isDashing = false;
     }
 
     // Melee Attack
@@ -815,6 +885,15 @@ public class PlayerController : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Ground Check
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            groundCheckRadius,
+            groundLayer | platformLayer
+        );
+
+        if (isDashing) return;
+
         if (isHealing)
         {
             // Completely lock player
@@ -847,13 +926,6 @@ public class PlayerController : MonoBehaviour
             }
             rb.linearVelocity = new Vector2(moveInput * speed, rb.linearVelocity.y);
         }
-
-        // Ground Check
-        isGrounded = Physics2D.OverlapCircle(
-            groundCheck.position,
-            groundCheckRadius,
-            groundLayer | platformLayer 
-        );
 
         if (doubleJumpUsed && isGrounded && Mathf.Abs(rb.linearVelocity.y) < 0.1f)
         {

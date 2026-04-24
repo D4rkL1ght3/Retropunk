@@ -1505,6 +1505,9 @@ MonoBehaviour:
   healAmount: 20
   healDuration: 0.5
   healCooldown: 15
+  dashForce: 10
+  dashDuration: 0.3
+  dashCooldown: 1.5
 --- !u!70 &131630277
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
