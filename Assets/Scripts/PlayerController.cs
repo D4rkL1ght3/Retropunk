@@ -160,7 +160,7 @@ public class PlayerController : MonoBehaviour
 
     [Header("Healing")]
     [SerializeField] private int healAmount = 20;
-    [SerializeField] private float healDuration = 1.2f;
+    [SerializeField] private float healDuration = 0.5f;
 
     [SerializeField] private float healCooldown = 30f;
     private float lastHealTime = -Mathf.Infinity;
