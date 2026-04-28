@@ -1391,7 +1391,7 @@ MonoBehaviour:
   primaryWeapon:
     gunName: Pistol
     fireRate: 0.5
-    damage: 4
+    damage: 3
     bulletSpeed: 20
     bulletLifetime: 0
     maxAmmo: 10
@@ -1404,7 +1404,7 @@ MonoBehaviour:
   secondaryWeapon:
     gunName: Assault Rifle
     fireRate: 0.2
-    damage: 3
+    damage: 2
     bulletSpeed: 25
     bulletLifetime: 1
     maxAmmo: 30
@@ -1420,7 +1420,7 @@ MonoBehaviour:
   reloadSound: {fileID: 8300000, guid: 8d623c77b152446428442948c8fc35f7, type: 3}
   meleeWeapon:
     weaponName: Knife
-    damage: 10
+    damage: 8
     range: 0.5
     cooldown: 0.6
     animator: {fileID: 9100000, guid: 14880ab33c10e4540aab94d5701b5e45, type: 2}
@@ -11667,7 +11667,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -35.62192, y: 1.1000023, z: -20}
+  m_LocalPosition: {x: -35.84965, y: 1.1000006, z: -20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
