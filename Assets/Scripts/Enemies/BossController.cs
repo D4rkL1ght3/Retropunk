@@ -4,7 +4,7 @@ public class BossController : MonoBehaviour
 {
     public GameObject cart;
     public GameObject driver;
-    public Animator cartAnim;
+    public Animator animator;
 
     public int rushesBeforeMelee = 3;
     public float meleeDuration = 15f;
@@ -35,8 +35,8 @@ public class BossController : MonoBehaviour
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
 
-        if (cartAnim == null)
-            cartAnim = cart.GetComponent<Animator>();
+        if (animator == null)
+            animator = cart.GetComponent<Animator>();
     }
 
     void Update()
@@ -84,8 +84,8 @@ public class BossController : MonoBehaviour
         // Stop cart movement (but keep it visible!)
         cart.GetComponent<EnemyRusher>().enabled = false;
 
-        if (cartAnim != null)
-            cartAnim.SetTrigger("Dismount");
+        if (animator != null)
+            animator.SetTrigger("Dismount");
     }
 
     public void Dismount()
@@ -94,8 +94,8 @@ public class BossController : MonoBehaviour
         rushCount = 0;
         state = State.Melee;
 
-        if (cartAnim != null)
-            cartAnim.SetBool("driverOut", true);
+        if (animator != null)
+            animator.SetBool("driverOut", true);
 
         driver.transform.position = cart.transform.position;
         driver.SetActive(true);
@@ -110,12 +110,11 @@ public class BossController : MonoBehaviour
     {
         driver.SetActive(false);
 
-        if (cartAnim != null)
+        if (animator != null)
         {
-            cartAnim.SetTrigger("Remount");
-            cartAnim.SetBool("driverOut", false);
+            animator.SetTrigger("Remount");
+            animator.SetBool("driverOut", false);
         }
-           
     }
 
     public void Remount()
@@ -123,7 +122,7 @@ public class BossController : MonoBehaviour
         // Reactivate cart AI
         cart.GetComponent<EnemyRusher>().enabled = true;
 
-        if (cartAnim != null)
+        if (animator != null)
             
 
         state = State.Cart;
