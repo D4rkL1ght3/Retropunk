@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 16
+  maxHealth: 20
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &9095282794382596745
 MonoBehaviour:
@@ -207,6 +207,7 @@ MonoBehaviour:
   maxDropHeight: 3
   maxReachableHeight: 1.5
   aggroTime: 4
+  aggroed: 0
 --- !u!95 &7793368852472326702
 Animator:
   serializedVersion: 7

@@ -204,7 +204,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Health
-  maxHealth: 20
+  maxHealth: 16
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &6076701654666950552
 MonoBehaviour:
@@ -228,6 +228,7 @@ MonoBehaviour:
   attackCooldown: 1.5
   bulletPrefab: {fileID: 2747704218444851675, guid: 7ed9310d082e3cd45ad236f1317f5cd4, type: 3}
   firePoint: {fileID: 2025044432932106805}
+  horizontalOnly: 0
   burstCount: 1
   burstDelay: 0
   Player:
@@ -241,6 +242,7 @@ MonoBehaviour:
     m_Bits: 256
   maxDropHeight: 1.5
   aggroTime: 3
+  aggroed: 0
 --- !u!95 &4849605956573506411
 Animator:
   serializedVersion: 7
