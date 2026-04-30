@@ -25,7 +25,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public float attackCooldown = 1.2f;
 
     private float lastAttackTime;
-    private bool isAttacking = false;
+    protected bool isAttacking = false;
 
     [Header("Raycast")]
     public LayerMask Player;
@@ -33,7 +33,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public LayerMask Platform;
 
     private Rigidbody2D rb;
-    private Animator animator;
+    protected Animator animator;
     private Health health;
 
     [SerializeField] float maxDropHeight = 3f;
@@ -43,7 +43,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public float aggroTime = 3f;
     private bool aggroed = false;
     private float aggroTimer;
-    private float distance;
+    protected float distance;
 
     enum EnemyState
     {
@@ -219,7 +219,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         return dropHeight <= maxDropHeight;
     }
 
-    void Flip(float directionX)
+    protected void Flip(float directionX)
     {
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Sign(directionX) * Mathf.Abs(scale.x);

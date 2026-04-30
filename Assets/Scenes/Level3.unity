@@ -9056,6 +9056,7 @@ GameObject:
   - component: {fileID: 1230983599}
   - component: {fileID: 1230983602}
   - component: {fileID: 1230983603}
+  - component: {fileID: 1230983604}
   m_Layer: 7
   m_Name: DriverBoss
   m_TagString: Enemy
@@ -9147,7 +9148,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 8050079004319037636, guid: 1e601d2f509016449aa46f90f04d8e93, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -9168,7 +9169,7 @@ Transform:
   m_GameObject: {fileID: 1230983598}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.16, z: 0}
+  m_LocalPosition: {x: 0, y: -0.15999997, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -9200,7 +9201,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1230983603
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9218,9 +9219,9 @@ MonoBehaviour:
   patrolDistance: 3
   patrolWaitTime: 1.5
   detectionRange: 8
-  attackRange: 0.8
+  attackRange: 0.9
   damage: 10
-  attackCooldown: 1.2
+  attackCooldown: 1
   Player:
     serializedVersion: 2
     m_Bits: 64
@@ -9233,6 +9234,28 @@ MonoBehaviour:
   maxDropHeight: 3
   maxReachableHeight: 1.5
   aggroTime: 3
+--- !u!95 &1230983604
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230983598}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2a3ade8da84ae9747bd16b5969cb2055, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1242091307
 GameObject:
   m_ObjectHideFlags: 0
@@ -13226,6 +13249,7 @@ GameObject:
   - component: {fileID: 1935703381}
   - component: {fileID: 1935703383}
   - component: {fileID: 1935703382}
+  - component: {fileID: 1935703384}
   m_Layer: 7
   m_Name: CartBoss
   m_TagString: Enemy
@@ -13267,8 +13291,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.04424954, y: 0.0000000052749556}
-  m_Size: {x: 2.114928, y: 1.3437531}
+  m_Offset: {x: -0.017854454, y: 0.0000000021284166}
+  m_Size: {x: 1.5777992, y: 1.3437762}
   m_Direction: 1
 --- !u!212 &1935703379
 SpriteRenderer:
@@ -13317,7 +13341,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: ddd447f44060be243be0041aaca73b08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -13419,8 +13443,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossController
   cart: {fileID: 1935703377}
   driver: {fileID: 1230983598}
+  cartAnim: {fileID: 1935703384}
   rushesBeforeMelee: 3
   meleeDuration: 15
+  player: {fileID: 0}
+  maxDistanceFromCart: 20
+--- !u!95 &1935703384
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935703377}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ac383fc37b8a1b74ab393030c874f3aa, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1946859376
 GameObject:
   m_ObjectHideFlags: 0

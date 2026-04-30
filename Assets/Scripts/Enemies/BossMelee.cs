@@ -1,3 +1,5 @@
+using Unity.VisualScripting;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class BossMelee : EnemyMelee
@@ -12,28 +14,40 @@ public class BossMelee : EnemyMelee
 
     protected override void Update()
     {
-        base.Update();
-
         if (boss == null) return;
 
         if (boss.IsReturningToCart)
         {
             HandleReturnToCart();
+            return;
         }
+
+        base.Update();
     }
 
     void HandleReturnToCart()
     {
         float dir = Mathf.Sign(boss.CartPosition.x - transform.position.x);
+        distance = Vector2.Distance(transform.position, player.position);
 
         // Override movement toward cart
         moveDirection = dir;
+        animator.SetBool("isMoving", moveDirection != 0f);
+
+        if (isAttacking)
+        {
+            Flip(player.position.x - transform.position.x);
+        }
+        else
+        {
+            Flip(dir);
+        }
 
         // STILL allow attacking
         TryAttack();
 
         // Reached cart
-        if (Vector2.Distance(transform.position, boss.CartPosition) < 0.5f)
+        if (Vector2.Distance(transform.position, boss.CartPosition) < 0.5f && !isAttacking)
         {
             boss.TriggerRemount();
         }
