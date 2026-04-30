@@ -47,7 +47,7 @@ public class BossMelee : EnemyMelee
         TryAttack();
 
         // Reached cart
-        if (Vector2.Distance(transform.position, boss.CartPosition) < 0.5f && !isAttacking)
+        if (Vector2.Distance(transform.position, boss.CartPosition) < 0.2f && !isAttacking)
         {
             boss.TriggerRemount();
         }

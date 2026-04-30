@@ -5659,7 +5659,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -9057,6 +9057,7 @@ GameObject:
   - component: {fileID: 1230983602}
   - component: {fileID: 1230983603}
   - component: {fileID: 1230983604}
+  - component: {fileID: 1230983605}
   m_Layer: 7
   m_Name: DriverBoss
   m_TagString: Enemy
@@ -9256,6 +9257,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1230983605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1230983598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 50
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &1242091307
 GameObject:
   m_ObjectHideFlags: 0
@@ -13250,6 +13265,7 @@ GameObject:
   - component: {fileID: 1935703383}
   - component: {fileID: 1935703382}
   - component: {fileID: 1935703384}
+  - component: {fileID: 1935703385}
   m_Layer: 7
   m_Name: CartBoss
   m_TagString: Enemy
@@ -13443,7 +13459,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossController
   cart: {fileID: 1935703377}
   driver: {fileID: 1230983598}
-  cartAnim: {fileID: 1935703384}
+  animator: {fileID: 0}
   rushesBeforeMelee: 3
   meleeDuration: 15
   player: {fileID: 0}
@@ -13470,6 +13486,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1935703385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1935703377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 80
+  damagedColor: {r: 1, g: 1, b: 0, a: 1}
 --- !u!1 &1946859376
 GameObject:
   m_ObjectHideFlags: 0
