@@ -25,7 +25,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
     public float attackRange = 0.8f;
     public int damage = 8;
 
-    private bool isRushing = false;
+    protected bool isRushing = false;
     private float rushTimer;
 
     private float rushDirection;
@@ -57,7 +57,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
 
     EnemyState currentState = EnemyState.Patrol;
 
-    void Start()
+    protected virtual void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -72,7 +72,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
         patrolRightX = transform.position.x + patrolDistance;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         distance = Vector2.Distance(transform.position, player.position);
         Vector2 direction = (player.position - transform.position).normalized;

@@ -6,7 +6,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     [Header("Movement")]
     public float moveSpeed = 3f;
-    private float moveDirection;
+    protected float moveDirection;
 
     [Header("Patrol")]
     public float patrolDistance = 3f;
@@ -53,7 +53,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     EnemyState currentState = EnemyState.Patrol;
 
-    void Start()
+    protected virtual void Start()
     {
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
@@ -68,7 +68,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         patrolRightX = transform.position.x + patrolDistance;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         distance = Vector2.Distance(transform.position, player.position);
         Vector2 direction = (player.position - transform.position).normalized;
@@ -226,7 +226,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         transform.localScale = scale;
     }
 
-    void TryAttack()
+    protected void TryAttack()
     {
         if (Time.time >= lastAttackTime + attackCooldown && distance <= attackRange)
         {
