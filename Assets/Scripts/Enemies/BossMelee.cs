@@ -54,4 +54,10 @@ public class BossMelee : EnemyMelee
             boss.TriggerRemount();
         }
     }
+
+    void OnDestroy()
+    {
+        if (boss != null)
+            Destroy(boss.gameObject);
+    }
 }
