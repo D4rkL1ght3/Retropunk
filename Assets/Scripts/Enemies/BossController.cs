@@ -14,6 +14,8 @@ public class BossController : MonoBehaviour
 
     public Transform player;
     public float maxDistanceFromCart = 8f;
+    public float dismountRange = 4f;
+    private bool readyToDismount = false;
 
     public bool IsReturningToCart { get; private set; }
 
@@ -41,6 +43,20 @@ public class BossController : MonoBehaviour
 
     void Update()
     {
+        if (state == State.Cart && readyToDismount)
+        {
+            float distanceToPlayer = Vector2.Distance(
+                cart.transform.position,
+                player.position
+            );
+
+            if (distanceToPlayer <= dismountRange)
+            {
+                TriggerDismount();
+                readyToDismount = false;
+            }
+        }
+
         if (state == State.Melee && !IsReturningToCart)
         {
             meleeTimer -= Time.deltaTime;
@@ -71,7 +87,7 @@ public class BossController : MonoBehaviour
 
         if (rushCount >= rushesBeforeMelee)
         {
-            TriggerDismount();
+            readyToDismount = true;
         }
     }
 
@@ -127,5 +143,16 @@ public class BossController : MonoBehaviour
 
         state = State.Cart;
         IsReturningToCart = false;
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        if (cart != null)
+        {
+            Gizmos.color = Color.orange;
+            Gizmos.DrawWireSphere(cart.transform.position, maxDistanceFromCart);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(cart.transform.position, dismountRange);
+        }
     }
 }
