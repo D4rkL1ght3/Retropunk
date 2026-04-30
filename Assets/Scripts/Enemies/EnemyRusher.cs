@@ -45,7 +45,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
 
     [Header("Aggro")]
     public float aggroTime = 5f;
-    private bool aggroed = false;
+    public bool aggroed = false;
     private float aggroTimer;
     private float distance;
 

@@ -41,7 +41,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     [Header("Aggro")]
     public float aggroTime = 3f;
-    private bool aggroed = false;
+    public bool aggroed = false;
     private float aggroTimer;
     protected float distance;
 

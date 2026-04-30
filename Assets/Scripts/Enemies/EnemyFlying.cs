@@ -34,7 +34,7 @@ public class EnemyFlying : MonoBehaviour, IEntity
 
     [Header("Aggro")]
     public float aggroTime = 1f;
-    private bool aggroed = false;
+    public bool aggroed = false;
     private float aggroTimer;
 
     private float distance;

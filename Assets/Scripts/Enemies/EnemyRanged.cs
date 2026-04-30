@@ -50,7 +50,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     [Header("Aggro")]
     public float aggroTime = 3f;
-    private bool aggroed = false;
+    public bool aggroed = false;
     private float aggroTimer;
     private float distance;
 
