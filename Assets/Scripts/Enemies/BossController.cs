@@ -100,7 +100,6 @@ public class BossController : MonoBehaviour
         Vector3 scale = cart.transform.localScale;
         scale.x = 1f; // Ensure driver faces right direction
         cart.transform.localScale = scale;
-        rb.constraints = RigidbodyConstraints2D.FreezePosition;
 
         // Stop cart movement (but keep it visible!)
         cart.GetComponent<EnemyRusher>().enabled = false;
@@ -118,6 +117,7 @@ public class BossController : MonoBehaviour
         if (animator != null)
             animator.SetBool("driverOut", true);
 
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
         driver.transform.position = cart.transform.position;
         driver.SetActive(true);
     }
