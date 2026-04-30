@@ -5,6 +5,7 @@ public class BossController : MonoBehaviour
     public GameObject cart;
     public GameObject driver;
     public Animator animator;
+    public Rigidbody2D rb;
 
     public int rushesBeforeMelee = 3;
     public float meleeDuration = 15f;
@@ -39,6 +40,9 @@ public class BossController : MonoBehaviour
 
         if (animator == null)
             animator = cart.GetComponent<Animator>();
+
+        if (rb == null)
+            rb = cart.GetComponent<Rigidbody2D>();
     }
 
     void Update()
@@ -96,6 +100,7 @@ public class BossController : MonoBehaviour
         Vector3 scale = cart.transform.localScale;
         scale.x = 1f; // Ensure driver faces right direction
         cart.transform.localScale = scale;
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
 
         // Stop cart movement (but keep it visible!)
         cart.GetComponent<EnemyRusher>().enabled = false;
@@ -137,10 +142,8 @@ public class BossController : MonoBehaviour
     {
         // Reactivate cart AI
         cart.GetComponent<EnemyRusher>().enabled = true;
-
-        if (animator != null)
-            
-
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
+        
         state = State.Cart;
         IsReturningToCart = false;
     }
