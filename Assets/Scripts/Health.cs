@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class Health : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class Health : MonoBehaviour
     private IEntity controller;
 
     bool isDead = false;
+    public event Action OnDeath;
     public Color damagedColor = Color.red;
 
     void Awake()
@@ -55,6 +57,7 @@ public class Health : MonoBehaviour
     {
         isDead = true;
         rb.linearVelocity = Vector2.zero;
+        OnDeath?.Invoke();
 
         if (controller != null)
             controller.Disable();
