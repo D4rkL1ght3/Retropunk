@@ -13462,7 +13462,8 @@ MonoBehaviour:
   cart: {fileID: 1935703377}
   driver: {fileID: 1230983598}
   animator: {fileID: 1935703384}
-  rb: {fileID: 0}
+  rb: {fileID: 1935703381}
+  spawners: []
   rushesBeforeMelee: 3
   meleeDuration: 15
   player: {fileID: 0}
