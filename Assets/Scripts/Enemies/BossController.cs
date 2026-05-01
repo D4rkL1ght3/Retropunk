@@ -6,6 +6,7 @@ public class BossController : MonoBehaviour
     public GameObject driver;
     public Animator animator;
     public Rigidbody2D rb;
+    public EnemySpawner[] spawners;
 
     public int rushesBeforeMelee = 3;
     public float meleeDuration = 15f;
@@ -146,6 +147,14 @@ public class BossController : MonoBehaviour
         
         state = State.Cart;
         IsReturningToCart = false;
+    }
+
+    void OnDestroy()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.StopSpawning();
+        }
     }
 
     void OnDrawGizmosSelected()
