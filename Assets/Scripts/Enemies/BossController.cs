@@ -44,6 +44,9 @@ public class BossController : MonoBehaviour
 
         if (rb == null)
             rb = cart.GetComponent<Rigidbody2D>();
+
+        if (spawners.Length == 0)
+            spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
     }
 
     void Update()
