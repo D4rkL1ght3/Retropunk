@@ -2,21 +2,24 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    [Header("References")]
     public GameObject cart;
     public GameObject driver;
     public Animator animator;
     public Rigidbody2D rb;
-    public EnemySpawner[] spawners;
 
+    public EnemySpawner[] spawners;
+    [SerializeField] private Goal goal;
+
+    [Header("Boss Settings")]
     public int rushesBeforeMelee = 3;
     public float meleeDuration = 15f;
-
-    private int rushCount = 0;
-    private float meleeTimer;
-
-    public Transform player;
     public float maxDistanceFromCart = 8f;
     public float dismountRange = 4f;
+
+    public Transform player;
+    private int rushCount = 0;
+    private float meleeTimer;
     private bool readyToDismount = false;
 
     public bool IsReturningToCart { get; private set; }
@@ -157,6 +160,10 @@ public class BossController : MonoBehaviour
         foreach (var spawner in spawners)
         {
             spawner.StopSpawning();
+        }
+        if (goal != null)
+        {
+            goal.UnlockGoal();
         }
     }
 
