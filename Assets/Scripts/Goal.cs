@@ -12,7 +12,23 @@ public class Goal : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private bool isLocked = false;
 
+    [Header("Truck Visuals")]
+    [SerializeField] private GameObject closedContainer;
+    [SerializeField] private GameObject openContainer;
+
     private bool completed = false;
+
+    void Start()
+    {
+        if (isLocked && closedContainer != null)
+        {
+            closedContainer.SetActive(true);
+            if (openContainer != null)
+            {
+                openContainer.SetActive(false);
+            }
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -33,6 +49,14 @@ public class Goal : MonoBehaviour
     {
         isLocked = false;
         Debug.Log("Goal Unlocked!");
+        if (closedContainer != null)
+        {
+            closedContainer.SetActive(false);
+            if (openContainer != null)
+            {
+                openContainer.SetActive(true);
+            }
+        }
     }
 
     void CompleteLevel()
