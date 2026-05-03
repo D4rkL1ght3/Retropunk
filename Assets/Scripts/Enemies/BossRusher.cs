@@ -20,7 +20,7 @@ public class BossRusher : EnemyRusher
 
         DetectRushEnd();
 
-        if (currentState == EnemyState.Chase && !aggroed)
+        if (currentState == EnemyState.Chase)
         {
             aggroed = true;
             boss.StartBossFight();
