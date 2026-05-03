@@ -92,7 +92,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
             }
         }
         
-        if (((distance <= detectionRange && canSeePlayer) || aggroed) && canReachPlayer)
+        if (((distance <= detectionRange && canSeePlayer) && canReachPlayer) || aggroed)
         {
             aggroTimer = aggroTime; // Reset aggro timer
             currentState = EnemyState.Chase;
