@@ -15772,7 +15772,7 @@ MonoBehaviour:
   gameOverScreen: {fileID: 170618592}
   levelClearScreen: {fileID: 379664421}
   gameUI: {fileID: 1478483076}
-  nextSceneName: Level2
+  nextSceneName: Level3
 --- !u!4 &1078601318
 Transform:
   m_ObjectHideFlags: 0
