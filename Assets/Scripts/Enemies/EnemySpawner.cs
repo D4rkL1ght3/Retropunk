@@ -89,6 +89,10 @@ public class EnemySpawner : MonoBehaviour
                 aliveEnemies.Remove(enemy);
             };
         }
+
+        IEntity controller = enemy.GetComponent<IEntity>();
+        if (controller != null)
+            controller.OnDamaged(); // aggro on spawn
     }
 
     GameObject GetRandomEnemy()
