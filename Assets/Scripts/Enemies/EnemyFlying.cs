@@ -236,12 +236,15 @@ public class EnemyFlying : MonoBehaviour, IEntity
     {
         if (attackPoint != null)
         {
+            // Attack range
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackPoint.position, attackRange);
         }
+        // Detection range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+        // Patrol range
         Gizmos.color = Color.cyan;
-        Gizmos.DrawWireSphere(patrolCenter, patrolRadius);
+        Gizmos.DrawWireSphere(transform.position, patrolRadius);
     }
 }

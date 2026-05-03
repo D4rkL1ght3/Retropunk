@@ -450,5 +450,8 @@ public class EnemyRanged : MonoBehaviour, IEntity
         // Retreat range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, retreatRange);
+        // Patrol range
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, patrolDistance);
     }
 }

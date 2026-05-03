@@ -314,5 +314,8 @@ public class EnemyRusher : MonoBehaviour, IEntity
         // Attack range
         Gizmos.color = Color.magenta;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        // Patrol range
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, patrolDistance);
     }
 }

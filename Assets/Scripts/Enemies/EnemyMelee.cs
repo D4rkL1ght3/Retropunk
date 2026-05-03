@@ -279,9 +279,14 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     void OnDrawGizmosSelected()
     {
+        // Attack range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRange);
+        // Detection range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+        // Patrol range
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, patrolDistance);
     }
 }
