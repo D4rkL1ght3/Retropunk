@@ -17765,7 +17765,7 @@ MonoBehaviour:
   - {fileID: 984257355}
   goal: {fileID: 1989130137323387437}
   rushesBeforeMelee: 3
-  meleeDuration: 15
+  meleeDuration: 10
   maxDistanceFromCart: 8
   dismountRange: 5
 --- !u!95 &1935703384
