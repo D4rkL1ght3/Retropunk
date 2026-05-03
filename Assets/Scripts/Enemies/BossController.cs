@@ -126,7 +126,7 @@ public class BossController : MonoBehaviour
         if (animator != null)
             animator.SetBool("driverOut", true);
 
-        rb.constraints = RigidbodyConstraints2D.FreezePositionX;
+        rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezeRotation;
         driver.transform.position = cart.transform.position;
         driver.SetActive(true);
     }

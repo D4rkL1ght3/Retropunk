@@ -687,8 +687,8 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 8873229133403390236, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
     weight: 1
-  spawnInterval: 5
-  maxAlive: 5
+  spawnInterval: 8
+  maxAlive: 4
   startOnAwake: 0
   spawnPoints: []
 --- !u!1 &74324980
@@ -5884,7 +5884,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -8298,8 +8298,8 @@ MonoBehaviour:
   enemies:
   - prefab: {fileID: 8873229133403390236, guid: fd5241fd6015c024a90d7eda2a9b35a3, type: 3}
     weight: 1
-  spawnInterval: 5
-  maxAlive: 5
+  spawnInterval: 8
+  maxAlive: 4
   startOnAwake: 0
   spawnPoints: []
 --- !u!4 &984257356
