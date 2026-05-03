@@ -17630,7 +17630,7 @@ MonoBehaviour:
   patrolDistance: 30
   patrolWaitTime: 3
   detectionRange: 10
-  rushDuration: 4
+  rushDuration: 5
   rushRange: 6
   attackRange: 0.8
   damage: 16
