@@ -12,7 +12,6 @@ public class BossMelee : EnemyMelee
         boss = GetComponentInParent<BossController>();
         aggroed = true;
         aggroTime = Mathf.Infinity;
-        GetComponent<Health>().OnDeath += OnBossDeath;
     }
 
     protected override void Update()
@@ -56,7 +55,7 @@ public class BossMelee : EnemyMelee
         }
     }
 
-    void OnBossDeath()
+    void OnDestroy()
     {
         if (boss != null)
             Destroy(boss.gameObject);

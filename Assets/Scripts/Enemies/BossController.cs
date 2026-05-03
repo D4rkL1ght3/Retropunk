@@ -39,7 +39,6 @@ public class BossController : MonoBehaviour
     {
         state = State.Cart;
         driver.SetActive(false);
-        GetComponent<Health>().OnDeath += OnBossDeath;
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -49,9 +48,6 @@ public class BossController : MonoBehaviour
 
         if (rb == null)
             rb = cart.GetComponent<Rigidbody2D>();
-
-        if (spawners.Length == 0)
-            spawners = FindObjectsByType<EnemySpawner>(FindObjectsSortMode.None);
     }
 
     void Update()
@@ -165,7 +161,7 @@ public class BossController : MonoBehaviour
         AudioManager.Instance.PlayBossMusic();
     }
 
-    void OnBossDeath()
+    public void OnDestroy()
     {
         foreach (var spawner in spawners)
             spawner.StopSpawning();
