@@ -32,7 +32,7 @@ public class Goal : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (completed) return;
+        if (completed || !collision.CompareTag("Player")) return;
         if (isLocked)
         {
             Debug.Log("Goal is locked! Complete required objectives to unlock.");
