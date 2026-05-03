@@ -76,12 +76,11 @@ public class EnemyFlying : MonoBehaviour, IEntity
         }
         else
         {
-            aggroTimer -= Time.deltaTime;
+            if (!aggroed)
+                aggroTimer -= Time.deltaTime; // Countdown aggro timer
+
             if (aggroTimer <= 0)
-            {
                 currentState = EnemyState.Patrol;
-                aggroed = false;
-            }
         }
 
         switch (currentState)

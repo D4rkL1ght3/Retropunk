@@ -155,6 +155,14 @@ public class BossController : MonoBehaviour
         IsReturningToCart = false;
     }
 
+    public void StartBossFight()
+    {
+        foreach (var spawner in spawners)
+        {
+            spawner.StartSpawning();
+        }
+    }
+
     void OnDestroy()
     {
         foreach (var spawner in spawners)

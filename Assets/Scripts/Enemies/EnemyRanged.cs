@@ -106,7 +106,9 @@ public class EnemyRanged : MonoBehaviour, IEntity
         }
         else
         {
-            aggroTimer -= Time.deltaTime;
+            if (!aggroed)
+                aggroTimer -= Time.deltaTime; // Countdown aggro timer
+
             if (aggroTimer <= 0)
                 currentState = EnemyState.Patrol;
         }

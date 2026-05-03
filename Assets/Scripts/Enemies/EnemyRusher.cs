@@ -6,7 +6,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
 
     [Header("Movement")]
     public float moveSpeed = 4f;
-    private float moveDirection;
+    protected float moveDirection;
 
     [Header("Patrol")]
     public float patrolDistance = 3f;
@@ -36,7 +36,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
     public LayerMask Ground;
     public LayerMask Platform;
 
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     private Animator animator;
     private Health health;
 
@@ -49,13 +49,13 @@ public class EnemyRusher : MonoBehaviour, IEntity
     private float aggroTimer;
     private float distance;
 
-    enum EnemyState
+    protected enum EnemyState
     {
         Patrol,
         Chase
     }
 
-    EnemyState currentState = EnemyState.Patrol;
+    protected EnemyState currentState = EnemyState.Patrol;
 
     protected virtual void Start()
     {
@@ -103,12 +103,11 @@ public class EnemyRusher : MonoBehaviour, IEntity
         }
         else
         {
-            aggroTimer -= Time.deltaTime;
+            if (!aggroed)
+                aggroTimer -= Time.deltaTime; // Countdown aggro timer
+
             if (aggroTimer <= 0)
-            {
                 currentState = EnemyState.Patrol;
-                aggroed = false; // Reset aggro state when timer runs out
-            }
         }
 
         switch (currentState)
@@ -146,7 +145,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
         }
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Vector2 velocity = rb.linearVelocity;
         velocity.x = moveDirection * moveSpeed;
