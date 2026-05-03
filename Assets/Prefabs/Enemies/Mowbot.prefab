@@ -206,6 +206,7 @@ MonoBehaviour:
   maxDropHeight: 3
   maxReachableHeight: 1.5
   aggroTime: 3
+  aggroed: 0
 --- !u!95 &1789116316085537688
 Animator:
   serializedVersion: 7

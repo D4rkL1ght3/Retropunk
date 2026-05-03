@@ -239,6 +239,7 @@ MonoBehaviour:
   damage: 2
   attackCooldown: 0.5
   aggroTime: 2
+  aggroed: 0
 --- !u!95 &4088206279390447443
 Animator:
   serializedVersion: 7

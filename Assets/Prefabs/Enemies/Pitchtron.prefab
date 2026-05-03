@@ -242,6 +242,7 @@ MonoBehaviour:
     m_Bits: 256
   maxDropHeight: 3
   aggroTime: 3
+  aggroed: 0
 --- !u!95 &8886796303383528404
 Animator:
   serializedVersion: 7
