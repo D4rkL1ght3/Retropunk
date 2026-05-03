@@ -12943,11 +12943,11 @@ Transform:
   m_GameObject: {fileID: 1230983598}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -0.15999997, z: 0}
+  m_LocalPosition: {x: -1, y: 1.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1935703380}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1230983602
 Rigidbody2D:
@@ -14268,7 +14268,6 @@ GameObject:
   - component: {fileID: 1478483079}
   - component: {fileID: 1478483078}
   - component: {fileID: 1478483077}
-  - component: {fileID: 1478483081}
   m_Layer: 5
   m_Name: GameUI
   m_TagString: Untagged
@@ -14363,19 +14362,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &1478483081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1478483076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e11162a296a387442a25b880581883a8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LoadoutUI
-  gameUI: {fileID: 1478483076}
 --- !u!1 &1508039523
 GameObject:
   m_ObjectHideFlags: 0
@@ -17676,8 +17662,7 @@ Transform:
   m_LocalPosition: {x: -1, y: 1.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1230983601}
+  m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!50 &1935703381
@@ -21169,11 +21154,24 @@ SceneRoots:
   - {fileID: 1167793904}
   - {fileID: 363655676}
   - {fileID: 1989130137323387436}
+  - {fileID: 1838305101}
+  - {fileID: 1824177681}
+  - {fileID: 1173532209}
+  - {fileID: 2134409718}
+  - {fileID: 204375596}
+  - {fileID: 406926743}
+  - {fileID: 1689704415}
+  - {fileID: 388057149}
+  - {fileID: 850027454}
+  - {fileID: 918371004}
+  - {fileID: 436853992}
+  - {fileID: 1940124301}
   - {fileID: 67997203}
   - {fileID: 984257356}
   - {fileID: 1899540096}
   - {fileID: 1836947762}
   - {fileID: 1935703380}
+  - {fileID: 1230983601}
   - {fileID: 1538402393}
   - {fileID: 1553842415}
   - {fileID: 512192575}
@@ -21197,15 +21195,3 @@ SceneRoots:
   - {fileID: 315022647}
   - {fileID: 1168857370}
   - {fileID: 1062293561}
-  - {fileID: 1838305101}
-  - {fileID: 1824177681}
-  - {fileID: 1173532209}
-  - {fileID: 2134409718}
-  - {fileID: 204375596}
-  - {fileID: 406926743}
-  - {fileID: 1689704415}
-  - {fileID: 388057149}
-  - {fileID: 850027454}
-  - {fileID: 918371004}
-  - {fileID: 436853992}
-  - {fileID: 1940124301}
