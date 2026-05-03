@@ -164,8 +164,11 @@ public class BossController : MonoBehaviour
 
     public void OnBossDeath()
     {
-        foreach (var spawner in spawners)
-            spawner.StopSpawning();
+        if (spawners.Length != 0)
+        {
+            foreach (var spawner in spawners)
+                spawner.StopSpawning();
+        }
 
         if (goal != null)
             goal.UnlockGoal();
