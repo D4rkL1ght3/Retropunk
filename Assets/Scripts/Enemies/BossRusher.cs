@@ -6,6 +6,8 @@ public class BossRusher : EnemyRusher
 {
     private BossController boss;
     private bool wasRushingLastFrame;
+
+    [Header("Boss Settings")]
     public float patrolSpeed = 2.5f;
     public bool fightStarted = false;
 
@@ -38,6 +40,7 @@ public class BossRusher : EnemyRusher
             rb.linearVelocity = velocity;
             return;
         }
+
         base.FixedUpdate();
     }
 

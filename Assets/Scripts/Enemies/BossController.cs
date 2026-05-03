@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BossController : MonoBehaviour
 {
+    public Transform player;
+
     [Header("References")]
     public GameObject cart;
     public GameObject driver;
@@ -17,7 +19,6 @@ public class BossController : MonoBehaviour
     public float maxDistanceFromCart = 8f;
     public float dismountRange = 4f;
 
-    public Transform player;
     private int rushCount = 0;
     private float meleeTimer;
     private bool readyToDismount = false;
@@ -38,6 +39,7 @@ public class BossController : MonoBehaviour
     {
         state = State.Cart;
         driver.SetActive(false);
+        GetComponent<Health>().OnDeath += OnBossDeath;
 
         if (player == null)
             player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -158,21 +160,16 @@ public class BossController : MonoBehaviour
     public void StartBossFight()
     {
         foreach (var spawner in spawners)
-        {
             spawner.StartSpawning();
-        }
     }
 
-    void OnDestroy()
+    void OnBossDeath()
     {
         foreach (var spawner in spawners)
-        {
             spawner.StopSpawning();
-        }
+
         if (goal != null)
-        {
             goal.UnlockGoal();
-        }
     }
 
     void OnDrawGizmosSelected()

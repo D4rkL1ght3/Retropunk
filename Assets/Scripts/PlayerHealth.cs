@@ -35,6 +35,7 @@ public class PlayerHealth : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         StopAllCoroutines();
         StartCoroutine(DamageFlash());
@@ -52,13 +53,13 @@ public class PlayerHealth : MonoBehaviour
     public void Heal(int heal)
     {
         currentHealth += heal;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
 
         StopAllCoroutines();
         StartCoroutine(HealFlash());
         OnHealed?.Invoke();
 
         Debug.Log(gameObject.name + " healed for " + heal);
-        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
     }
 
     IEnumerator DamageFlash()

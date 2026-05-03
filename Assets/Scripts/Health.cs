@@ -30,6 +30,8 @@ public class Health : MonoBehaviour
         if (isDead) return;
 
         currentHealth -= damage;
+        currentHealth = Mathf.Clamp(currentHealth, 0, maxHealth);
+
         if (controller != null)
             controller.OnDamaged();
 
