@@ -11,7 +11,6 @@ public class BossMelee : EnemyMelee
         base.Start();
         boss = GetComponentInParent<BossController>();
         aggroed = true;
-        aggroTime = Mathf.Infinity;
     }
 
     protected override void Update()
