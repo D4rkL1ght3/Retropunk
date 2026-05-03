@@ -161,6 +161,8 @@ public class BossController : MonoBehaviour
     {
         foreach (var spawner in spawners)
             spawner.StartSpawning();
+
+        AudioManager.Instance.PlayBossMusic();
     }
 
     void OnBossDeath()

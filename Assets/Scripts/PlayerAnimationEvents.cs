@@ -11,8 +11,9 @@ public class PlayerAnimationEvents : MonoBehaviour
     public void OnDeath()
     {
         if (GameOverManager.Instance != null)
-        {
             GameOverManager.Instance.GameOver();
-        }
+
+        if (AudioManager.Instance != null)
+            AudioManager.Instance.PlayDefeatMusic();
     }
 }
