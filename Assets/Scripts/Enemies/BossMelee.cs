@@ -58,6 +58,9 @@ public class BossMelee : EnemyMelee
     void OnDestroy()
     {
         if (boss != null)
+        {
+            boss.OnBossDeath();
             Destroy(boss.gameObject);
+        }
     }
 }
