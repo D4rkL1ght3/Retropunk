@@ -7,6 +7,7 @@ public class BossRusher : EnemyRusher
     private BossController boss;
     private bool wasRushingLastFrame;
     public float patrolSpeed = 2.5f;
+    public bool fightStarted = false;
 
     protected override void Start()
     {
@@ -20,10 +21,11 @@ public class BossRusher : EnemyRusher
 
         DetectRushEnd();
 
-        if (currentState == EnemyState.Chase)
+        if (currentState == EnemyState.Chase && !fightStarted)
         {
-            aggroed = true;
             boss.StartBossFight();
+            aggroed = true;
+            fightStarted = true;
         }
     }
 
