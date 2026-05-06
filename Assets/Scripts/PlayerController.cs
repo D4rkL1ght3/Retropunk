@@ -186,14 +186,40 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         defaultGravity = rb.gravityScale;
 
-        if (primaryWeapon != null)
-            primaryWeapon.Initialize();
-
-        if (secondaryWeapon != null)
-            secondaryWeapon.Initialize();
+        InitializeLoadout();
 
         currentStamina = maxStamina;
         UpdateAmmoUI();
+    }
+
+    void InitializeLoadout()
+    {
+        var loadout = LoadoutManager.Instance.currentLoadout;
+
+        if (loadout == null)
+        {
+            Debug.LogWarning("No loadout found!");
+            return;
+        }
+
+        // Guns
+        if (loadout.primaryGun != null)
+        {
+            primaryWeapon = new Gun(loadout.primaryGun);
+            primaryWeapon.Initialize();
+        }
+
+        if (loadout.secondaryGun != null)
+        {
+            secondaryWeapon = new Gun(loadout.secondaryGun);
+            secondaryWeapon.Initialize();
+        }
+
+        // Melee
+        if (loadout.meleeWeapon != null)
+        {
+            meleeWeapon = new MeleeWeapon(loadout.meleeWeapon);
+        }
     }
 
     void Update()

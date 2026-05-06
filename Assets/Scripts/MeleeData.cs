@@ -10,6 +10,7 @@ public class MeleeData : ScriptableObject
     public float range = 0.5f;
     public float cooldown = 0.6f;
 
-    [Header("Animations")]
+    [Header("Visuals")]
+    public Sprite icon;
     public RuntimeAnimatorController animator;
 }
