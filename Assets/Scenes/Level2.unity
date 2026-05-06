@@ -17895,6 +17895,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e11162a296a387442a25b880581883a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadoutUI
+  tempLoadout:
+    primary:
+      gunName: 
+      fireRate: 0
+      damage: 0
+      bulletSpeed: 0
+      bulletLifetime: 0
+      maxAmmo: 0
+      currentAmmo: 0
+      reloadTime: 0
+      baseSprite: {fileID: 0}
+      diagonalSprite: {fileID: 0}
+      bulletPrefab: {fileID: 0}
+      nextFireTime: 0
+      gunType: 0
+    secondary:
+      gunName: 
+      fireRate: 0
+      damage: 0
+      bulletSpeed: 0
+      bulletLifetime: 0
+      maxAmmo: 0
+      currentAmmo: 0
+      reloadTime: 0
+      baseSprite: {fileID: 0}
+      diagonalSprite: {fileID: 0}
+      bulletPrefab: {fileID: 0}
+      nextFireTime: 0
+      gunType: 0
+    melee:
+      weaponName: 
+      damage: 0
+      range: 0
+      cooldown: 0
+      animator: {fileID: 0}
   gameUI: {fileID: 1478483076}
 --- !u!1 &1508039523
 GameObject:
@@ -23363,6 +23398,14 @@ PrefabInstance:
       propertyPath: ammoText
       value: 
       objectReference: {fileID: 1743465456}
+    - target: {fileID: 5511501621163338838, guid: fda30e614c6e9d542a92db7a0f9c24e3, type: 3}
+      propertyPath: primaryWeapon.shootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 0982b0c2a6ad8864cb536e31ce9afce4, type: 3}
+    - target: {fileID: 5511501621163338838, guid: fda30e614c6e9d542a92db7a0f9c24e3, type: 3}
+      propertyPath: secondaryWeapon.shootSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 493329b5da8b8ed41827b99fbac7871e, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

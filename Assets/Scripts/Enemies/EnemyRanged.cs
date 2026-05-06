@@ -31,6 +31,8 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     public GameObject bulletPrefab;
     public Transform firePoint;
+    public AudioSource audioSource;
+    public AudioClip shootSound;
 
     [Header("Shooting Mode")]
     public bool horizontalOnly = false;
@@ -272,6 +274,12 @@ public class EnemyRanged : MonoBehaviour, IEntity
         if (b != null)
         {
             b.Initialize(direction);
+        }
+
+        if (audioSource != null && shootSound != null)
+        {
+            audioSource.Stop();
+            audioSource.PlayOneShot(shootSound);
         }
     }
 

@@ -633,6 +633,7 @@ MonoBehaviour:
     gunName: Pistol
     fireRate: 0.5
     damage: 4
+    shootSound: {fileID: 8300000, guid: 0982b0c2a6ad8864cb536e31ce9afce4, type: 3}
     bulletSpeed: 20
     bulletLifetime: 0
     maxAmmo: 10
@@ -646,6 +647,7 @@ MonoBehaviour:
     gunName: Assault Rifle
     fireRate: 0.2
     damage: 3
+    shootSound: {fileID: 8300000, guid: 493329b5da8b8ed41827b99fbac7871e, type: 3}
     bulletSpeed: 25
     bulletLifetime: 1
     maxAmmo: 30

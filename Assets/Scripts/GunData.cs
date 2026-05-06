@@ -8,6 +8,7 @@ public class GunData : ScriptableObject
     [Header("Shooting")]
     public float fireRate = 0.2f;
     public int damage = 5;
+    public AudioClip shootSound;
 
     [Header("Projectile")]
     public float bulletSpeed = 20f;

@@ -360,6 +360,10 @@ public class PlayerController : MonoBehaviour
                 if (currentGun.CanShoot())
                 {
                     currentGun.Shoot(firePoint, currentAimDirection);
+                    if (currentGun.shootSound != null)
+                    {
+                        audioSource.PlayOneShot(currentGun.shootSound);
+                    }
 
                     UpdateAmmoUI();
                 }
