@@ -194,6 +194,12 @@ public class PlayerController : MonoBehaviour
 
     void InitializeLoadout()
     {
+        if (LoadoutManager.Instance == null)
+        {
+            Debug.LogWarning("LoadoutManager instance not found!");
+            return;
+        }
+
         var loadout = LoadoutManager.Instance.currentLoadout;
 
         if (loadout == null)
