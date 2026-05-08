@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d82ab6c7b819164a949b170559412e3, type: 3}
+  m_Name: CyberPistol
+  m_EditorClassIdentifier: Assembly-CSharp::GunData
+  gunName: Cyber Pistol
+  fireRate: 0.5
+  damage: 4
+  shootSound: {fileID: 8300000, guid: 0982b0c2a6ad8864cb536e31ce9afce4, type: 3}
+  bulletSpeed: 20
+  bulletLifetime: 1
+  maxAmmo: 10
+  reloadTime: 1
+  baseSprite: {fileID: 21300000, guid: 64f06502a5163e94b92d5664bf2a4418, type: 3}
+  diagonalSprite: {fileID: 21300000, guid: 34610e8e5c08de94ab006b3de756fd7b, type: 3}
+  bulletPrefab: {fileID: 1477378336292868779, guid: e56e9b639a4eee84093c688af3c9b6e1, type: 3}
+  gunType: 0
