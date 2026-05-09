@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02927b71bcc0f9d46a6344bb11142682, type: 3}
+  m_Name: WeaponArsenal
+  m_EditorClassIdentifier: Assembly-CSharp::WeaponDatabase
+  primaryGuns:
+  - {fileID: 11400000, guid: 996e2ad33c780184298001c71792be26, type: 2}
+  secondaryGuns:
+  - {fileID: 11400000, guid: a86e928c23ffd4f41b74f5ad8eb49ea7, type: 2}
+  meleeWeapons:
+  - {fileID: 11400000, guid: 061cd49f0d04f1d41b4dd2838bf54a90, type: 2}
