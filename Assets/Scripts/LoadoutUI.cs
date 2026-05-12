@@ -18,9 +18,4 @@ public class LoadoutUI : MonoBehaviour
     {
         selectionUI.Open(WeaponSelectionUI.SlotType.Melee);
     }
-
-    public void BackToMainMenu()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("MainMenu");
-    }
 }
