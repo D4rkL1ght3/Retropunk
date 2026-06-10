@@ -24,3 +24,16 @@ MonoBehaviour:
   diagonalSprite: {fileID: 21300000, guid: 19e2bdd10d9ff0044a2f51cb69af4d98, type: 3}
   bulletPrefab: {fileID: 6454494011821787917, guid: c26fc7d40d929244baad2680b457edce, type: 3}
   gunType: 1
+  statRatings:
+  - statName: Damage
+    rating: 8
+    statIcon: {fileID: 2984886049249454438, guid: 528ed76e7a0a87546b449089154077d9, type: 3}
+  - statName: Ammo Capacity
+    rating: 6
+    statIcon: {fileID: -7864223098581987500, guid: 4689ad54dba82664693c69e664c1bb42, type: 3}
+  - statName: Range
+    rating: 5
+    statIcon: {fileID: -800539931983229277, guid: 87ab4b065aa7d8a49a2e500d34dc2bf3, type: 3}
+  - statName: Reload Speed
+    rating: 4
+    statIcon: {fileID: 6766840999840905961, guid: abd3b28ad95bce74dbe4cb9956641d82, type: 3}

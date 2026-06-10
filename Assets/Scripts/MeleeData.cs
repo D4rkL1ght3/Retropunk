@@ -13,4 +13,7 @@ public class MeleeData : ScriptableObject
     [Header("Visuals")]
     public Sprite icon;
     public RuntimeAnimatorController animator;
+
+    [Header("Loadout UI Stat Ratings")]
+    public WeaponStatRating[] statRatings;
 }

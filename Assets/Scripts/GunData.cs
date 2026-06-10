@@ -26,4 +26,7 @@ public class GunData : ScriptableObject
     public GameObject bulletPrefab;
 
     public Gun.GunType gunType;
+
+    [Header("Loadout UI Stat Ratings")]
+    public WeaponStatRating[] statRatings;
 }

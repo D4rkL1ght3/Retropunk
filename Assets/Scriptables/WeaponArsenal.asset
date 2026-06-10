@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::WeaponDatabase
   primaryGuns:
   - {fileID: 11400000, guid: 996e2ad33c780184298001c71792be26, type: 2}
+  - {fileID: 11400000, guid: ca154b3a526e97d44af7442efb28b06a, type: 2}
   secondaryGuns:
   - {fileID: 11400000, guid: a86e928c23ffd4f41b74f5ad8eb49ea7, type: 2}
   meleeWeapons:

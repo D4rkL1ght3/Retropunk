@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class WeaponSelectionUI : MonoBehaviour
@@ -14,7 +15,11 @@ public class WeaponSelectionUI : MonoBehaviour
 
     [Header("UI")]
     public TextMeshProUGUI weaponNameText;
-    public TextMeshProUGUI statsText;
+    public Image weaponDisplay;
+    public GameObject loadoutSelectPanel;
+
+    public LoadoutSlotUI[] slots;
+    [SerializeField] private WeaponStatsPanelUI statsPanel;
 
     private SlotType currentSlot;
     private int currentIndex;
@@ -66,10 +71,11 @@ public class WeaponSelectionUI : MonoBehaviour
 
             weaponNameText.text = data.weaponName;
 
-            statsText.text =
-                $"Damage: {data.damage}\n" +
-                $"Range: {data.range}\n" +
-                $"Cooldown: {data.cooldown}";
+            if (weaponDisplay != null)
+                weaponDisplay.sprite = data.icon;
+
+            if (statsPanel != null)
+                statsPanel.DisplayStats(data.statRatings);
         }
         else
         {
@@ -77,11 +83,11 @@ public class WeaponSelectionUI : MonoBehaviour
 
             weaponNameText.text = data.gunName;
 
-            statsText.text =
-                $"Damage: {data.damage}\n" +
-                $"Fire Rate: {data.fireRate}\n" +
-                $"Ammo: {data.maxAmmo}\n" +
-                $"Reload: {data.reloadTime}";
+            if (weaponDisplay != null)
+                weaponDisplay.sprite = data.baseSprite;
+
+            if (statsPanel != null)
+                statsPanel.DisplayStats(data.statRatings);
         }
     }
 
@@ -112,6 +118,16 @@ public class WeaponSelectionUI : MonoBehaviour
                 break;
         }
 
+        foreach (var slot in slots)
+            slot.Refresh();
+
         gameObject.SetActive(false);
+        loadoutSelectPanel.SetActive(true);
+    }
+
+    public void Cancel()
+    {
+        gameObject.SetActive(false);
+        loadoutSelectPanel.SetActive(true);
     }
 }

@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d82ab6c7b819164a949b170559412e3, type: 3}
+  m_Name: Laser Blaster
+  m_EditorClassIdentifier: Assembly-CSharp::GunData
+  gunName: Laser Blaster
+  fireRate: 0.4
+  damage: 5
+  shootSound: {fileID: 8300000, guid: 0982b0c2a6ad8864cb536e31ce9afce4, type: 3}
+  bulletSpeed: 30
+  bulletLifetime: 1
+  maxAmmo: 12
+  reloadTime: 1.8
+  baseSprite: {fileID: 21300000, guid: f45b3e1b1c30ab94582b31c0514b131e, type: 3}
+  diagonalSprite: {fileID: 21300000, guid: 2b79f128e4df54347a5cb3f99be23b43, type: 3}
+  bulletPrefab: {fileID: 6454494011821787917, guid: ff0b0d1532583cc40a60b721369f4b87, type: 3}
+  gunType: 1
+  statRatings:
+  - statName: Damage
+    rating: 9
+    statIcon: {fileID: 2984886049249454438, guid: 528ed76e7a0a87546b449089154077d9, type: 3}
+  - statName: Ammo Capacity
+    rating: 4
+    statIcon: {fileID: -7864223098581987500, guid: 4689ad54dba82664693c69e664c1bb42, type: 3}
+  - statName: Range
+    rating: 6
+    statIcon: {fileID: -800539931983229277, guid: 87ab4b065aa7d8a49a2e500d34dc2bf3, type: 3}
+  - statName: Reload Speed
+    rating: 2
+    statIcon: {fileID: 6766840999840905961, guid: abd3b28ad95bce74dbe4cb9956641d82, type: 3}

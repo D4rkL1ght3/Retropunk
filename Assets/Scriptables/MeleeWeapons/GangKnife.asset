@@ -18,3 +18,10 @@ MonoBehaviour:
   cooldown: 0.6
   icon: {fileID: 5488939364047104911, guid: d931ef7e1c70ce647b13d38cd26ee361, type: 3}
   animator: {fileID: 9100000, guid: 14880ab33c10e4540aab94d5701b5e45, type: 2}
+  statRatings:
+  - statName: Damage
+    rating: 10
+    statIcon: {fileID: -8221737138467185080, guid: 0e51c893723266d4587e87915a5d6820, type: 3}
+  - statName: Cooldown
+    rating: 6
+    statIcon: {fileID: -6564766312631433731, guid: d1e9e7b51098e6c45a8b91f6da7aef0d, type: 3}
