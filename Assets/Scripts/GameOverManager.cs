@@ -1,13 +1,19 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class GameOverManager : MonoBehaviour
 {
     public static GameOverManager Instance;
+
     public GameObject gameOverScreen;
     public GameObject levelClearScreen;
     public GameObject gameUI;
+
     [SerializeField] string nextSceneName;
+
+    [Header("Reward UI")]
+    [SerializeField] private TextMeshProUGUI rewardText;
 
     void Awake()
     {
@@ -19,6 +25,9 @@ public class GameOverManager : MonoBehaviour
 
     public void GameOver()
     {
+        if (LevelCashManager.Instance != null)
+            LevelCashManager.Instance.FailLevelAndLoseCash();
+
         Time.timeScale = 0f;
         gameUI.SetActive(false);
         gameOverScreen.SetActive(true);
@@ -26,12 +35,18 @@ public class GameOverManager : MonoBehaviour
 
     public void LevelClear()
     {
+        int reward = 0;
+
+        if (LevelCashManager.Instance != null)
+            reward = LevelCashManager.Instance.CompleteLevelAndGiveReward();
+
+        if (rewardText != null)
+            rewardText.text = "Reward: $" + reward;
+
         Time.timeScale = 0f;
         gameUI.SetActive(false);
         levelClearScreen.SetActive(true);
     }
-
-    // ===== BUTTON FUNCTIONS =====
 
     public void NextLevel()
     {

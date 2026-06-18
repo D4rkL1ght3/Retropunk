@@ -572,6 +572,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadoutUI
   selectionUI: {fileID: 1689146764}
+  slots:
+  - {fileID: 1936837981}
+  - {fileID: 1118341850}
+  - {fileID: 866574188}
 --- !u!1 &57150252
 GameObject:
   m_ObjectHideFlags: 0
@@ -3277,10 +3281,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4228e19be0e82704d8902a084086c8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LoadoutManager
+  weaponDatabase: {fileID: 11400000, guid: 57893f3c71d366649ae33199031ef337, type: 2}
   currentLoadout:
-    primaryGun: {fileID: 11400000, guid: 996e2ad33c780184298001c71792be26, type: 2}
-    secondaryGun: {fileID: 11400000, guid: a86e928c23ffd4f41b74f5ad8eb49ea7, type: 2}
-    meleeWeapon: {fileID: 11400000, guid: 061cd49f0d04f1d41b4dd2838bf54a90, type: 2}
+    primaryGun: {fileID: 0}
+    secondaryGun: {fileID: 0}
+    meleeWeapon: {fileID: 0}
 --- !u!4 &362433794
 Transform:
   m_ObjectHideFlags: 0

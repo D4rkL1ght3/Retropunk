@@ -3,6 +3,17 @@ using UnityEngine;
 public class LoadoutUI : MonoBehaviour
 {
     public WeaponSelectionUI selectionUI;
+    public LoadoutSlotUI[] slots;
+
+    void OnEnable()
+    {
+        // Refresh the loadout slots when the UI is enabled
+        var slots = GetComponentsInChildren<LoadoutSlotUI>();
+        foreach (var slot in slots)
+        {
+            slot.Refresh();
+        }
+    }
 
     public void OpenPrimary()
     {

@@ -17,9 +17,7 @@ public class WeaponSelectionUI : MonoBehaviour
     public TextMeshProUGUI weaponNameText;
     public Image weaponDisplay;
     public GameObject loadoutSelectPanel;
-
-    public LoadoutSlotUI[] slots;
-    [SerializeField] private WeaponStatsPanelUI statsPanel;
+    public WeaponStatsPanelUI statsPanel;
 
     private SlotType currentSlot;
     private int currentIndex;
@@ -118,8 +116,7 @@ public class WeaponSelectionUI : MonoBehaviour
                 break;
         }
 
-        foreach (var slot in slots)
-            slot.Refresh();
+        LoadoutManager.Instance.SaveLoadout();
 
         gameObject.SetActive(false);
         loadoutSelectPanel.SetActive(true);
