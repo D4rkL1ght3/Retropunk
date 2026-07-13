@@ -11,8 +11,6 @@ public class GameOverManager : MonoBehaviour
     public GameObject gameUI;
 
     [SerializeField] string nextSceneName;
-
-    [Header("Reward UI")]
     [SerializeField] private TextMeshProUGUI rewardText;
 
     void Awake()
@@ -41,7 +39,7 @@ public class GameOverManager : MonoBehaviour
             reward = LevelCashManager.Instance.CompleteLevelAndGiveReward();
 
         if (rewardText != null)
-            rewardText.text = "Reward: $" + reward;
+            rewardText.text = "$" + reward;
 
         Time.timeScale = 0f;
         gameUI.SetActive(false);
