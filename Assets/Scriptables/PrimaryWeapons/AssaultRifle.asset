@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: AssaultRifle
   m_EditorClassIdentifier: Assembly-CSharp::GunData
   gunName: Assault Rifle
+  price: 0
+  unlockedByDefault: 1
   fireRate: 0.2
   damage: 3
   shootSound: {fileID: 8300000, guid: 493329b5da8b8ed41827b99fbac7871e, type: 3}

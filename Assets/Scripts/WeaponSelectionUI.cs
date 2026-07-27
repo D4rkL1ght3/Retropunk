@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -17,13 +18,15 @@ public class WeaponSelectionUI : MonoBehaviour
     public TextMeshProUGUI weaponNameText;
     public Image weaponDisplay;
     public GameObject loadoutSelectPanel;
-    public WeaponStatsPanelUI statsPanel;
+
+    public LoadoutSlotUI[] slots;
+    [SerializeField] private WeaponStatsPanelUI statsPanel;
 
     private SlotType currentSlot;
     private int currentIndex;
 
-    private GunData[] currentGunList;
-    private MeleeData[] currentMeleeList;
+    private List<GunData> currentGunList = new List<GunData>();
+    private List<MeleeData> currentMeleeList = new List<MeleeData>();
 
     public void Open(SlotType slot)
     {
@@ -31,25 +34,56 @@ public class WeaponSelectionUI : MonoBehaviour
         currentSlot = slot;
         currentIndex = 0;
 
-        switch (slot)
-        {
-            case SlotType.Primary:
-                currentGunList = database.primaryGuns;
-                break;
-            case SlotType.Secondary:
-                currentGunList = database.secondaryGuns;
-                break;
-            case SlotType.Melee:
-                currentMeleeList = database.meleeWeapons;
-                break;
-        }
+        BuildOwnedWeaponList();
 
         RefreshUI();
+    }
+
+    void BuildOwnedWeaponList()
+    {
+        currentGunList.Clear();
+        currentMeleeList.Clear();
+
+        if (WeaponOwnershipManager.Instance == null)
+        {
+            Debug.LogWarning("WeaponOwnershipManager not found!");
+            return;
+        }
+
+        switch (currentSlot)
+        {
+            case SlotType.Primary:
+                foreach (GunData gun in database.primaryGuns)
+                {
+                    if (WeaponOwnershipManager.Instance.IsGunOwned(gun))
+                        currentGunList.Add(gun);
+                }
+                break;
+
+            case SlotType.Secondary:
+                foreach (GunData gun in database.secondaryGuns)
+                {
+                    if (WeaponOwnershipManager.Instance.IsGunOwned(gun))
+                        currentGunList.Add(gun);
+                }
+                break;
+
+            case SlotType.Melee:
+                foreach (MeleeData melee in database.meleeWeapons)
+                {
+                    if (WeaponOwnershipManager.Instance.IsMeleeOwned(melee))
+                        currentMeleeList.Add(melee);
+                }
+                break;
+        }
     }
 
     public void Next()
     {
         int count = GetCurrentCount();
+
+        if (count <= 0) return;
+
         currentIndex = (currentIndex + 1) % count;
         RefreshUI();
     }
@@ -57,15 +91,33 @@ public class WeaponSelectionUI : MonoBehaviour
     public void Previous()
     {
         int count = GetCurrentCount();
+
+        if (count <= 0) return;
+
         currentIndex = (currentIndex - 1 + count) % count;
         RefreshUI();
     }
 
     void RefreshUI()
     {
+        int count = GetCurrentCount();
+
+        if (count <= 0)
+        {
+            weaponNameText.text = "No Owned Weapons";
+
+            if (weaponDisplay != null)
+                weaponDisplay.sprite = null;
+
+            if (statsPanel != null)
+                statsPanel.DisplayStats(null);
+
+            return;
+        }
+
         if (currentSlot == SlotType.Melee)
         {
-            var data = currentMeleeList[currentIndex];
+            MeleeData data = currentMeleeList[currentIndex];
 
             weaponNameText.text = data.weaponName;
 
@@ -77,7 +129,7 @@ public class WeaponSelectionUI : MonoBehaviour
         }
         else
         {
-            var data = currentGunList[currentIndex];
+            GunData data = currentGunList[currentIndex];
 
             weaponNameText.text = data.gunName;
 
@@ -92,13 +144,21 @@ public class WeaponSelectionUI : MonoBehaviour
     int GetCurrentCount()
     {
         if (currentSlot == SlotType.Melee)
-            return currentMeleeList.Length;
+            return currentMeleeList.Count;
 
-        return currentGunList.Length;
+        return currentGunList.Count;
     }
 
     public void Apply()
     {
+        int count = GetCurrentCount();
+
+        if (count <= 0)
+        {
+            Debug.LogWarning("Cannot apply weapon. No owned weapons available.");
+            return;
+        }
+
         var loadout = LoadoutManager.Instance.currentLoadout;
 
         switch (currentSlot)
@@ -117,6 +177,9 @@ public class WeaponSelectionUI : MonoBehaviour
         }
 
         LoadoutManager.Instance.SaveLoadout();
+
+        foreach (var slot in slots)
+            slot.Refresh();
 
         gameObject.SetActive(false);
         loadoutSelectPanel.SetActive(true);

@@ -13,6 +13,8 @@ MonoBehaviour:
   m_Name: GangKnife
   m_EditorClassIdentifier: Assembly-CSharp::MeleeData
   weaponName: Gang Knife
+  price: 0
+  unlockedByDefault: 1
   damage: 10
   range: 0.5
   cooldown: 0.6

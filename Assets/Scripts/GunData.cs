@@ -5,6 +5,10 @@ public class GunData : ScriptableObject
 {
     public string gunName;
 
+    [Header("Shop")]
+    public int price = 100;
+    public bool unlockedByDefault = false;
+
     [Header("Shooting")]
     public float fireRate = 0.2f;
     public int damage = 5;

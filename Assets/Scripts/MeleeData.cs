@@ -5,6 +5,10 @@ public class MeleeData : ScriptableObject
 {
     public string weaponName;
 
+    [Header("Shop")]
+    public int price = 100;
+    public bool unlockedByDefault = false;
+
     [Header("Stats")]
     public int damage = 10;
     public float range = 0.5f;
