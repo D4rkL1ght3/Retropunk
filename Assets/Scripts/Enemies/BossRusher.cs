@@ -10,6 +10,8 @@ public class BossRusher : EnemyRusher
     [Header("Boss Settings")]
     public float patrolSpeed = 2.5f;
     public bool fightStarted = false;
+    public float knockbackForce = 10f;
+    public float stunDuration = 1f;
 
     protected override void Start()
     {
@@ -42,6 +44,21 @@ public class BossRusher : EnemyRusher
         }
 
         base.FixedUpdate();
+    }
+
+    protected override void RushHit()
+    {
+        base.RushHit();
+
+        PlayerController controller = player.GetComponent<PlayerController>();
+
+        if (controller != null)
+        {
+            Vector2 dir = (player.position - transform.position).normalized;
+
+            controller.ApplyKnockback(dir, knockbackForce);
+            controller.ApplyStun(stunDuration);
+        }
     }
 
     void DetectRushEnd()

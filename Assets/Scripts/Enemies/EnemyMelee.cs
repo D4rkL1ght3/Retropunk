@@ -32,7 +32,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public LayerMask Ground;
     public LayerMask Platform;
 
-    private Rigidbody2D rb;
+    protected Rigidbody2D rb;
     protected Animator animator;
     private Health health;
 
@@ -225,7 +225,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         transform.localScale = scale;
     }
 
-    protected void TryAttack()
+    protected virtual void TryAttack()
     {
         if (Time.time >= lastAttackTime + attackCooldown && distance <= attackRange)
         {
@@ -234,7 +234,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
     }
 
-    void Attack()
+    protected virtual void Attack()
     {
         isAttacking = true;
 

@@ -179,6 +179,15 @@ public class PlayerController : MonoBehaviour
     private bool isDashing = false;
     private float lastDashTime = -Mathf.Infinity;
 
+    [Header("Crowd Control")]
+    [SerializeField] private float knockbackControlLock = 0.2f;
+
+    private bool isStunned = false;
+    private bool isKnockedBack = false;
+
+    private Coroutine stunCoroutine;
+    private Coroutine knockbackCoroutine;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -231,7 +240,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Time.timeScale == 0f) return;
 
-        if (isDashing) return;
+        if (isDashing || isKnockedBack || isStunned) return;
 
         // Get horizontal input
         moveInput = Input.GetAxisRaw("Horizontal");
@@ -630,6 +639,61 @@ public class PlayerController : MonoBehaviour
         isDashing = false;
     }
 
+    // Knockback
+    public void ApplyKnockback(Vector2 direction, float force)
+    {
+        if (knockbackCoroutine != null)
+            StopCoroutine(knockbackCoroutine);
+
+        knockbackCoroutine = StartCoroutine(KnockbackRoutine(direction, force));
+    }
+
+    private IEnumerator KnockbackRoutine(Vector2 direction, float force)
+    {
+        isKnockedBack = true;
+
+        CancelReload();
+        CancelHealing();
+
+        isAttacking = false;
+
+        rb.linearVelocity = Vector2.zero;
+        rb.AddForce(direction.normalized * force, ForceMode2D.Impulse);
+
+        yield return new WaitForSeconds(knockbackControlLock);
+
+        isKnockedBack = false;
+        knockbackCoroutine = null;
+    }
+
+    // Stun
+    public void ApplyStun(float duration)
+    {
+        if (stunCoroutine != null)
+            StopCoroutine(stunCoroutine);
+
+        stunCoroutine = StartCoroutine(StunRoutine(duration));
+    }
+
+    private IEnumerator StunRoutine(float duration)
+    {
+        isStunned = true;
+
+        CancelReload();
+        CancelHealing();
+
+        isAttacking = false;
+
+        EnterDefaultMode();
+
+        defaultAnimator.SetTrigger("Stunned");
+
+        yield return new WaitForSeconds(duration);
+
+        isStunned = false;
+        stunCoroutine = null;
+    }
+
     // Melee Attack
     void Attack()
     {
@@ -924,9 +988,9 @@ public class PlayerController : MonoBehaviour
             groundLayer | platformLayer
         );
 
-        if (isDashing) return;
+        if (isDashing || isKnockedBack) return;
 
-        if (isHealing)
+        if (isHealing || isStunned)
         {
             // Completely lock player
             rb.linearVelocity = new Vector2(0f, rb.linearVelocity.y);

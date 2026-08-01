@@ -229,7 +229,7 @@ public class EnemyRusher : MonoBehaviour, IEntity
         }
     }
 
-    void RushHit()
+    protected virtual void RushHit()
     {
         if (!isRushing || hasHitThisRun) return;
 
