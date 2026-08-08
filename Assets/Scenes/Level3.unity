@@ -9265,7 +9265,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -18712,9 +18712,9 @@ MonoBehaviour:
   aggroTime: 5
   aggroed: 0
   patrolSpeed: 2.5
-  fightStarted: 0
   knockbackForce: 10
   stunDuration: 1
+  fightStarted: 0
 --- !u!114 &1935703383
 MonoBehaviour:
   m_ObjectHideFlags: 0

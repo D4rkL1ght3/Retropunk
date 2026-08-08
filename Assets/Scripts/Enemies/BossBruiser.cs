@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class BossBruiser : EnemyMelee
 {
-    [Header("Heavy Charge")]
-    private float walkSpeed;
+    [Header("Boss Settings")]
     public float sprintSpeed = 6f;
+    private float walkSpeed;
 
     public float chargeRange = 5f;
     public float heavyCooldown = 6f;

@@ -7411,7 +7411,7 @@ MonoBehaviour:
   maxReachableHeight: 1.5
   aggroTime: 3
   aggroed: 0
-  sprintSpeed: 3
+  sprintSpeed: 3.5
   chargeRange: 8
   heavyCooldown: 6
   heavyDamage: 10

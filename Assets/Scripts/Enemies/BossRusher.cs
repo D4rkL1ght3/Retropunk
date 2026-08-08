@@ -9,9 +9,9 @@ public class BossRusher : EnemyRusher
 
     [Header("Boss Settings")]
     public float patrolSpeed = 2.5f;
-    public bool fightStarted = false;
     public float knockbackForce = 10f;
     public float stunDuration = 1f;
+    public bool fightStarted = false;
 
     protected override void Start()
     {
