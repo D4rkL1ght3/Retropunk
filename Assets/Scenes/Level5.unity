@@ -6865,7 +6865,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -7211,6 +7211,7 @@ GameObject:
   - component: {fileID: 648964731}
   - component: {fileID: 648964735}
   - component: {fileID: 648964736}
+  - component: {fileID: 648964737}
   m_Layer: 7
   m_Name: FootballBully
   m_TagString: Enemy
@@ -7414,10 +7415,24 @@ MonoBehaviour:
   sprintSpeed: 3.5
   chargeRange: 8
   heavyCooldown: 6
-  heavyDamage: 10
+  heavyDamage: 12
   heavyAttackRange: 0.75
   knockbackForce: 8
   stunDuration: 0.5
+--- !u!114 &648964737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 648964730}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e510bb1c8451e8345812c70fd64d9cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health
+  maxHealth: 80
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &657279968
 GameObject:
   m_ObjectHideFlags: 0
@@ -18181,8 +18196,8 @@ SceneRoots:
   - {fileID: 363655676}
   - {fileID: 1501174786}
   - {fileID: 1486099539}
+  - {fileID: 648964734}
   - {fileID: 1989130137323387436}
   - {fileID: 422724325}
   - {fileID: 1105215479}
   - {fileID: 1076211559}
-  - {fileID: 648964734}
