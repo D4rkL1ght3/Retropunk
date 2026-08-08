@@ -7351,7 +7351,7 @@ Transform:
   m_GameObject: {fileID: 648964730}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -33, y: 1.7, z: 0}
+  m_LocalPosition: {x: 86, y: -0.3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7393,9 +7393,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossBruiser
   player: {fileID: 0}
   moveSpeed: 2.5
-  patrolDistance: 3
-  patrolWaitTime: 1.5
-  detectionRange: 10
+  patrolDistance: 0.5
+  patrolWaitTime: 3
+  detectionRange: 12
   attackRange: 0.9
   damage: 6
   attackCooldown: 1
