@@ -645,6 +645,9 @@ public class PlayerController : MonoBehaviour
         if (knockbackCoroutine != null)
             StopCoroutine(knockbackCoroutine);
 
+        if (playerHealth != null && playerHealth.CurrentHealth <= 0)
+            return;
+
         knockbackCoroutine = StartCoroutine(KnockbackRoutine(direction, force));
     }
 
@@ -671,6 +674,9 @@ public class PlayerController : MonoBehaviour
     {
         if (stunCoroutine != null)
             StopCoroutine(stunCoroutine);
+
+        if (playerHealth != null && playerHealth.CurrentHealth <= 0)
+            return;
 
         stunCoroutine = StartCoroutine(StunRoutine(duration));
     }

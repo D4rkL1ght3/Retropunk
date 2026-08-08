@@ -24,7 +24,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public int damage = 4;
     public float attackCooldown = 1.2f;
 
-    private float lastAttackTime;
+    protected private float lastAttackTime;
     protected bool isAttacking = false;
 
     [Header("Raycast")]
@@ -45,13 +45,13 @@ public class EnemyMelee : MonoBehaviour, IEntity
     private float aggroTimer;
     protected float distance;
 
-    enum EnemyState
+    protected enum EnemyState
     {
         Patrol,
         Chase
     }
 
-    EnemyState currentState = EnemyState.Patrol;
+    protected EnemyState currentState = EnemyState.Patrol;
 
     protected virtual void Start()
     {
@@ -168,7 +168,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
     }
 
-    void ChasePlayer()
+    protected virtual void ChasePlayer()
     {
         if (isAttacking)
         {
@@ -277,7 +277,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         Destroy(gameObject);
     }
 
-    void OnDrawGizmosSelected()
+    protected virtual void OnDrawGizmosSelected()
     {
         // Attack range
         Gizmos.color = Color.red;

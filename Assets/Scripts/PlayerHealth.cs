@@ -102,13 +102,13 @@ public class PlayerHealth : MonoBehaviour
         if (playerController != null)
             playerController.enabled = false;
 
+        if (animator != null)
+            animator.SetTrigger("Death");
+
         if (audioSource != null && deathSound != null)
         {
             audioSource.Stop();
             audioSource.PlayOneShot(deathSound);
         }
-
-        if (animator != null)
-            animator.SetTrigger("Death");
     }
 }
