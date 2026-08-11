@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class BossBruiser : EnemyMelee
 {
-    [Header("Boss Settings")]
+    [Header("Boss Charge")]
     public float sprintSpeed = 6f;
     private float walkSpeed;
 
@@ -11,13 +11,26 @@ public class BossBruiser : EnemyMelee
     public float heavyCooldown = 6f;
     public int heavyDamage = 12;
     public float heavyAttackRange = 0.8f;
+
     public float knockbackForce = 12f;
     public float stunDuration = 1f;
 
+    [Header("Football Throw")]
+    public GameObject lobbedProjectilePrefab;
+    public Transform throwPoint;
+
+    public float throwRange = 10f;
+    public float throwForce = 7f;
+    public float throwCooldown = 3f;
+
     private bool heavyReady;
+    private bool throwReady;
     private bool isCharging = false;
     private bool isTaunting = false;
-    private float nextHeavyTime = -1f;
+    private bool isThrowing = false;
+
+    private float nextHeavyTime;
+    private float nextThrowTime;
     private bool fightStarted = false;
 
     protected override void Start()
@@ -45,6 +58,7 @@ public class BossBruiser : EnemyMelee
         }
 
         heavyReady = Time.time >= nextHeavyTime;
+        throwReady = Time.time >= nextThrowTime;
 
         if (heavyReady && !isCharging && distance <= chargeRange)
         {
@@ -52,11 +66,16 @@ public class BossBruiser : EnemyMelee
             animator.SetBool("isSprinting", true);
             isCharging = true;
         }
+
+        if (throwReady && !isThrowing && !isCharging)
+        {
+            TryThrow();
+        }
     }
 
     protected override void ChasePlayer()
     {
-        if (isAttacking)
+        if (isAttacking || isThrowing)
         {
             moveDirection = 0f;
             return;
@@ -80,6 +99,8 @@ public class BossBruiser : EnemyMelee
 
     protected override void TryAttack()
     {
+        if (isThrowing) return;
+
         if (heavyReady)
         {
             if (Time.time >= lastAttackTime + attackCooldown && distance <= heavyAttackRange)
@@ -149,6 +170,47 @@ public class BossBruiser : EnemyMelee
         isTaunting = false;
     }
 
+    void TryThrow()
+    {
+        if (isAttacking) return;
+
+        if (throwReady && distance > chargeRange && distance <= throwRange)
+        {
+            isThrowing = true;
+            animator.SetTrigger("Throw");
+            nextThrowTime = Time.time + throwCooldown;
+        }
+    }
+
+    public void ThrowLobbedProjectile()
+    {
+        float horizontalDistance = player.position.x - throwPoint.position.x;
+
+        Vector2 throwVelocity = new Vector2(
+            horizontalDistance,
+            throwForce
+        );
+
+        GameObject projectile = Instantiate(
+            lobbedProjectilePrefab,
+            throwPoint.position,
+            Quaternion.identity
+        );
+
+        LobbedProjectile lobbedProjectile =
+            projectile.GetComponent<LobbedProjectile>();
+
+        if (lobbedProjectile != null)
+        {
+            lobbedProjectile.Initialize(throwVelocity);
+        }
+    }
+
+    public void EndThrow()
+    {
+        isThrowing = false;
+    }
+
     public void StartBossFight()
     {
         AudioManager.Instance.PlayBossMusic();
@@ -164,5 +226,8 @@ public class BossBruiser : EnemyMelee
         // Charge range
         Gizmos.color = Color.orange;
         Gizmos.DrawWireSphere(transform.position, chargeRange);
+        // Throw range
+        Gizmos.color = Color.purple;
+        Gizmos.DrawWireSphere(transform.position, throwRange);
     }
 }
