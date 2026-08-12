@@ -666,6 +666,7 @@ MonoBehaviour:
     damage: 8
     range: 0.5
     cooldown: 0.6
+    icon: {fileID: 0}
     animator: {fileID: 9100000, guid: 14880ab33c10e4540aab94d5701b5e45, type: 2}
   weaponAnimator: {fileID: 304752115379157622}
   meleePoint: {fileID: 3065988437688483490}
@@ -685,6 +686,7 @@ MonoBehaviour:
   dashForce: 10
   dashDuration: 0.3
   dashCooldown: 1.5
+  knockbackControlLock: 0.2
 --- !u!70 &6658092296800582861
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -719,8 +721,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0.015560627}
-  m_Size: {x: 0.65625, y: 1.0626287}
+  m_Offset: {x: 0, y: -0.1}
+  m_Size: {x: 0.6, y: 0.9}
   m_Direction: 0
 --- !u!82 &5947833144328812576
 AudioSource:

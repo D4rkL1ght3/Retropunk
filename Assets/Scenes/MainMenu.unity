@@ -18433,10 +18433,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.1796875
+    x: 0
     y: 0
-    width: 0.22013889
-    height: 0.22013889
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 34
@@ -21452,7 +21452,10 @@ MonoBehaviour:
   weaponNameText: {fileID: 873137188}
   weaponDisplay: {fileID: 1839406335}
   loadoutSelectPanel: {fileID: 36455502}
-  slots: []
+  slots:
+  - {fileID: 1936837981}
+  - {fileID: 1118341850}
+  - {fileID: 866574188}
   statsPanel: {fileID: 1298399352}
 --- !u!1 &1694588428
 GameObject:
