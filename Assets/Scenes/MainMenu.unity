@@ -577,6 +577,10 @@ MonoBehaviour:
   shopButton: {fileID: 1217500647}
   shopButtonText: {fileID: 980628368}
   requiredUnlockedLevel: 3
+  slots:
+  - {fileID: 1936837981}
+  - {fileID: 1118341850}
+  - {fileID: 866574188}
 --- !u!1 &37180643
 GameObject:
   m_ObjectHideFlags: 0
@@ -21452,10 +21456,6 @@ MonoBehaviour:
   weaponNameText: {fileID: 873137188}
   weaponDisplay: {fileID: 1839406335}
   loadoutSelectPanel: {fileID: 36455502}
-  slots:
-  - {fileID: 1936837981}
-  - {fileID: 1118341850}
-  - {fileID: 866574188}
   statsPanel: {fileID: 1298399352}
 --- !u!1 &1694588428
 GameObject:

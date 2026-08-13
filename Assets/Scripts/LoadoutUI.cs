@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,10 +15,24 @@ public class LoadoutUI : MonoBehaviour
     [Header("Shop Unlock")]
     [SerializeField] private int requiredUnlockedLevel = 4;
 
+    [Header("Slots")]
+    [SerializeField] private LoadoutSlotUI[] slots;
+
     void OnEnable()
     {
         RefreshShopButton();
+        RefreshSlots();
     }
+
+    public void RefreshSlots()
+    {
+        foreach (LoadoutSlotUI slot in slots)
+        {
+            if (slot != null)
+                slot.Refresh();
+        }
+    }
+
 
     public void OpenPrimary()
     {

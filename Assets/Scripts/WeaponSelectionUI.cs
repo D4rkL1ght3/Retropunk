@@ -19,7 +19,6 @@ public class WeaponSelectionUI : MonoBehaviour
     public Image weaponDisplay;
     public GameObject loadoutSelectPanel;
 
-    public LoadoutSlotUI[] slots;
     [SerializeField] private WeaponStatsPanelUI statsPanel;
 
     private SlotType currentSlot;
@@ -177,9 +176,6 @@ public class WeaponSelectionUI : MonoBehaviour
         }
 
         LoadoutManager.Instance.SaveLoadout();
-
-        foreach (var slot in slots)
-            slot.Refresh();
 
         gameObject.SetActive(false);
         loadoutSelectPanel.SetActive(true);
