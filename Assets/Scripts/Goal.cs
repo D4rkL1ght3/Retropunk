@@ -20,19 +20,17 @@ public class Goal : MonoBehaviour
 
     void Start()
     {
-        if (isLocked && closedContainer != null)
+        if (isLocked && closedContainer != null && openContainer != null)
         {
             closedContainer.SetActive(true);
-            if (openContainer != null)
-            {
-                openContainer.SetActive(false);
-            }
+            openContainer.SetActive(false);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (completed || !collision.CompareTag("Player")) return;
+
         if (isLocked)
         {
             Debug.Log("Goal is locked! Complete required objectives to unlock.");
