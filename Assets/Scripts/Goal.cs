@@ -49,13 +49,11 @@ public class Goal : MonoBehaviour
     {
         isLocked = false;
         Debug.Log("Goal Unlocked!");
-        if (closedContainer != null)
+
+        if (closedContainer != null && openContainer != null)
         {
             closedContainer.SetActive(false);
-            if (openContainer != null)
-            {
-                openContainer.SetActive(true);
-            }
+            openContainer.SetActive(true);
         }
     }
 
