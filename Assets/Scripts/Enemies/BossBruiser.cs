@@ -35,17 +35,26 @@ public class BossBruiser : EnemyMelee
     private bool fightStarted = false;
 
     [Header("References")]
-    [SerializeField] private Goal goal;
     [SerializeField] private CinemachineConfiner2D cameraConfiner;
     public BoxCollider2D bossCameraBounds;
     private BoxCollider2D levelCameraBounds;
 
+    [SerializeField] private Goal goal;
+    public GameObject doorClosed;
+    public GameObject doorOpen;
+
     protected override void Start()
     {
         base.Start();
+
         GetComponent<Health>().OnDeath += OnBossDeath;
 
         walkSpeed = moveSpeed;
+
+        if (cameraConfiner != null)
+        {
+            levelCameraBounds = cameraConfiner.BoundingShape2D as BoxCollider2D;
+        }
     }
 
     protected override void Update()
@@ -225,7 +234,6 @@ public class BossBruiser : EnemyMelee
 
         if (cameraConfiner != null && bossCameraBounds)
         {
-            cameraConfiner.BoundingShape2D = levelCameraBounds;
             cameraConfiner.BoundingShape2D = bossCameraBounds;
         }
     }
@@ -237,6 +245,12 @@ public class BossBruiser : EnemyMelee
 
         if (cameraConfiner != null)
             cameraConfiner.BoundingShape2D = levelCameraBounds;
+
+        if (doorOpen && doorClosed != null)
+        {
+            doorClosed.SetActive(false);
+            doorOpen.SetActive(true);
+        }
     }
 
     protected override void OnDrawGizmosSelected()

@@ -13744,7 +13744,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -14788,7 +14788,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.Cinemachine::Unity.Cinemachine.CinemachineConfiner2D
   BoundingShape2D: {fileID: 671871463}
   Damping: 0.5
-  SlowingDistance: 5
+  SlowingDistance: 0.01
   OversizeWindow:
     Enabled: 0
     MaxWindowSize: 0
