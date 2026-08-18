@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class BossBruiser : EnemyMelee
@@ -33,9 +34,16 @@ public class BossBruiser : EnemyMelee
     private float nextThrowTime;
     private bool fightStarted = false;
 
+    [Header("References")]
+    [SerializeField] private Goal goal;
+    [SerializeField] private CinemachineConfiner2D cameraConfiner;
+    public BoxCollider2D bossCameraBounds;
+    private BoxCollider2D levelCameraBounds;
+
     protected override void Start()
     {
         base.Start();
+        GetComponent<Health>().OnDeath += OnBossDeath;
 
         walkSpeed = moveSpeed;
     }
@@ -214,6 +222,21 @@ public class BossBruiser : EnemyMelee
     public void StartBossFight()
     {
         AudioManager.Instance.PlayBossMusic();
+
+        if (cameraConfiner != null && bossCameraBounds)
+        {
+            cameraConfiner.BoundingShape2D = levelCameraBounds;
+            cameraConfiner.BoundingShape2D = bossCameraBounds;
+        }
+    }
+
+    public void OnBossDeath()
+    {
+        if (goal != null)
+            goal.UnlockGoal();
+
+        if (cameraConfiner != null)
+            cameraConfiner.BoundingShape2D = levelCameraBounds;
     }
 
     protected override void OnDrawGizmosSelected()
