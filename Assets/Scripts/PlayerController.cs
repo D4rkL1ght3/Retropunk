@@ -603,6 +603,7 @@ public class PlayerController : MonoBehaviour
         }
 
         StartCoroutine(DashRoutine());
+        lastDashTime = Time.time;
         currentStamina -= 0.5f;
         staminaCooldownTimer = staminaCooldown;
         currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);

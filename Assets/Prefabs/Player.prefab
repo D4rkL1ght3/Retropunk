@@ -685,7 +685,7 @@ MonoBehaviour:
   healCooldown: 15
   dashForce: 10
   dashDuration: 0.3
-  dashCooldown: 1.5
+  dashCooldown: 0.6
   knockbackControlLock: 0.2
 --- !u!70 &6658092296800582861
 CapsuleCollider2D:
