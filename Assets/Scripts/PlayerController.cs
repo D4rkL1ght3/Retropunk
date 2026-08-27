@@ -989,11 +989,22 @@ public class PlayerController : MonoBehaviour
     void FixedUpdate()
     {
         // Ground Check
-        isGrounded = Physics2D.OverlapCircle(
+        if (Physics2D.OverlapCircle(
             groundCheck.position,
             groundCheckRadius,
-            groundLayer | platformLayer
-        );
+            platformLayer
+        ))
+        {
+            isGrounded = Mathf.Abs(rb.linearVelocity.y) < 0.1f;
+        }
+        else 
+        {
+            isGrounded = Physics2D.OverlapCircle(
+                groundCheck.position,
+                groundCheckRadius,
+                groundLayer
+            );
+        };
 
         if (isDashing || isKnockedBack) return;
 
