@@ -18,15 +18,23 @@ public class PlayerController : MonoBehaviour
     [Header("Movement")]
     public float moveSpeed = 4f;
     public float jumpForce = 8f;
-    private bool doubleJumpUsed = false;
 
     public float climbSpeed = 3f;
     private int ladderCount = 0;
+
+    private bool doubleJumpUsed = false;
+    private bool isFalling = false;
+    private float fallStartY;
     private bool isOnLadder => ladderCount > 0;
     private float ladderX;
     private bool isClimbing;
     private float verticalInput;
     private float defaultGravity;
+
+    [Header("Fall Damage")]
+    [SerializeField] private float safeFallDistance = 4f;
+    [SerializeField] private float damagePerUnit = 2f;
+    [SerializeField] private int maxFallDamage = 40;
 
     [Header("Ground Check")]
     public Transform groundCheck;
@@ -277,21 +285,30 @@ public class PlayerController : MonoBehaviour
         }
 
         // Jump
-        if (Input.GetButtonDown("Jump") && !doubleJumpUsed && currentStamina >= 0.25f && currentState != PlayerState.Melee)
+        if (Input.GetButtonDown("Jump") && currentStamina >= 0.25f && currentState != PlayerState.Melee)
         {
-            if (currentState != PlayerState.Default)
-                doubleJumpUsed = true; // Disable double jump
-
-            if (!isGrounded && !isClimbing)
+            // Normal jump
+            if (isGrounded && !isClimbing)
             {
-                // Double Jump
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+                isFalling = false;
+            }
+            // Double jump - only while still rising
+            else if (!isGrounded && !isClimbing && !doubleJumpUsed && !isFalling)
+            {
                 rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
+                rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
+
                 defaultAnimator.SetTrigger("DoubleJump");
                 doubleJumpUsed = true;
+                isFalling = false;
+            }
+            else
+            {
+                return;
             }
 
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            currentStamina -= 0.25f; // Small stamina cost for jumping
+            currentStamina -= 0.25f;
             staminaCooldownTimer = staminaCooldown;
             currentStamina = Mathf.Clamp(currentStamina, 0, maxStamina);
         }
@@ -962,6 +979,23 @@ public class PlayerController : MonoBehaviour
             ammoText.color = Color.white;
     }
 
+    void HandleFallDamage()
+    {
+        float fallDistance = fallStartY - transform.position.y;
+
+        if (fallDistance <= safeFallDistance)
+            return;
+
+        float damage = (fallDistance - safeFallDistance) * damagePerUnit;
+
+        int finalDamage = Mathf.Min(Mathf.RoundToInt(damage), maxFallDamage);
+
+        if (finalDamage > 0 && playerHealth != null)
+        {
+            playerHealth.TakeDamage(finalDamage);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.CompareTag("Ladder"))
@@ -1005,6 +1039,23 @@ public class PlayerController : MonoBehaviour
                 groundLayer
             );
         };
+
+        // Fall detection
+        // Fall detection
+        if (isGrounded || isClimbing)
+        {
+            if (isFalling)
+            {
+                HandleFallDamage();
+            }
+
+            isFalling = false;
+        }
+        else if (rb.linearVelocity.y <= -5f && !isFalling)
+        {
+            isFalling = true;
+            fallStartY = transform.position.y;
+        }
 
         if (isDashing || isKnockedBack) return;
 
