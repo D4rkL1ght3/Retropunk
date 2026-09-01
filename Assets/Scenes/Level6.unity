@@ -22037,7 +22037,7 @@ MonoBehaviour:
   maxReachableHeight: 1.5
   aggroTime: 3
   aggroed: 0
-  seekingMissilePrefab: {fileID: 0}
+  missilePrefab: {fileID: 0}
   missileLaunchPoint: {fileID: 0}
   missileCount: 6
   missileCooldown: 4
