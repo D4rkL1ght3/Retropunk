@@ -549,7 +549,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 32
+  spritePixelsToUnits: 128
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -799,6 +799,28 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: Bombs-and-Explosions-Pixel-Art-Set3-Photoroom_8
+      rect:
+        serializedVersion: 2
+        x: 1375
+        y: 937
+        width: 20
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8934c484c569964683c590cb2c36198
+      internalID: -1294559842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -849,6 +871,7 @@ TextureImporter:
       Bombs-and-Explosions-Pixel-Art-Set3-Photoroom_5: -305465045073135183
       Bombs-and-Explosions-Pixel-Art-Set3-Photoroom_6: -5622447705422869260
       Bombs-and-Explosions-Pixel-Art-Set3-Photoroom_7: 5656404781832261839
+      Bombs-and-Explosions-Pixel-Art-Set3-Photoroom_8: -1294559842
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

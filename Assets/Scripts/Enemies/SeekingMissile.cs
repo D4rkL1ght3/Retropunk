@@ -1,13 +1,17 @@
 using UnityEngine;
+using System.Collections;
 
 public class SeekingMissile : MonoBehaviour, IEntity
 {
     [Header("Target")]
     public Transform player;
+    public LayerMask playerLayer;
+    public LayerMask groundLayer;
 
     [Header("Movement")]
     public float moveSpeed = 8f;
-    public float turnSpeed = 90f;
+    public float turnSpeed = 180f;
+    public float lifetime = 4f;
 
     [Header("Explosion")]
     public GameObject explosionPrefab;
@@ -25,6 +29,8 @@ public class SeekingMissile : MonoBehaviour, IEntity
             if (playerObject != null)
                 player = playerObject.transform;
         }
+
+        StartCoroutine(DestroyAfterLifetime());
     }
 
     void Update()
@@ -58,14 +64,15 @@ public class SeekingMissile : MonoBehaviour, IEntity
         transform.position += transform.right * moveSpeed * Time.deltaTime;
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
-    {
-        Explode();
-    }
-
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Explode();
+        if (collision.CompareTag("Enemy"))
+            return;
+
+        if (((1 << collision.gameObject.layer) & (groundLayer | playerLayer)) != 0)
+        {
+            Explode();
+        }
     }
 
     public void Explode()
@@ -85,7 +92,6 @@ public class SeekingMissile : MonoBehaviour, IEntity
         }
 
         DealExplosionDamage();
-
         Destroy(gameObject);
     }
 
@@ -108,14 +114,18 @@ public class SeekingMissile : MonoBehaviour, IEntity
         }
     }
 
-    public void OnDamaged() { }
+    IEnumerator DestroyAfterLifetime()
+    {
+        yield return new WaitForSeconds(lifetime);
+        Explode();
+    }
 
-    public void Disable() { }
-
-    public void OnDeath()
+    public void OnDamaged()
     {
         Explode();
     }
+    public void Disable() { }
+    public void OnDeath() { }
 
     void OnDrawGizmosSelected()
     {
