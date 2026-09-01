@@ -27,7 +27,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public bool useAttackPoint = false;
     public Transform attackPoint;
 
-    public float flipDeadzone = 0.05f;
+    [SerializeField] private float flipDeadzone = 0.2f;
     private float lastRepositionDirection;
 
     protected private float lastAttackTime;
@@ -371,7 +371,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         if (useAttackPoint)
         {
             // Attack range deadzone
-            Gizmos.color = Color.darkOrange;
+            Gizmos.color = Color.orange;
             Gizmos.DrawWireSphere(transform.position, flipDeadzone);
         }
     }

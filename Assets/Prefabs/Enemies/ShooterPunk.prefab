@@ -226,6 +226,7 @@ MonoBehaviour:
   detectionRange: 10
   optimalRange: 8
   retreatRange: 4
+  deadzoneRange: 0.2
   attackCooldown: 1.5
   bulletPrefab: {fileID: 2747704218444851675, guid: 7ed9310d082e3cd45ad236f1317f5cd4, type: 3}
   firePoint: {fileID: 2025044432932106805}

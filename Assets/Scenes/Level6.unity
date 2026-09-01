@@ -21797,9 +21797,9 @@ GameObject:
   - component: {fileID: 366742440}
   - component: {fileID: 366742439}
   - component: {fileID: 366742438}
-  - component: {fileID: 366742442}
   - component: {fileID: 366742444}
   - component: {fileID: 366742443}
+  - component: {fileID: 366742445}
   m_Layer: 7
   m_Name: GreenMecha
   m_TagString: Enemy
@@ -21937,7 +21937,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 4723107735738678597, guid: aad2b7758a756ca46b90409673f17ace, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -21965,42 +21965,6 @@ Transform:
   - {fileID: 632828940}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &366742442
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 366742437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55e13a358377a2e4b845cf31409810f6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMelee
-  player: {fileID: 0}
-  moveSpeed: 2.5
-  patrolDistance: 3
-  patrolWaitTime: 1.5
-  detectionRange: 8
-  attackRange: 0.5
-  damage: 10
-  attackCooldown: 1.5
-  useAttackPoint: 1
-  attackPoint: {fileID: 632828940}
-  flipDeadzone: 0.3
-  Player:
-    serializedVersion: 2
-    m_Bits: 64
-  Ground:
-    serializedVersion: 2
-    m_Bits: 8
-  Platform:
-    serializedVersion: 2
-    m_Bits: 256
-  maxDropHeight: 3
-  maxReachableHeight: 1.5
-  aggroTime: 3
-  aggroed: 0
 --- !u!95 &366742443
 Animator:
   serializedVersion: 7
@@ -22037,6 +22001,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Health
   maxHealth: 200
   damagedColor: {r: 1, g: 1, b: 0, a: 1}
+--- !u!114 &366742445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 366742437}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2544c17c5e6f9d94485f6cff1351fd24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MechaBoss
+  player: {fileID: 0}
+  moveSpeed: 1.5
+  patrolDistance: 0.01
+  patrolWaitTime: 10
+  detectionRange: 8
+  attackRange: 0.5
+  damage: 10
+  attackCooldown: 1.5
+  useAttackPoint: 1
+  attackPoint: {fileID: 632828940}
+  flipDeadzone: 0.3
+  Player:
+    serializedVersion: 2
+    m_Bits: 64
+  Ground:
+    serializedVersion: 2
+    m_Bits: 8
+  Platform:
+    serializedVersion: 2
+    m_Bits: 256
+  maxDropHeight: 3
+  maxReachableHeight: 1.5
+  aggroTime: 3
+  aggroed: 0
+  seekingMissilePrefab: {fileID: 0}
+  missileLaunchPoint: {fileID: 0}
+  missileCount: 6
+  missileCooldown: 4
 --- !u!1001 &375301701
 PrefabInstance:
   m_ObjectHideFlags: 0

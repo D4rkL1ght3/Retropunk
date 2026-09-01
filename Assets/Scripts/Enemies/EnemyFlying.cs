@@ -22,6 +22,8 @@ public class EnemyFlying : MonoBehaviour, IEntity
 
     [Header("Detection")]
     public float detectionRange = 8f;
+    public LayerMask Player;
+    public LayerMask Ground;
 
     [Header("Attack")]
     public Transform attackPoint;
@@ -67,9 +69,28 @@ public class EnemyFlying : MonoBehaviour, IEntity
     void Update()
     {
         distance = Vector2.Distance(attackPoint.position, player.position);
+        Vector2 direction = (player.position - transform.position).normalized;
+
+        // Raycast toward player
+        RaycastHit2D hit = Physics2D.Raycast(
+            transform.position,
+            direction,
+            detectionRange,
+            Ground | Player
+        );
+
+        bool canSeePlayer = false;
+
+        if (hit.collider != null)
+        {
+            if (hit.collider.CompareTag("Player"))
+            {
+                canSeePlayer = true;
+            }
+        }
 
         // Detection
-        if (distance <= detectionRange || aggroed)
+        if ((distance <= detectionRange && canSeePlayer) || aggroed)
         {
             aggroTimer = aggroTime;
             currentState = EnemyState.Chase;

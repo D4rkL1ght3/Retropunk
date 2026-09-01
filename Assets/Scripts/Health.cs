@@ -64,6 +64,7 @@ public class Health : MonoBehaviour
         if (controller != null)
             controller.Disable();
 
-        animator.SetTrigger("Death");
+        if (animator != null)
+            animator.SetTrigger("Death");
     }
 }

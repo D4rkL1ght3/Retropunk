@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 8160218558324024774}
   - component: {fileID: 4004804024821729604}
   - component: {fileID: 5217703488575260531}
-  - component: {fileID: 657554577144060554}
+  - component: {fileID: 829538361619526499}
   m_Layer: 0
-  m_Name: ShooterBullet
+  m_Name: SeekingMissile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 2208703988740019828, guid: 22a99cf76997a0142ac712a44e552357, type: 3}
+  m_Sprite: {fileID: -454384845472657506, guid: cc97efb459471f34b83eab3e3fe75d8e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -132,7 +132,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.375, y: 0.1875}
+    oldSize: {x: 0.125, y: 0.125}
     newSize: {x: 0.09375, y: 0.09375}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -167,7 +167,7 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &657554577144060554
+--- !u!114 &829538361619526499
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -176,12 +176,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2747704218444851675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2edad7ba62ec3d42a209a1c62ca7f42, type: 3}
+  m_Script: {fileID: 11500000, guid: 698bc276a45f8aa41890efa93995a2fc, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SeekingMissile
-  player: {fileID: 0}
-  moveSpeed: 2.5
-  turnSpeed: 90
-  explosionPrefab: {fileID: 0}
-  explosionRadius: 1.5
-  explosionDamage: 8
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyProjectile
+  speed: 15
+  lifetime: 1
+  damage: 4
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 8

@@ -24,6 +24,9 @@ public class EnemyRanged : MonoBehaviour, IEntity
     public float optimalRange = 5f;
     public float retreatRange = 3f;
 
+    [SerializeField] private float deadzoneRange = 0.2f;
+    private float lastRepositionDirection;
+
     [Header("Shooting")]
     public float attackCooldown = 1.5f;
     private float lastAttackTime;
@@ -75,6 +78,7 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
         patrolLeftX = transform.position.x - patrolDistance;
         patrolRightX = transform.position.x + patrolDistance;
+        lastRepositionDirection = Mathf.Sign(transform.localScale.x);
     }
 
     void Update()
@@ -390,16 +394,17 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
         if (TryGetShotHit(dir, out Vector2 hitPoint))
         {
-            // If this shot already hits player, no need to move
             if (HasClearShot(dir))
                 return 0f;
 
-            // Move to align hit point with player
             float deltaX = player.position.x - hitPoint.x;
-            if (Mathf.Abs(deltaX) < 0.2f)
-                return 0f;
 
-            return Mathf.Sign(deltaX);
+            if (Mathf.Abs(deltaX) < deadzoneRange)
+                return lastRepositionDirection;
+
+            lastRepositionDirection = Mathf.Sign(deltaX);
+
+            return lastRepositionDirection;
         }
 
         return 0f;
@@ -426,6 +431,9 @@ public class EnemyRanged : MonoBehaviour, IEntity
 
     void Flip(float directionX)
     {
+        if (Mathf.Abs(directionX) <= deadzoneRange)
+            return;
+
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Sign(directionX) * Mathf.Abs(scale.x);
         transform.localScale = scale;
@@ -452,14 +460,21 @@ public class EnemyRanged : MonoBehaviour, IEntity
         // Detection range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+
         // Optimal range
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(transform.position, optimalRange);
+
         // Retreat range
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, retreatRange);
+
         // Patrol range
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, patrolDistance);
+
+        // Deadzone range
+        Gizmos.color = Color.orange;
+        Gizmos.DrawWireSphere(transform.position, deadzoneRange);
     }
 }
