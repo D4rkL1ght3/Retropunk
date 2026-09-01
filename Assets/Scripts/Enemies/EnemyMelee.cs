@@ -24,6 +24,12 @@ public class EnemyMelee : MonoBehaviour, IEntity
     public int damage = 4;
     public float attackCooldown = 1.2f;
 
+    public bool useAttackPoint = false;
+    public Transform attackPoint;
+
+    public float flipDeadzone = 0.05f;
+    private float lastRepositionDirection;
+
     protected private float lastAttackTime;
     protected bool isAttacking = false;
 
@@ -66,11 +72,12 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
         patrolLeftX = transform.position.x - patrolDistance;
         patrolRightX = transform.position.x + patrolDistance;
+        lastRepositionDirection = Mathf.Sign(transform.localScale.x);
     }
 
     protected virtual void Update()
     {
-        distance = Vector2.Distance(transform.position, player.position);
+        distance = Vector2.Distance(GetAttackOrigin(), player.position);
         Vector2 direction = (player.position - transform.position).normalized;
 
         // Raycast toward player
@@ -176,15 +183,41 @@ public class EnemyMelee : MonoBehaviour, IEntity
             return;
         }
 
-        float dir = Mathf.Sign(player.position.x - transform.position.x);
+        // Normal melee enemy behavior
+        if (!useAttackPoint || attackPoint == null)
+        {
+            float dir = Mathf.Sign(player.position.x - transform.position.x);
 
-        if (distance > attackRange && IsDropSafe(dir))
-        {
-            moveDirection = dir;
+            if (distance > attackRange && IsDropSafe(dir))
+            {
+                moveDirection = dir;
+            }
+            else
+            {
+                moveDirection = 0f;
+            }
+
+            return;
         }
-        else
+
+        // Attack-point enemy behavior
+        if (distance > attackRange)
         {
-            moveDirection = 0f;
+            float dir = GetPlayerDirection();
+
+            if (dir != 0f && IsDropSafe(dir))
+                moveDirection = dir;
+            else
+                moveDirection = 0f;
+        }
+        else if (IsPlayerBehindAttackPoint())
+        {
+            float retreatDirection = -GetAttackPointFacingDirection();
+
+            if (IsDropSafe(retreatDirection))
+                moveDirection = retreatDirection;
+            else
+                moveDirection = 0f;
         }
     }
 
@@ -220,6 +253,9 @@ public class EnemyMelee : MonoBehaviour, IEntity
 
     protected void Flip(float directionX)
     {
+        if (Mathf.Abs(directionX) <= flipDeadzone)
+            return;
+
         Vector3 scale = transform.localScale;
         scale.x = Mathf.Sign(directionX) * Mathf.Abs(scale.x);
         transform.localScale = scale;
@@ -248,9 +284,9 @@ public class EnemyMelee : MonoBehaviour, IEntity
         isAttacking = false;
     }
 
-    public void DealDamage()
+    protected virtual void DealDamage()
     {
-        distance = Vector2.Distance(transform.position, player.position);
+        distance = Vector2.Distance(GetAttackOrigin(), player.position);
 
         if (distance <= attackRange)
         {
@@ -261,6 +297,47 @@ public class EnemyMelee : MonoBehaviour, IEntity
                 playerHealth.TakeDamage(damage);
             }
         }
+    }
+
+    protected float GetPlayerDirection()
+    {
+        float horizontalDifference = player.position.x - transform.position.x;
+
+        if (Mathf.Abs(horizontalDifference) <= flipDeadzone)
+            return lastRepositionDirection;
+
+        lastRepositionDirection = Mathf.Sign(horizontalDifference);
+
+        return lastRepositionDirection;
+    }
+
+    protected float GetAttackPointFacingDirection()
+    {
+        float direction = attackPoint.position.x - transform.position.x;
+
+        if (Mathf.Abs(direction) <= flipDeadzone)
+            return Mathf.Sign(transform.localScale.x);
+
+        return Mathf.Sign(direction);
+    }
+
+    protected bool IsPlayerBehindAttackPoint()
+    {
+        float facingDirection = GetAttackPointFacingDirection();
+        float playerFromAttackPoint = player.position.x - attackPoint.position.x;
+
+        if (Mathf.Abs(playerFromAttackPoint) <= flipDeadzone)
+            return false;
+
+        return Mathf.Sign(playerFromAttackPoint) != facingDirection;
+    }
+
+    protected Vector2 GetAttackOrigin()
+    {
+        if (useAttackPoint && attackPoint != null)
+            return attackPoint.position;
+
+        return transform.position;
     }
 
     public void OnDamaged()
@@ -281,12 +358,21 @@ public class EnemyMelee : MonoBehaviour, IEntity
     {
         // Attack range
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, attackRange);
+        Gizmos.DrawWireSphere(GetAttackOrigin(), attackRange);
+
         // Detection range
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRange);
+
         // Patrol range
         Gizmos.color = Color.cyan;
         Gizmos.DrawWireSphere(transform.position, patrolDistance);
+
+        if (useAttackPoint)
+        {
+            // Attack range deadzone
+            Gizmos.color = Color.darkOrange;
+            Gizmos.DrawWireSphere(transform.position, flipDeadzone);
+        }
     }
 }

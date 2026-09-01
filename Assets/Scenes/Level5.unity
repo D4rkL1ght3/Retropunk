@@ -17354,6 +17354,9 @@ MonoBehaviour:
   attackRange: 0.9
   damage: 6
   attackCooldown: 1
+  useAttackPoint: 0
+  attackPoint: {fileID: 0}
+  flipDeadzone: 0.05
   Player:
     serializedVersion: 2
     m_Bits: 64
@@ -17378,7 +17381,7 @@ MonoBehaviour:
   throwPoint: {fileID: 2081672231}
   throwRange: 10
   throwForce: 4
-  throwCooldown: 3
+  throwCooldown: 2
   cameraConfiner: {fileID: 695336633}
   bossCameraBounds: {fileID: 685322360}
   goal: {fileID: 1989130137323387437}

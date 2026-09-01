@@ -194,6 +194,9 @@ MonoBehaviour:
   attackRange: 0.8
   damage: 5
   attackCooldown: 1
+  useAttackPoint: 0
+  attackPoint: {fileID: 0}
+  flipDeadzone: 0
   Player:
     serializedVersion: 2
     m_Bits: 64
