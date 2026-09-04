@@ -13848,8 +13848,11 @@ MonoBehaviour:
   patrolWaitTime: 1.5
   detectionRange: 10
   attackRange: 0.9
-  damage: 10
+  damage: 9
   attackCooldown: 1
+  useAttackPoint: 0
+  attackPoint: {fileID: 0}
+  flipDeadzone: 0.2
   Player:
     serializedVersion: 2
     m_Bits: 64

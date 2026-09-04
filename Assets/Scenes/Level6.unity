@@ -22042,8 +22042,8 @@ MonoBehaviour:
   missilePrefab: {fileID: 2747704218444851675, guid: 8127c97d5300a6343b9ec24d3ee8de22, type: 3}
   missileLaunchPoint: {fileID: 504832733}
   missileCount: 6
-  missileCooldown: 5
-  missileBurstDelay: 0.2
+  missileCooldown: 8
+  missileBurstDelay: 0.1
   missileStartingAngle: 15
   audioSource: {fileID: 366742446}
   attackSound: {fileID: 8300000, guid: 0982b0c2a6ad8864cb536e31ce9afce4, type: 3}
@@ -22779,7 +22779,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5.625
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

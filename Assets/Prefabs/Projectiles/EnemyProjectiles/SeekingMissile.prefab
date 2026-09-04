@@ -188,11 +188,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   moveSpeed: 8
-  turnSpeed: 180
+  turnSpeed: 120
   lifetime: 4
   explosionPrefab: {fileID: 7367053408126187400, guid: 7598dc73ae1a4d14892dcd9945bf0560, type: 3}
   explosionRadius: 0.6
-  explosionDamage: 6
+  explosionDamage: 5
 --- !u!114 &4527368043244876302
 MonoBehaviour:
   m_ObjectHideFlags: 0

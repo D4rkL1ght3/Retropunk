@@ -26,7 +26,7 @@ public class MechaBoss : EnemyMelee
 
         if (currentState == EnemyState.Chase && !fightStarted)
         {
-            lastMissileTime = Time.time + missileCooldown;
+            lastMissileTime = Time.time - (missileCooldown / 2f);
             fightStarted = true;
             aggroed = true;
         }
@@ -39,13 +39,13 @@ public class MechaBoss : EnemyMelee
 
     void TryMissileBarrage()
     {
-        if (isFiringMissiles)
+        if (isAttacking || isFiringMissiles)
             return;
 
-        if (Time.time >= lastMissileTime + missileCooldown)
+        if (Time.time >= lastMissileTime + missileCooldown && distance > attackRange)
         {
             StartCoroutine(FireMissileBarrage());
-
+            animator.SetTrigger("FireMissiles");
             lastMissileTime = Time.time;
         }
     }
@@ -101,6 +101,14 @@ public class MechaBoss : EnemyMelee
         {
             seekingMissile.player = player;
         }
+    }
+
+    protected override void TryAttack()
+    {
+        if (isFiringMissiles)
+            return;
+
+        base.TryAttack();
     }
 
     protected override void DealDamage()
