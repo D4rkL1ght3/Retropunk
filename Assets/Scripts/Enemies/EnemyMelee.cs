@@ -136,7 +136,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         }
     }
 
-    void FixedUpdate()
+    protected virtual void FixedUpdate()
     {
         Vector2 velocity = rb.linearVelocity;
         velocity.x = moveDirection * moveSpeed;
@@ -251,7 +251,7 @@ public class EnemyMelee : MonoBehaviour, IEntity
         return dropHeight <= maxDropHeight;
     }
 
-    protected void Flip(float directionX)
+    protected virtual void Flip(float directionX)
     {
         if (Mathf.Abs(directionX) <= flipDeadzone)
             return;
